@@ -15,6 +15,13 @@ class CreateFacturesTable extends Migration
     {
         Schema::create('factures', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('commande_id');
+            $table->date('date_facture');
+            $table->float('base_ht');
+            $table->float('tva');
+            $table->float('remise');
+            $table->float('total_ht');
+            $table->float('total_ttc');
             $table->timestamps();
         });
     }

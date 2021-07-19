@@ -15,6 +15,7 @@ class CreateEtatCommandesTable extends Migration
     {
         Schema::create('etat_commandes', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
             $table->timestamps();
         });
     }

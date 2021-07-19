@@ -15,8 +15,8 @@ class CreateBoutiquesTable extends Migration
     {
         Schema::create('boutiques', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->foreignId('categorie_id')->constrained();
+            $table->string('name');
             $table->timestamps();
         });
     }
