@@ -15,6 +15,6 @@ class Mode_livraison extends Model
 
     public function livraisons()
     {
-        $this->belongsToMany(Livraison::class);
+        $this->hasMany(Livraison::class);
     }
 }

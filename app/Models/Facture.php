@@ -8,4 +8,25 @@ use Illuminate\Database\Eloquent\Model;
 class Facture extends Model
 {
     use HasFactory;
+    
+    protected $fillable = [
+        'commande_id',
+        'date_facture',
+        'base_ht',
+        'tva',
+        'remise',
+        'total_ht',
+        'total_ttc',
+
+    ];
+
+    public function commande()
+    {
+        $this->belongsTo(Commande::class);
+    }
+
+    public function payment()
+    {
+        $this->hasOne(Payment::class);
+    }
 }

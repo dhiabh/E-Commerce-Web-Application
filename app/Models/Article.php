@@ -34,7 +34,7 @@ class Article extends Model
 
     public function commande()
     {
-        $this->belongsTo(Commande::class);
+        $this->belongsToMany(Commande::class);
     }
 
 }

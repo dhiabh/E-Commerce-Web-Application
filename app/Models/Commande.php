@@ -24,11 +24,21 @@ class Commandes extends Model
 
     public function articles()
     {
-        $this->hasMany(Article::class);
+        $this->belongsToMany(Article::class);
     }
 
     public function etats_commande()
     {
         $this->belongsToMany(Etat_commande::class);
+    }
+
+    public function livraison()
+    {
+        $this->belongsTo(Livraison::class);
+    }
+
+    public function facture()
+    {
+        $this->hasOne(Facture::class);
     }
 }

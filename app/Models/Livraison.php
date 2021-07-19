@@ -16,6 +16,14 @@ class Livraison extends Model
 
     public function mode_livraison()
     {
-        $this->hasOne(Mode_livraison::class);
+        $this->belongsTo(Mode_livraison::class);
     }
+
+    public function commandes()
+    {
+        $this->hasMany(Commande::class);
+
+    }
+
+
 }
