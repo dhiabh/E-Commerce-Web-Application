@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Pays extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'pays_code',
+        'name'
+    ];
+
+    public function villes()
+    {
+        $this->hasMany(Ville::class);
+    }
 }

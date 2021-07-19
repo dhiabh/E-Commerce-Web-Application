@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Mode_livraison extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name'
+    ];
+
+    public function livraisons()
+    {
+        $this->belongsToMany(Livraison::class);
+    }
 }
