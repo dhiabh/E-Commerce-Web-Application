@@ -15,7 +15,7 @@ class CreateFacturesTable extends Migration
     {
         Schema::create('factures', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('commande_id');
+            $table->foreignId('commande_id')->constrained();
             $table->date('date_facture');
             $table->float('base_ht');
             $table->float('tva');

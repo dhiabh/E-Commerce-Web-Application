@@ -15,7 +15,7 @@ class CreateLivraisonsTable extends Migration
     {
         Schema::create('livraisons', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('mode_livraison_id');
+            $table->foreignId('mode_livraison_id')->constrained();
             $table->date('date_livraison');
             $table->timestamps();
         });

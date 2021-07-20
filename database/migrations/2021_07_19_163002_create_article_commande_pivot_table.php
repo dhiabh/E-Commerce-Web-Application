@@ -15,9 +15,14 @@ class CreateArticleCommandePivotTable extends Migration
     {
         Schema::create('article_commande', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('article_id');
-            $table->unsignedBigInteger('commande_id');
             $table->unsignedBigInteger('quantity');
+
+            $table->unsignedBigInteger('article_id');
+            $table->foreign('article_id')->references('id')->on('articles')->onDelete('cascade');
+
+            $table->unsignedBigInteger('commande_id');
+            $table->foreign('commande_id')->references('id')->on('commandes')->onDelete('cascade');
+            
             $table->timestamps();
         });
     }

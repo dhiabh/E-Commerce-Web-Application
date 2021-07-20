@@ -15,8 +15,8 @@ class CreatePaymentsTable extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('mode_payment_id');
-            $table->foreignId('facture_id');
+            $table->foreignId('mode_payment_id')->constrained();
+            $table->foreignId('facture_id')->constrained();
             $table->float('montant_payment');
             $table->boolean('statut_payment');
             $table->date('date_payment');
