@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->foreignId('ville_id')->nullable()->constrained();
             $table->string('nom');
-            $table->string('prenom')->nullable();
+            $table->string('prenom');
             $table->unsignedBigInteger('num_tel')->nullable();
             $table->unsignedBigInteger('num_tel_2')->nullable();
             $table->text('adresse')->nullable();
