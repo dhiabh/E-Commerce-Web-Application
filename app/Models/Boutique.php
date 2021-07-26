@@ -16,11 +16,11 @@ class Boutique extends Model
 
     public function categorie()
     {
-        $this->belongsTo(Categorie::class);
+        return $this->belongsTo(Categorie::class);
     }
 
     public function articles()
     {
-        $this->hasMany(Article::class);
+        return $this->hasMany(Article::class);
     }
 }

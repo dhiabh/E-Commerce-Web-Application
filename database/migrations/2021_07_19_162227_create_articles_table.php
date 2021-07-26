@@ -16,6 +16,7 @@ class CreateArticlesTable extends Migration
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
             $table->foreignId('boutique_id')->constrained();
+            $table->foreignId('user_id')->constrained();
             $table->string('name');
             $table->float('price');
             $table->bigInteger('quantity');

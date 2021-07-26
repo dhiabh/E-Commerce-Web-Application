@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserStoreRequest;
+use App\Models\Article;
+use App\Models\Pays;
 use App\Models\User;
+use App\Models\Ville;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -12,9 +16,11 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(User $user)
     {
-        return view('users.index');
+        $user = auth()->user();
+        $articles = Article::all();
+        return view('users.index',compact('user','articles'));
     }
 
     /**
@@ -55,9 +61,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        //
+        $countries = Pays::all();
+        $villes = Ville::all();
+        return view('users.edit',compact('user','countries','villes'));
     }
 
     /**
@@ -67,9 +75,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserStoreRequest $request, User $user)
     {
-        //
+        $user->update($request->validated());
+
+        return redirect()->route('users.index')->with('message','Informations mises à jour avec succés');
     }
 
     /**

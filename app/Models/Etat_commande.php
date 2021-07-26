@@ -15,6 +15,6 @@ class Etat_commande extends Model
 
     public function commandes()
     {
-        $this->belongsToMany(Commande::class);
+        return $this->belongsToMany(Commande::class);
     }
 }

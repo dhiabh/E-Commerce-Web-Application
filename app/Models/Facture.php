@@ -22,11 +22,11 @@ class Facture extends Model
 
     public function commande()
     {
-        $this->belongsTo(Commande::class);
+        return $this->belongsTo(Commande::class);
     }
 
     public function payment()
     {
-        $this->hasOne(Payment::class);
+        return $this->hasOne(Payment::class);
     }
 }

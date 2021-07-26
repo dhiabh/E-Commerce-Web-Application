@@ -19,26 +19,26 @@ class Commande extends Model
 
     public function user()
     {
-        $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function articles()
     {
-        $this->belongsToMany(Article::class);
+        return $this->belongsToMany(Article::class);
     }
 
     public function etats_commande()
     {
-        $this->belongsToMany(Etat_commande::class);
+        return $this->belongsToMany(Etat_commande::class);
     }
 
     public function livraison()
     {
-        $this->belongsTo(Livraison::class);
+        return $this->belongsTo(Livraison::class);
     }
 
     public function facture()
     {
-        $this->hasOne(Facture::class);
+        return $this->hasOne(Facture::class);
     }
 }

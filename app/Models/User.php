@@ -53,16 +53,16 @@ class User extends Authenticatable
 
     public function panier() 
     {
-        $this->hasOne(Panier::class);
+        return $this->hasOne(Panier::class);
     }
 
     public function articles() 
     {
-        $this->hasMany(Article::class);
+        return $this->hasMany(Article::class);
     }
 
     public function commandes()
     {
-        $this->hasMany(Commande::class);
+        return $this->hasMany(Commande::class);
     }
 }

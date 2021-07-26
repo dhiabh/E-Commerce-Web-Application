@@ -19,22 +19,22 @@ class Article extends Model
 
     public function user()
     {
-        $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function panier()
     {
-        $this->belongsTo(Panier::class);
+        return $this->belongsTo(Panier::class);
     }
 
     public function boutique()
     {
-        $this->belongsTo(Boutique::class);
+        return $this->belongsTo(Boutique::class);
     }
 
     public function commande()
     {
-        $this->belongsToMany(Commande::class);
+        return $this->belongsToMany(Commande::class);
     }
 
 }

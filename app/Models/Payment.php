@@ -19,11 +19,11 @@ class Payment extends Model
 
     public function facture()
     {
-        $this->belongsTo(Facture::class);
+        return $this->belongsTo(Facture::class);
     }
 
     public function mode_payment()
     {
-        $this->belongsTo(Mode_payment::class);
+        return $this->belongsTo(Mode_payment::class);
     }
 }

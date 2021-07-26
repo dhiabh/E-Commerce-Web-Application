@@ -15,6 +15,6 @@ class Mode_payment extends Model
 
     public function payments()
     {
-        $this->hasMany(Payment::class);
+        return $this->hasMany(Payment::class);
     }
 }

@@ -15,6 +15,6 @@ class Categorie extends Model
 
     public function boutiques()
     {
-        $this->hasMany(Boutique::class);
+        return $this->hasMany(Boutique::class);
     }
 }
