@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserStoreRequest;
 use App\Models\Article;
+use App\Models\Boutique;
 use App\Models\Pays;
 use App\Models\User;
 use App\Models\Ville;
@@ -19,9 +20,12 @@ class UserController extends Controller
     public function index(User $user)
     {
         $user = auth()->user();
-        $articles = Article::all();
-        return view('users.index',compact('user','articles'));
+        $boutiques = Boutique::All()->where('user_id', $user->id);
+
+        return view('users.index',compact('user','boutiques'));
     }
+
+    
 
     /**
      * Show the form for creating a new resource.

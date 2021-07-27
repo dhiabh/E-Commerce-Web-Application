@@ -56,9 +56,9 @@ class User extends Authenticatable
         return $this->hasOne(Panier::class);
     }
 
-    public function articles() 
+    public function boutiques() 
     {
-        return $this->hasMany(Article::class);
+        return $this->hasMany(Boutique::class);
     }
 
     public function commandes()

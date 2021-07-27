@@ -69,13 +69,15 @@
                     </thead>
                     <tbody>
                         <tr>
-                            @foreach ($articles as $article)
-                                <td>{{ $article->boutique->name }}</td>
-                                <td>{{ $user->boutique->categorie->name }}</td>
+                            @foreach ($boutiques as $boutique)
+                                <tr>
+                                    <td>{{ $boutique->name }}</td>
+                                    <td>{{ $boutique->categorie->name }}</td>
+                                </tr>
                             @endforeach
-                            
+                           
 
-                            
+
                         </tr>
 
 

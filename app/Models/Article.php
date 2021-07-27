@@ -11,16 +11,12 @@ class Article extends Model
 
     protected $fillable = [
         'boutique_id',
+        'panier_id',
         'name',
         'price',
         'quantity',
         'description_article'
     ];
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
 
     public function panier()
     {
@@ -35,6 +31,11 @@ class Article extends Model
     public function commande()
     {
         return $this->belongsToMany(Commande::class);
+    }
+
+    public function images()
+    {
+        return $this->hasMany(Image::class);
     }
 
 }

@@ -11,6 +11,7 @@ class Boutique extends Model
 
     protected $fillable = [
         'categorie_id',
+        'user_id',
         'name'
     ];
 
@@ -22,5 +23,10 @@ class Boutique extends Model
     public function articles()
     {
         return $this->hasMany(Article::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
