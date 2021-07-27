@@ -68,21 +68,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            @foreach ($boutiques as $boutique)
-                                <tr>
-                                    <td>{{ $boutique->name }}</td>
-                                    <td>{{ $boutique->categorie->name }}</td>
-                                </tr>
-                            @endforeach
-                           
-
-
-                        </tr>
-
-
+                        @foreach ($boutiques as $boutique)
+                            <tr>
+                                <td><a href="{{ route('boutiques.show', $boutique->id)}}">{{ $boutique->name }}</a></td>
+                                <td>{{ $boutique->categorie->name }}</td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
+                <a href="{{ route('boutiques.create') }}" class="btn btn-success">Ajouter un Boutique</a>
             </div>
         </div>
     </div>
