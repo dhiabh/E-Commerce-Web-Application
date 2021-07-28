@@ -17,7 +17,7 @@
                         <h1><strong>{{ $boutique->name }}</strong></h1>
                     </div>
                 </div>
-                
+
             </div>
             <div class="card-body">
                 <div class="align-items-baseline d-flex mb-5">
@@ -47,7 +47,17 @@
                         @endforeach
                     </tbody>
                 </table>
-                <a href="{{ route('articles.create') }}" class="btn btn-success">Ajouter un Article</a>
+                <div class="d-flex">
+                    <a href="{{ route('articles.create') }}" class="btn btn-success">Ajouter un Article</a>
+                    <form method="POST" action="{{ route('boutiques.destroy', $boutique->id) }}">
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn btn-danger ml-5">Supprimer ce Boutique</button>
+                    </form>
+                </div>
+
+
+
             </div>
         </div>
     </div>

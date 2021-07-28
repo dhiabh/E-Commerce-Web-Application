@@ -20,8 +20,7 @@ class UserController extends Controller
     public function index(User $user)
     {
         $user = auth()->user();
-        $boutiques = Boutique::All()->where('user_id', $user->id);
-
+        $boutiques = Boutique::orderBy('id','DESC')->get()->where('user_id', $user->id);
         return view('users.index',compact('user','boutiques'));
     }
 

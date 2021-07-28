@@ -22,6 +22,8 @@ class CreateArticlesTable extends Migration
             $table->bigInteger('quantity');
             $table->text('description_article');
             $table->timestamps();
+
+            $table->foreign('boutique_id')->references('id')->on('boutiques')->onDelete('cascade');
         });
     }
 

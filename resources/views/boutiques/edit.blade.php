@@ -8,7 +8,7 @@
                 <div class="card">
                     <div class="card-header">
                         {{ __('Modifier votre Boutique') }}
-                        <a href="{{ route('users.index') }}" class="float-right">Back</a>
+                        <a href="{{ route('boutiques.show', $boutique->id) }}" class="float-right">Back</a>
                     </div>
     
                     <div class="card-body">
@@ -54,7 +54,7 @@
     
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
+                                    <button type="submit" class="btn btn-success">
                                         {{ __('Update') }}
                                     </button>
                                 </div>
