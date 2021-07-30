@@ -18,9 +18,9 @@ class Article extends Model
         'description_article'
     ];
 
-    public function panier()
+    public function paniers()
     {
-        return $this->belongsTo(Panier::class);
+        return $this->belongsToMany(Panier::class);
     }
 
     public function boutique()

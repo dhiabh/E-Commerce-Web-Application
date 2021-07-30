@@ -15,6 +15,15 @@ class Boutique extends Model
         'name'
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleted(function($boutique){
+            $boutique->articles()->delete();
+        });
+    }
+
     public function categorie()
     {
         return $this->belongsTo(Categorie::class);

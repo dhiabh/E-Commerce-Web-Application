@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateArticleCommandePivotTable extends Migration
+class CreatesArticlePanierPivotTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,17 @@ class CreateArticleCommandePivotTable extends Migration
      */
     public function up()
     {
-        Schema::create('article_commande', function (Blueprint $table) {
-            $table->primary(['article_id', 'commande_id']);
-            
-
+        Schema::create('article_panier', function (Blueprint $table) {
+            $table->primary(['article_id','panier_id']);
             $table->unsignedBigInteger('article_id');
+            $table->unsignedBigInteger('panier_id');
+
+            $table->timestamps();
             $table->index('article_id');
 
-            $table->unsignedBigInteger('commande_id');
-            $table->index('commande_id');
+            $table->index('panier_id');
+
             
-            $table->unsignedBigInteger('quantity');
-            $table->timestamps();
         });
     }
 
@@ -35,6 +34,6 @@ class CreateArticleCommandePivotTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('article_commande');
+        Schema::dropIfExists('article_panier');
     }
 }

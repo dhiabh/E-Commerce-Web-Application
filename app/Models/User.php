@@ -46,6 +46,15 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function ($user) {
+            $user->panier()->create();
+        });
+    }
+
     public function ville()
     {
         return $this->belongsTo(Ville::class);

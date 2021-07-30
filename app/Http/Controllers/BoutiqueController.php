@@ -96,11 +96,6 @@ class BoutiqueController extends Controller
      */
     public function destroy(Boutique $boutique)
     {
-        $articles = Article::all()->where('boutique_id',$boutique->id);
-        foreach($articles as $article)
-        {
-            $article->delete();
-        }
         $boutique->delete();
 
         return redirect()->route('users.index')->with('message','Boutique supprimé avec succés');

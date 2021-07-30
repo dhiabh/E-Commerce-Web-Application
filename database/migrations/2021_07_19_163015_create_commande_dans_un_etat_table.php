@@ -14,14 +14,15 @@ class CreateCommandeDansUnEtatTable extends Migration
     public function up()
     {
         Schema::create('commande_etat_commande', function (Blueprint $table) {
-            $table->id();
-            $table->boolean('statut');
+            $table->primary(['commande_id', 'etat_commande_id']);
 
             $table->unsignedBigInteger('commande_id');
-            $table->foreign('commande_id')->references('id')->on('commandes')->onDelete('cascade');
+            $table->index('commande_id');
 
             $table->unsignedBigInteger('etat_commande_id');
-            $table->foreign('etat_commande_id')->references('id')->on('etat_commandes')->onDelete('cascade');
+            $table->index('etat_commande_id');
+
+            $table->boolean('statut');
             
             $table->timestamps();
         });
