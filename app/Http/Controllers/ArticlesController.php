@@ -21,6 +21,11 @@ use App\Http\Requests\ArticleStoreRequest;
 class ArticlesController extends Controller
 {
 
+    public function __construct()
+    {
+       $this->middleware('auth', ['except' => ['index', 'show']]);
+    }
+
     public function index($id)
     {
         $boutique = Boutique::find($id);
@@ -182,22 +187,23 @@ class ArticlesController extends Controller
     {
         $article = Article::find($id);
         if(is_null($article)) {
-            return view('articles.index');
+            return view('/');
         }
         $boutique = Boutique::find($article->boutique_id);
 
-        $image = Image::where('article_id', $id)->get();
-        $commande = Commande::where('article_id', $id)->get();
-        $panier = Panier::where('article_id', $id)->get();
+        $images = Image::where('article_id', $id)->get();
+        foreach($images as $image) {
+            Storage::delete('public/images/articles/'.$image->image);   
+        }
         
+        $article->images()->delete();
+        $article->paniers()->detach();
 
-        Storage::delete('public/images/articles/'.$image->image);
-        $image->delete();
-        $commande->delete();
-        $panier->delete();
         $article->delete();
 
-        return view('boutiques.show')->with('boutique', $boutique);
+        return redirect()->action(
+            [BoutiqueController::class, 'show'], ['boutique' => $boutique]
+        );
 
     }
 

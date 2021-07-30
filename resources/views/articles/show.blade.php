@@ -2,7 +2,7 @@
 
 @section('content')
   <header id="fh5co-header" class="fh5co-cover fh5co-cover-sm" role="banner" 
-    style="background-image:url({{ URL::to('storage/images/articles/a.jpg') }});">
+    style="background-image:url({{ URL::to('storage/images/articles/'.$images[0]->image) }});">
     <div class="overlay"></div>
     <div class="container">
       <div class="row">
@@ -23,12 +23,14 @@
     <div class="row animate-box">
       <div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
         <p>
-          <a 
-            href="/articles/{{ $article->id }}/edit" 
-            class="btn btn-primary btn-outline btn-lg float-right"
-          >
-            Edit
-          </a>
+          @if(!Auth::guest()))
+            <a 
+              href="/articles/{{ $article->id }}/edit" 
+              class="btn btn-primary btn-outline btn-lg float-right"
+            >
+              Edit
+            </a>
+          @endif
         </p>
       </div>
     </div>
@@ -141,5 +143,21 @@
         </div>
       </div>
     </div>
+    <div class="row animate-box">
+      <div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
+        <p>
+          @if(!Auth::guest())
+            <a 
+              href="{{ route('articles.delete', $article->id) }}" 
+              class="btn btn-primary btn-outline btn-lg float-right"
+              style="text-align: center;"
+            >
+              Supprimer l'article
+            </a>
+          @endif
+        </p>
+      </div>
+    </div>
   </div>
+
 @endsection
