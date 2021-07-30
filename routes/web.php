@@ -55,3 +55,9 @@ Route::post(
     '/articles/{article}/upload-image',
     [ArticlesController::class, 'addImage']
 )->name('images.upload');
+
+
+Route::get(
+    '/articles/{article}/delete', 
+    [ArticlesController::class, 'destroy']
+)->name('articles.delete');

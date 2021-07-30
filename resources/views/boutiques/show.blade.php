@@ -40,7 +40,12 @@
                     <tbody>
                         @foreach ($articles as $article)
                             <tr>
-                                <td>{{ $article->name }}</td>
+                                <td>
+                                    <a href="{{ route('articles.show', $article->id) }}">
+                                        {{ $article->name }}
+                                    </a>
+                                </td>
+                                </a>
                                 <td>{{ $article->price }}$</td>
                                 <td>{{ $article->quantity }}</td>
                             </tr>
