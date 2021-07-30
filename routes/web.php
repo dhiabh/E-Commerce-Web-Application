@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\ArticlesController;
 use App\Http\Controllers\BoutiqueController;
 use App\Http\Controllers\PanierController;
 use App\Http\Controllers\UserController;
@@ -30,9 +30,28 @@ Route::resource('users', UserController::class);
 
 Route::resource('boutiques', BoutiqueController::class);
 
-Route::resource('articles', ArticleController::class);
+
 
 Route::resource('paniers', PanierController::class);
 
 
 
+Route::resource('articles', ArticlesController::class);
+
+Route::get(
+    '/boutiques/{boutique}/create',
+    [ArticlesController::class, 'create'] 
+)->name('boutiques.articles.create');
+
+Route::post(
+    '/boutiques/{boutique}/articles/store',
+    [ArticlesController::class, 'store']
+)->name('boutiques.articles.store');
+
+Route::get('/images/{image}/delete', [ArticlesController::class, 'deleteImage'])->name('deleteImage');
+
+
+Route::post(
+    '/articles/{article}/upload-image',
+    [ArticlesController::class, 'addImage']
+)->name('images.upload');

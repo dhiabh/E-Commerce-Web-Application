@@ -56,6 +56,7 @@
 
     <!-- Theme style  -->
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     
 
 
@@ -83,22 +84,17 @@
         <a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
     </div>
 
-    <!-- jQuery -->
     <script src="{{ asset('js/jquery.min.js') }}"></script>
-    <!-- jQuery Easing -->
     <script src="{{ asset('js/jquery.easing.1.3.js') }}"></script>
-    <!-- Bootstrap -->
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-    <!-- Waypoints -->
     <script src="{{ asset('js/jquery.waypoints.min.js') }}"></script>
-    <!-- Carousel -->
     <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
-    <!-- countTo -->
     <script src="{{ asset('js/jquery.countTo.js') }}"></script>
-    <!-- Flexslider -->
     <script src="{{ asset('js/jquery.flexslider-min.js') }}"></script>
-    <!-- Main -->
     <script src="{{ asset('js/main.js') }}"></script>
+
+    <script src="{{ asset('js/pdp.js') }}"></script>
+
 
 </body>
 

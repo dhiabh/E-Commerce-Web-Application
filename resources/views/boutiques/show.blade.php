@@ -48,7 +48,8 @@
                     </tbody>
                 </table>
                 <div class="d-flex">
-                    <a href="{{ route('articles.create') }}" class="btn btn-success">Ajouter un Article</a>
+                    <a href="{{ route('boutiques.articles.create', $boutique->id) }}" class="btn btn-success">     Ajouter un Article
+                    </a>
                     <form method="POST" action="{{ route('boutiques.destroy', $boutique->id) }}">
                         @csrf
                         @method('DELETE')
