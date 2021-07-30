@@ -25,7 +25,7 @@
                                             <option value="{{ $categorie->id }}">{{ $categorie->name }}</option>
                                         @endforeach
                                         
-                                      </select>
+                                    </select>
     
                                     @error('categorie')
                                         <span class="invalid-feedback" role="alert">

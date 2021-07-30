@@ -15,14 +15,17 @@ class CreateArticlesTable extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('boutique_id');
+           // $table->unsignedBigInteger('boutique_id');
+            $table->foreignId('boutique_id')->constrained();
+            $table->foreignId('panier_id')->nullable()->constrained();
             $table->string('name');
             $table->float('price');
             $table->bigInteger('quantity');
-            $table->text('description_article');
+            $table->text('description');
             $table->timestamps();
 
             $table->index('boutique_id');
+            
         });
     }
 
