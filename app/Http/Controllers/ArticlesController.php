@@ -201,16 +201,13 @@ class ArticlesController extends Controller
 
         $article->delete();
 
-<<<<<<< HEAD
         
         $article->paniers->detach();
 
         return view('boutiques.show')->with('boutique', $boutique);
-=======
         return redirect()->action(
             [BoutiqueController::class, 'show'], ['boutique' => $boutique]
         );
->>>>>>> 8feadee447178ec582d0ddc55f6bae214e00c977
 
     }
 
