@@ -10,9 +10,6 @@
           <div class="display-t">
             <div class="display-tc animate-box" data-animate-effect="fadeIn">
               <h1>{{ $article->name }}</h1>
-              <!--<h2>
-                Free html5 templates Made by <a href="http://freehtml5.co" target="_blank">freehtml5.co</a>
-              </h2>-->
             </div>
           </div>
         </div>
@@ -52,10 +49,14 @@
           <div class="row animate-box">
             <div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
               <h2>{{ $article->name }}</h2>
-              <p>
-                <a href="#" class="btn btn-primary btn-outline btn-lg">Add to Cart</a>
+              <div class="col-md-8 col-md-offset-2 text-center fh5co-heading d-flex">
+                <form method="POST" action="{{ route('paniers.store',$article->id) }}">
+                  @csrf
+                  <button class="btn btn-primary btn-outline btn-lg">Add to Cart</button>
+                </form>
+                
                 <a href="#" class="btn btn-primary btn-outline btn-lg">Compare</a>
-              </p>
+              </div>
             </div>
           </div>
         </div>

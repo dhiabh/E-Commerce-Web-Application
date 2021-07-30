@@ -9,7 +9,7 @@
 
                 <div class="card-header">
                     'Ajouter un Article'
-                    <a href="{{ route('users.index') }}" class="float-right">Back</a>
+                    <a href="{{ route('boutiques.show', $boutique_id) }}" class="float-right">Back</a>
                 </div>
 
                 <div class="card-body">
@@ -21,7 +21,7 @@
                         @csrf
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">
-                                Nom d'article {{ $boutique_id }}
+                                Nom d'article 
                             </label>
 
                             <div class="col-md-6">
@@ -65,7 +65,7 @@
                             <div class="col-md-6">
                                 <div class="custom-file">
                                     <input type="file" class="custom-file-input" name="image" id="image">
-                                    <label class="custom-file-label" for="customFile">Choosit une image</label>
+                                    <label class="custom-file-label" for="customFile">Choisit une image</label>
                                 </div>
                             </div>
                         </div>

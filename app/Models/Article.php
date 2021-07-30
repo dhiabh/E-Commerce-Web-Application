@@ -18,6 +18,7 @@ class Article extends Model
         'description_article'
     ];
 
+    
     public function paniers()
     {
         return $this->belongsToMany(Panier::class);

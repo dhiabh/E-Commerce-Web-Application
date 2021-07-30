@@ -47,9 +47,14 @@ class PanierController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store($id)
     {
-        //
+        auth()->user()->panier->articles->create([
+            'panier_id' => auth()->user()->panier->id,
+            'article_id' => $id
+        ]);
+
+        return redirect()->route('articles.show');
     }
 
     /**

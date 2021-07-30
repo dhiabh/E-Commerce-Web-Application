@@ -197,6 +197,9 @@ class ArticlesController extends Controller
         $panier->delete();
         $article->delete();
 
+        
+        $article->paniers->detach();
+
         return view('boutiques.show')->with('boutique', $boutique);
 
     }
