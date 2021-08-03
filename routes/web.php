@@ -4,6 +4,9 @@ use App\Http\Controllers\ArticlesController;
 use App\Http\Controllers\BoutiqueController;
 use App\Http\Controllers\PanierController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CommandesController;
+use App\Http\Controllers\LivraisonsController;
+use App\Http\Controllers\PaymentsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -61,3 +64,9 @@ Route::get(
     '/articles/{article}/delete', 
     [ArticlesController::class, 'destroy']
 )->name('articles.delete');
+
+
+Route::resource('commandes', CommandesController::class );
+Route::resource('livraisons', LivraisonsController::class );
+
+Route::resource('payments', PaymentsController::class );
