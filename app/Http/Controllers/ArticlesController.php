@@ -52,7 +52,6 @@ class ArticlesController extends Controller
         $article->price = $request->price;
         $article->description = $request->description;
         $article->quantity = $request->quantity;
-        $article->panier_id = 1;
         
         if(is_null($shop_id)) {
             $categorie_name = $request->category;

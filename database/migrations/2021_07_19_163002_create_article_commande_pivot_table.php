@@ -23,7 +23,7 @@ class CreateArticleCommandePivotTable extends Migration
             $table->unsignedBigInteger('commande_id');
             $table->index('commande_id');
             
-            $table->unsignedBigInteger('quantity');
+            $table->unsignedBigInteger('quantity')->nullable();
             $table->timestamps();
         });
     }

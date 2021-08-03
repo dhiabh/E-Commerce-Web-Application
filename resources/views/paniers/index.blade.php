@@ -14,7 +14,7 @@
             <div class="card-header text-center">
                 <div class="row">
                     <div class="col">
-                        <h1><strong>Votre Panier ({{ $articles_number }} articles)</strong></h1>
+                        <h1><strong>Votre Panier ({{ $articles_number }} {{ $articles_number > 1 ? "articles" : "article" }})</strong></h1>
                     </div>
                 </div>
             </div>
@@ -47,9 +47,10 @@
 
                                     <select name="quantity" id="quantity" class="form-control"
                                         aria-label="Default select example">
-                                        <option value="1" selected>1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
+                                        
+                                        @for ($i = 1; $i <= 10; $i++)
+                                            <option value="{{ $i }}">{{ $i }}</option>
+                                        @endfor
                                     </select>
 
 
@@ -76,7 +77,7 @@
             </div>
             <div class="mr-5" style="text-align: right">
                 <button class="md-6 btn btn-secondary"><a href="{{ url('/') }}">POURSUIVRE VOS ACHATS</a></button>
-                <button class="md-6 btn btn-success"><a href="#">FINALISER VOTRE COMMANDE</a></button>
+                <button class="md-6 btn btn-success"><a href="{{ route('commandes.create',$articles) }}">FINALISER VOTRE COMMANDE</a></button>
             </div>
 
 

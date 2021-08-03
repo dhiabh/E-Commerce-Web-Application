@@ -17,7 +17,6 @@ class CreateArticlesTable extends Migration
             $table->id();
            // $table->unsignedBigInteger('boutique_id');
             $table->foreignId('boutique_id')->constrained();
-            $table->foreignId('panier_id')->nullable()->constrained();
             $table->string('name');
             $table->float('price');
             $table->bigInteger('quantity');

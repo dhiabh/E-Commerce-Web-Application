@@ -20,7 +20,7 @@
     <div class="row animate-box">
       <div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
         <p>
-          @if(!Auth::guest()))
+          @if(!Auth::guest())
             <a 
               href="/articles/{{ $article->id }}/edit" 
               class="btn btn-primary btn-outline btn-lg float-right"

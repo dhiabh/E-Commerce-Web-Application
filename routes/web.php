@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ArticlesController;
 use App\Http\Controllers\BoutiqueController;
+use App\Http\Controllers\FactureController;
+use App\Http\Controllers\LivraisonController;
 use App\Http\Controllers\PanierController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -61,3 +63,7 @@ Route::get(
     '/articles/{article}/delete', 
     [ArticlesController::class, 'destroy']
 )->name('articles.delete');
+
+Route::resource('livraisons', LivraisonController::class);
+
+Route::resource('factures', FactureController::class);
