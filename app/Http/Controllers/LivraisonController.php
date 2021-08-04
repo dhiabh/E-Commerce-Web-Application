@@ -7,6 +7,7 @@ use App\Models\Facture;
 use App\Models\Livraison;
 use App\Models\Mode_livraison;
 use Carbon\Carbon;
+use App\Models\Panier;
 use Illuminate\Http\Request;
 use Intervention\Image\ImageManagerStatic as ImageIntervention;
 

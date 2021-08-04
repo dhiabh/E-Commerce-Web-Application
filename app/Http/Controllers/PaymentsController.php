@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Facture;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Payment;
@@ -24,9 +25,10 @@ class PaymentsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+
+    public function create(Facture $facture)
     {
-        return view('payments.create');
+        return view('payments.create')->with('facture', $facture);
     }
 
     /**
@@ -35,12 +37,11 @@ class PaymentsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Facture $facture)
     {
         $payment = new Payment;
-        //$payment->facture_id = 1;
         $payment->date_payment = Carbon::now();
-        $payment->montant_payment = (Facture::find($facture_id))->total_ttc;
+        $payment->montant_payment = $facture->total_ttc;
         $payment->statut_payment = false;
         $mode_payment = $request->mode;
         $payment->mode_payment_id = Mode_payment::where('name', $mode_payment)->get()->id;
@@ -49,21 +50,21 @@ class PaymentsController extends Controller
 
         if($mode_payment == 'cash') {
             return view('welcome');
-        } else {
-            return redirect()->action(
-                [PaymentController::class, 'addCarte'],
-                ['payment_id' => $payment->id]
-            );
-            /*
-                contact with banque api 
-            */
-            if(true) {
-                $payment->save();
-                return view('welcome');
-            } else {
-                return redirect()->back();
-        }    
         }
+        return redirect()->action(
+            [PaymentController::class, 'addCarte'],
+            ['payment' => $payment]
+        );
+        /*
+            contact with banque api 
+        */
+        if(true) {
+            $payment->save();
+            return view('welcome');
+        } else {
+            return redirect()->back();
+        }
+        
 
 
     }
@@ -115,6 +116,6 @@ class PaymentsController extends Controller
 
     public function addCarte($payment_id) {
         $payment = Payment::find($payment_id);
-        return view('payments.add_carte')->with('payment' $payment);
+        return view('payments.add_carte')->with('payment', $payment);
     }
 }

@@ -11,8 +11,6 @@ class Commande extends Model
 
     protected $fillable = [
         'user_id',
-        'nbre_articles',
-        'total_amount',
         'date_commande'
     ];
 
@@ -31,7 +29,7 @@ class Commande extends Model
         return $this->belongsToMany(Etat_commande::class);
     }
 
-    public function livraison()
+    public function livraisons()
     {
         return $this->belongsToMany(Livraison::class);
     }

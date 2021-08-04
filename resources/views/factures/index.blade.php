@@ -41,7 +41,11 @@
                 <h3><strong>Total TTC: {{ $facture->total_ttc }}$</strong></h3>
             </div>
             <div>
-                <button class="btn btn-success"><a href="{{ route('payments.create', $facture) }}">Continuer</a></button>
+                <button class="btn btn-success">
+                    <a href="{{ route('payments.create', $facture) }}">
+                        Continuer
+                    </a>
+                </button>
             </div>
 
 

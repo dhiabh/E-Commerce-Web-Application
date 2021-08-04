@@ -7,7 +7,6 @@ use App\Http\Controllers\LivraisonController;
 use App\Http\Controllers\PanierController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CommandesController;
-use App\Http\Controllers\LivraisonsController;
 use App\Http\Controllers\PaymentsController;
 use Illuminate\Support\Facades\Route;
 

@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\LivraisonController;
 use App\Models\Commande;
 use App\Models\Panier;
-use Illuminate\Support\Facades\DB;
 
 class CommandesController extends Controller
 {
@@ -28,10 +27,7 @@ class CommandesController extends Controller
      */
     public function create()
     {
-        //$panier = Panier::find($panier_id);
-        //$articles = $panier->articles;
-        $panier = auth()->user()->panier;
-        return view('commandes.create',compact('panier'));
+        return view('commandes.create');
     }
 
     /**
