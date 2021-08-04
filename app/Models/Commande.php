@@ -11,7 +11,6 @@ class Commande extends Model
 
     protected $fillable = [
         'user_id',
-        'livraison_id',
         'nbre_articles',
         'total_amount',
         'date_commande'
@@ -34,7 +33,7 @@ class Commande extends Model
 
     public function livraison()
     {
-        return $this->belongsTo(Livraison::class);
+        return $this->belongsToMany(Livraison::class);
     }
 
     public function facture()

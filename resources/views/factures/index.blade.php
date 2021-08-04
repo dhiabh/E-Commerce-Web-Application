@@ -19,26 +19,29 @@
                 </div>
             </div>
             <div class="card-body">
+                @foreach ($articles as $article)
                 <div class="d-flex">
-                    <div>Article Image</div>
+                    <div><img style="width: 40%" src="{{ URL::to('/storage/images/articles/'.$article->images()->first()->image) }}" alt=""></div>
                     <div>
-                        <div>Article Name</div>
-                        <div>Article Price</div>
+                        <div>{{ $article->name }}</div>
+                        <div>{{ $article->price }}$</div>
                         <div>Quantité</div>
                     </div>
                 </div>
+                <hr>
+                @endforeach
+                
+               
+               <div>Sous Total: {{ $facture->total_ht }}$</div>
+               <div>Frais Livraison: {{ $livraison->mode_livraison->frais }}$</div>
                <hr>
-               <div>Sous Total</div>
-               <div>Frais Livraison</div>
-               <hr>
-               <div>Total TTC</div>
 
             </div>
             <div class="mr-5" style="text-align: right">
-                <h3><strong>Total TTC: $</strong></h3>
+                <h3><strong>Total TTC: {{ $facture->total_ttc }}$</strong></h3>
             </div>
             <div>
-                <button class="btn btn-success"><a href="#">Continuer</a></button>
+                <button class="btn btn-success"><a href="{{ route('payments.create', $facture) }}">Continuer</a></button>
             </div>
 
 

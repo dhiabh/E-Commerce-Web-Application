@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCommandesTable extends Migration
+class UpdateCommandesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,13 @@ class CreateCommandesTable extends Migration
      */
     public function up()
     {
-        Schema::create('commandes', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained();
-            $table->string('nom');
+        Schema::table('commandes', function (Blueprint $table) {
             $table->string('prenom');
+            $table->string('nom');
             $table->string('tel');
             $table->text('address');
             $table->string('region');
             $table->string('ville');
-            $table->date('date_commande');
-            $table->timestamps();
         });
     }
 
@@ -34,6 +30,6 @@ class CreateCommandesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('commandes');
+        //
     }
 }

@@ -75,9 +75,12 @@
             <div class="mr-5" style="text-align: right">
                 <h3><strong>Total TTC: {{ $total }}$</strong></h3>
             </div>
+           <div>
+               
+           </div>
             <div class="mr-5" style="text-align: right">
                 <button class="md-6 btn btn-secondary"><a href="{{ url('/') }}">POURSUIVRE VOS ACHATS</a></button>
-                <button class="md-6 btn btn-success"><a href="{{ route('commandes.create',$articles) }}">FINALISER VOTRE COMMANDE</a></button>
+                <button class="md-6 btn btn-success"><a href="{{ route('commandes.create') }}">FINALISER VOTRE COMMANDE</a></button>
             </div>
 
 

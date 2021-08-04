@@ -1,10 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Auth;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Http\Controllers\LivraisonController;
+use App\Models\Commande;
+use App\Models\Panier;
+use Illuminate\Support\Facades\DB;
 
-class FactureController extends Controller
+class CommandesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,8 +18,7 @@ class FactureController extends Controller
      */
     public function index()
     {
-
-        //return view('factures.index',compact('articles'));
+        //
     }
 
     /**
@@ -24,7 +28,10 @@ class FactureController extends Controller
      */
     public function create()
     {
-        //
+        //$panier = Panier::find($panier_id);
+        //$articles = $panier->articles;
+        $panier = auth()->user()->panier;
+        return view('commandes.create',compact('panier'));
     }
 
     /**
@@ -33,9 +40,34 @@ class FactureController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request )
     {
-        //
+        
+        $panier = auth()->user()->panier;
+
+        $commande = new Commande;
+
+        $commande->user_id = Auth::id();
+        $commande->nom = $request->input("nom");
+        $commande->prenom = $request->input("prenom");
+        $commande->tel = $request->input("tel");
+        $commande->address = $request->input("addresse");
+        $commande->region = $request->input("region");
+        $commande->ville = $request->input("ville");
+        $commande->date_commande = Carbon::now();
+        $commande->save();
+
+        $articles = $panier->articles;
+
+        $commande->articles()->sync($articles);
+
+        
+
+       
+        
+
+        return redirect()->route('livraisons.create');
+        
     }
 
     /**

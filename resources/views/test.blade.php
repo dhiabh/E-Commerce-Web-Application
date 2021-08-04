@@ -1,0 +1,1 @@
+<h1>{{ $mode_payment }}</h1>

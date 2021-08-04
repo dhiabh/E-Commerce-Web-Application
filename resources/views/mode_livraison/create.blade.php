@@ -20,7 +20,7 @@
 
             </div>
             <div class="card-body">
-                <form method="POST" action="{{ route('livraisons.store','commande') }}">
+                <form method="POST" action="{{ route('livraisons.store') }}">
                     @csrf
                     @foreach ($modes_livraison as $mode_livraison)
                     <div class="form-check ">
@@ -34,7 +34,6 @@
                       </div>
                       <hr>
                     @endforeach
-                        
                         <button class="btn btn-success ml-5">Continuer</button>
                     </form>
             

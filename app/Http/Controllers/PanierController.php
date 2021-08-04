@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use App\Models\Panier;
 use Illuminate\Http\Request;
+use Illuminate\Models\Image;
 use Illuminate\Support\Facades\DB;
 use PHPUnit\Framework\Constraint\Count;
 
@@ -28,7 +29,8 @@ class PanierController extends Controller
             $total += $article->price;
         }
 
-        return view('paniers.index', compact('panier','articles', 'articles_number','total'));
+
+        return view('paniers.index', compact('articles', 'articles_number','total'));
     }
 
     /**

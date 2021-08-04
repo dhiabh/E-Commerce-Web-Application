@@ -6,6 +6,9 @@ use App\Http\Controllers\FactureController;
 use App\Http\Controllers\LivraisonController;
 use App\Http\Controllers\PanierController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CommandesController;
+use App\Http\Controllers\LivraisonsController;
+use App\Http\Controllers\PaymentsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -64,6 +67,14 @@ Route::get(
     [ArticlesController::class, 'destroy']
 )->name('articles.delete');
 
-Route::resource('livraisons', LivraisonController::class);
+
+
+
+Route::resource('commandes', CommandesController::class );
+
+
+Route::resource('livraisons', LivraisonController::class );
 
 Route::resource('factures', FactureController::class);
+
+Route::resource('payments', PaymentsController::class );

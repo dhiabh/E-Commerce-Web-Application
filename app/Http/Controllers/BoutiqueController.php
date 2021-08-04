@@ -38,7 +38,7 @@ class BoutiqueController extends Controller
      */
     public function store(Request $request)
     {
-        Boutique::create([
+        Boutique::create([  
             'user_id' => auth()->user()->id,
             'categorie_id' => $request->categorie_id,
             'name' => $request->name

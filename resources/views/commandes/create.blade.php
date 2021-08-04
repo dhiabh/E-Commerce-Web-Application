@@ -6,74 +6,73 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-
-                <div class="card-header">
-                    'Ajouter un Article'
-                    <a href="{{ route('boutiques.show', $boutique_id) }}" class="float-right">Back</a>
-                </div>
-
                 <div class="card-body">
                     <form 
                         method="POST" 
-                        action="{{ route('boutiques.articles.store', $boutique_id) }}"
+                        action="{{ route('commandes.store', $panier->id) }}"
                         enctype="multipart/form-data"
                     >
                         @csrf
                         <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">
-                                Nom d'article 
+                            <label for="nom" class="col-md-4 col-form-label text-md-right">
+                                Nom 
                             </label>
 
                             <div class="col-md-6">
-                                <input name="name" type="text" class="form-control">
+                                <input name="nom" type="text" class="form-control">
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="price" class="col-md-4 col-form-label text-md-right">
-                                Prix
+                            <label for="prenom" class="col-md-4 col-form-label text-md-right">
+                                Prénom
                             </label>
                             <div class="col-md-6">
-                                <input type="number" name="price" class="form-control">
+                                <input type="text" name="prenom" class="form-control">
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="quantity" class="col-md-4 col-form-label text-md-right">
-                                Quantité en stock
+                            <label for="tel" class="col-md-4 col-form-label text-md-right">
+                                Numéro de tel
                             </label>
                             <div class="col-md-6">
-                                <input type="number" name="quantity" class="form-control">
+                                <input type="text" name="tel" class="form-control">
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="description" class="col-md-4 col-form-label text-md-right">
-                                Description
+                            <label for="addresse" class="col-md-4 col-form-label text-md-right">
+                                Addresse
                             </label>
                             <div class="col-md-6">
-                                <textarea class="form-control" rows="5" name="description"></textarea>
+                                <textarea class="form-control" rows="5" name="addresse"></textarea>
                             </div>
                         </div>
-
                         <div class="form-group row">
-                            <label for="image" class="col-md-4 col-form-label text-md-right">
-                                Image
+                            <label for="region" class="col-md-4 col-form-label text-md-right">
+                                Région
                             </label>
                             <div class="col-md-6">
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" name="image" id="image" required>
-                                    <label class="custom-file-label" for="customFile">Choisit une image</label>
-                                </div>
+                                <input type="text" name="region" class="form-control">
                             </div>
                         </div>
-
+                        <div class="form-group row">
+                            <label for="ville" class="col-md-4 col-form-label text-md-right">
+                                Ville
+                            </label>
+                            <div class="col-md-6">
+                                <input type="text" name="ville" class="form-control">
+                            </div>
+                        </div>
+                            
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    Ajouter
+                                    Enregistrer
                                 </button>
                             </div>
+                            
                         </div>
                     </form>
                 </div>
@@ -81,6 +80,4 @@
         </div>
     </div>
 </div>
-
 @endsection
-
