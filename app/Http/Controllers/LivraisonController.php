@@ -31,7 +31,7 @@ class LivraisonController extends Controller
     {
         $commande = Commande::latest('id')->first();
         $modes_livraison = Mode_livraison::all();
-        return view('mode_livraison.create',compact('modes_livraison','commande'));
+        return view('mode_livraison.create',compact('modes_livraison'));
     }
 
     /**
