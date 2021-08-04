@@ -10,7 +10,9 @@ class Mode_livraison extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name'
+        'name',
+        'description',
+        'frais'
     ];
 
     public function livraisons()

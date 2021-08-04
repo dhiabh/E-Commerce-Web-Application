@@ -16,6 +16,8 @@ class CreateModeLivraisonsTable extends Migration
         Schema::create('mode_livraisons', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->text('description');
+            $table->float('frais');
             $table->timestamps();
         });
     }

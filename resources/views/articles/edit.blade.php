@@ -8,7 +8,7 @@
             <h2 style="text-align: center;">Détails de l'article</h2>
             <div class="card">
                 <div class="card-header">
-                    'Modifier l'article
+                    Modifier l'article
                     <a href="{{ route('users.index') }}" class="float-right">Back</a>
                 </div>
 
@@ -107,7 +107,7 @@
             enctype="multipart/form-data"
         >
         @csrf
-        @method('PUT')
+        
             <div class="form-group row">
                 <label for="image" class="col-md-4 col-form-label text-md-right">
                     Image

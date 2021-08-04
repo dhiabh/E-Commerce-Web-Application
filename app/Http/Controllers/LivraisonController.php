@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Livraison;
+use App\Models\Mode_livraison;
+use App\Models\Commande;
 use Carbon\Carbon;
+use App\Models\Panier;
 use Illuminate\Http\Request;
-use App\Models\Payment;
-use App\Models\Mode_payment;
 
-class PaymentsController extends Controller
+class LivraisonController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -24,9 +26,11 @@ class PaymentsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Facture $facture)
+    public function create()
     {
-        return view('payments.create')->with('facture', $facture);
+        $commande = Commande::latest('id')->first();
+        $modes_livraison = Mode_livraison::all();
+        return view('mode_livraison.create',compact('modes_livraison'));
     }
 
     /**
@@ -35,36 +39,15 @@ class PaymentsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Facture $facture)
+    public function store(Request $request)
     {
-        $payment = new Payment;
-        $payment->date_payment = Carbon::now();
-        $payment->montant_payment = $facture->total_ttc;
-        $payment->statut_payment = false;
-        $mode_payment = $request->mode;
-        $payment->mode_payment_id = Mode_payment::where('name', $mode_payment)->get()->id;
+        Livraison::create([
+            'mode_livraison_id' => $request->mode_livraison_id,
+            'date_livraison' => Carbon::now()
+        ]);
+        $articles = $commande->articles;
 
-        $payment->save();
-
-        if($mode_payment == 'cash') {
-            return view('welcome');
-        }
-        return redirect()->action(
-            [PaymentController::class, 'addCarte'],
-            ['payment' => $payment]
-        );
-        /*
-            contact with banque api 
-        */
-        if(true) {
-            $payment->save();
-            return view('welcome');
-        } else {
-            return redirect()->back();
-        }
-        
-
-
+        return redirect()->route('factures.index','articles');
     }
 
     /**
@@ -110,10 +93,5 @@ class PaymentsController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function addCarte($payment_id) {
-        $payment = Payment::find($payment_id);
-        return view('payments.add_carte')->with('payment' $payment);
     }
 }

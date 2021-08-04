@@ -62,7 +62,7 @@
                             </label>
                             <div class="col-md-6">
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input" name="image" id="image">
+                                    <input type="file" class="custom-file-input" name="image" id="image" required>
                                     <label class="custom-file-label" for="customFile">Choisit une image</label>
                                 </div>
                             </div>

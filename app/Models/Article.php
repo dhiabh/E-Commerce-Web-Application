@@ -11,11 +11,10 @@ class Article extends Model
 
     protected $fillable = [
         'boutique_id',
-        'panier_id',
         'name',
         'price',
         'quantity',
-        'description_article'
+        'description'
     ];
 
     
@@ -29,7 +28,7 @@ class Article extends Model
         return $this->belongsTo(Boutique::class);
     }
 
-    public function commande()
+    public function commandes()
     {
         return $this->belongsToMany(Commande::class);
     }

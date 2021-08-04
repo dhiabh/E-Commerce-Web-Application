@@ -9,7 +9,7 @@
                 <div class="card-body">
                     <form 
                         method="POST" 
-                        action="{{ route('payments.store') }}"
+                        action="{{ route('payments.store', $facture) }}"
                         enctype="multipart/form-data"
                     >
                         @csrf

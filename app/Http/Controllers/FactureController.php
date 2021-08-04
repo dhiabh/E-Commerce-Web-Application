@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
 use Illuminate\Http\Request;
-use App\Models\Payment;
-use App\Models\Mode_payment;
 
-class PaymentsController extends Controller
+class FactureController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +13,7 @@ class PaymentsController extends Controller
      */
     public function index()
     {
-        //
+        return view('factures.index');
     }
 
     /**
@@ -24,9 +21,9 @@ class PaymentsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Facture $facture)
+    public function create()
     {
-        return view('payments.create')->with('facture', $facture);
+        //
     }
 
     /**
@@ -35,36 +32,9 @@ class PaymentsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Facture $facture)
+    public function store(Request $request)
     {
-        $payment = new Payment;
-        $payment->date_payment = Carbon::now();
-        $payment->montant_payment = $facture->total_ttc;
-        $payment->statut_payment = false;
-        $mode_payment = $request->mode;
-        $payment->mode_payment_id = Mode_payment::where('name', $mode_payment)->get()->id;
-
-        $payment->save();
-
-        if($mode_payment == 'cash') {
-            return view('welcome');
-        }
-        return redirect()->action(
-            [PaymentController::class, 'addCarte'],
-            ['payment' => $payment]
-        );
-        /*
-            contact with banque api 
-        */
-        if(true) {
-            $payment->save();
-            return view('welcome');
-        } else {
-            return redirect()->back();
-        }
-        
-
-
+        //
     }
 
     /**
@@ -110,10 +80,5 @@ class PaymentsController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function addCarte($payment_id) {
-        $payment = Payment::find($payment_id);
-        return view('payments.add_carte')->with('payment' $payment);
     }
 }

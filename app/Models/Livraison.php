@@ -21,7 +21,7 @@ class Livraison extends Model
 
     public function commandes()
     {
-        return $this->hasMany(Commande::class);
+        return $this->belongsToMany(Commande::class);
 
     }
 

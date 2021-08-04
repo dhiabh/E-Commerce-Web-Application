@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use App\Http\Controllers\LivraisonsController;
+use App\Http\Controllers\LivraisonController;
 use App\Models\Commande;
+use App\Models\Panier;
 
 class CommandesController extends Controller
 {
@@ -16,7 +17,6 @@ class CommandesController extends Controller
      */
     public function index()
     {
-        //
     }
 
     /**
@@ -24,9 +24,10 @@ class CommandesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($articles)
+    public function create()
     {
-        return view('commandes.create')->with('articles', $articles);
+
+        return view('commandes.create');
     }
 
     /**
@@ -35,31 +36,27 @@ class CommandesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $articles)
+    public function store(Request $request)
     {
         $commande = new Commande;
 
         $commande->user_id = Auth::id();
         $commande->nom = $request->input("name");
         $commande->prenom = $request->input("prenom");
-        $commande->tel = $request->input("tel");
+        $commande->tel =  $request->input("tel");
         $commande->address = $request->input("addresse");
         $commande->region = $request->input("region");
         $commande->ville = $request->input("ville");
         $commande->date_commande = Carbon::now();
         $commande->save();
 
-        foreach($articles as $article) {
-            $commande->articles->create([
-            'commande_id' => $commande->id,
-            'article_id' => $article->id,
-            ]);
-        }
+        $panier = Auth::user()->panier;
+        $articles = $panier->articles;
+        
+        $commande->articles()->sync($articles);
+                
 
-        return redirect()->action(
-            [LivraisonsController::class, 'create'],
-            ['commande'=> $commande]
-        );
+        return redirect()->route('livraisons.create');
     }
 
     /**

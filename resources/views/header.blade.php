@@ -89,10 +89,20 @@
                             @endguest
                         </ul>
                     </li>
-                    <li class="shopping-cart"><a href="{{ route('paniers.index') }}"
+                    @guest
+                        @if (Route::has('login'))
+                            <li class="shopping-cart"><a href="{{ route('login') }}"
+                                class="cart"><span><small>{{auth()->user() ? auth()->user()->panier->articles->count() : 0}}</small><i
+                                        class="icon-shopping-cart"></i></span>&nbsp; Panier</a>
+                            </li>
+                        @endif
+                    @else
+                        <li class="shopping-cart"><a href="{{ route('paniers.index') }}"
                             class="cart"><span><small>{{auth()->user() ? auth()->user()->panier->articles->count() : 0}}</small><i
                                     class="icon-shopping-cart"></i></span>&nbsp; Panier</a>
-                    </li>
+                        </li>
+                    @endguest
+                   
                 </ul>
             </div>
 
