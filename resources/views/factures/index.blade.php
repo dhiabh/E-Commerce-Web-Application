@@ -32,8 +32,8 @@
                 @endforeach
                 
                
-               <div>Sous Total: {{ $facture->total_ht }}$</div>
-               <div>Frais Livraison: {{ $livraison->mode_livraison->frais }}$</div>
+               <div class="text-dark"><strong>Sous Total: {{ $facture->total_ht }}$</strong></div>
+               <div class="text-dark"><strong>Frais Livraison: {{ $livraison->mode_livraison->frais }}$</strong></div>
                <hr>
 
             </div>
