@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image as ImageIntervention;
 
+use Auth;
 use App\Http\Controllers\BoutiqueController;
 use App\Http\Controllers\CommandeController;
 
@@ -24,16 +25,13 @@ class ArticlesController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['index', 'show']]);
+       $this->middleware('auth', ['except' => ['index', 'show', 'browse']]);
     }
 
-    public function index($id)
+    public function browse($n)
     {
-        $boutique = Boutique::find($id);
-        return redirect()->action(
-            [BoutiqueController::class, 'index'],
-            ['boutique' => $boutique]
-        );
+        $articles = Article::all();
+        return view('articles.index', compact('articles', 'n'));
     }
 
 
@@ -86,16 +84,13 @@ class ArticlesController extends Controller
 
 
         $article = Article::find($id);
-        if (is_null($article)) {
+        if(is_null($article)) {
             return view('home');
         }
 
-        $this->authorize('belongsToUser',$article);
+        $this->authorize('belongsToUser', $article);
 
-
-        $images = Image::where('article_id', $id)->get();
-        
-        return view('articles.edit', compact('article'));
+        return view('articles.edit', compact('article'));        
     }
 
 
@@ -123,11 +118,11 @@ class ArticlesController extends Controller
     public function destroy($id)
     {
         $article = Article::find($id);
-        if (is_null($article)) {
-            return view('/');
+        if(is_null($article)) {
+            return view('home');
         }
 
-        $this->authorize('belongsToUser',$article);
+        $this->authorize('belongsToUser', $article);
 
         $boutique = Boutique::find($article->boutique_id);
 
@@ -137,7 +132,12 @@ class ArticlesController extends Controller
         }
 
         $article->images()->delete();
-        $article->paniers()->detach();
+        $paniers = Panier::all();
+        foreach($paniers as $panier){
+            $panier->articles()->detach($article->id);
+            // also works: $article->paniers()->detach($panier->id);
+        }
+        //Doesn't work :$article->paniers()->detach();
 
         $article->delete();
 
@@ -167,9 +167,14 @@ class ArticlesController extends Controller
         
     }
 
-    public function deleteImage(Image $image)
-    {
+    public function deleteImage($id) {
+        $image = Image::find($id);
+        if(is_null($image)) {
+            return view('home');
+        }
+
         $image->delete();
-        return redirect()->back();
+        Storage::delete('public/images/articles/'.$image->image);
+        return redirect()->back();  
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Models\Panier;
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Models\Image;
 use Illuminate\Support\Facades\DB;
@@ -11,11 +12,12 @@ use PHPUnit\Framework\Constraint\Count;
 
 class PanierController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
+    public function __construct()
+    {
+       $this->middleware('auth');
+    }
+
     public function index(Panier $panier)
     {
         $panier = auth()->user()->panier;
@@ -49,9 +51,23 @@ class PanierController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Article $article)
+    public function store(Request $request) {
+
+    }
+    public function addArticle($article_id)
     {
-        
+        $panier = Auth::user()->panier;
+        $article = Article::find($article_id);
+        $article_in_panier = $panier->articles->contains($article);
+        if($article_in_panier) {
+            return redirect()->back();
+        }
+
+        $panier->articles()->attach($article);
+
+        $panier->articles()->where('article_id', $article_id)->first()->pivot->update(['quantity' => 1]);
+
+        return view('articles.show')->with('article', $article);
     }
 
     /**

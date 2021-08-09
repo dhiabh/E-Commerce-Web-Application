@@ -7,75 +7,29 @@
         <aside id="fh5co-hero" class="js-fullheight">
             <div class="flexslider js-fullheight">
                 <ul class="slides">
-                    <li style="background-image: url({{ asset('images/img_bg_1.jpg') }});">
-                        <div class="overlay-gradient"></div>
+                    @foreach($articles as $article)
+                    <li style="background-image:url({{ URL::to('storage/images/articles/'.$article->images()->first()->image) }});">
+                        @if($loop->first)
+                            <div class="overlay-gradient"></div>
+                        @endif
                         <div class="container">
                             <div class="col-md-6 col-md-offset-3 col-md-pull-3 js-fullheight slider-text">
                                 <div class="slider-text-inner">
                                     <div class="desc">
-                                        <span class="price">$800</span>
-                                        <h2>Alato Cabinet</h2>
-                                        <p>Far far away, behind the word mountains, far from the countries Vokalia and
-                                            Consonantia, there live the blind texts. Separated they live in
-                                            Bookmarksgrove.</p>
-                                        <p><a href="single.html" class="btn btn-primary btn-outline btn-lg">Purchase
-                                                Now</a></p>
+                                        <span class="price">{{ $article->price }}</span>
+                                        <h2>{{ $article->name }}</h2>
+                                        <p>{{ $article->description }}</p>
+                                        <p>
+                                            <a href="{{ route('articles.show', $article->id) }}" class="btn btn-primary btn-outline btn-lg">
+                                                Purchase Now
+                                            </a>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </li>
-                    <li style="background-image: url({{ asset('images/img_bg_2.jpg') }});">
-                        <div class="container">
-                            <div class="col-md-6 col-md-offset-3 col-md-pull-3 js-fullheight slider-text">
-                                <div class="slider-text-inner">
-                                    <div class="desc">
-                                        <span class="price">$530</span>
-                                        <h2>The Haluz Rocking Chair</h2>
-                                        <p>Far far away, behind the word mountains, far from the countries Vokalia and
-                                            Consonantia, there live the blind texts. Separated they live in
-                                            Bookmarksgrove.</p>
-                                        <p><a href="single.html" class="btn btn-primary btn-outline btn-lg">Purchase
-                                                Now</a></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li style="background-image: url({{ asset('images/img_bg_3.jpg') }});">
-                        <div class="container">
-                            <div class="col-md-6 col-md-offset-3 col-md-pull-3 js-fullheight slider-text">
-                                <div class="slider-text-inner">
-                                    <div class="desc">
-                                        <span class="price">$750</span>
-                                        <h2>Alato Cabinet</h2>
-                                        <p>Far far away, behind the word mountains, far from the countries Vokalia and
-                                            Consonantia, there live the blind texts. Separated they live in
-                                            Bookmarksgrove.</p>
-                                        <p><a href="single.html" class="btn btn-primary btn-outline btn-lg">Purchase
-                                                Now</a></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li style="background-image: url({{ asset('images/img_bg_4.jpg') }});">
-                        <div class="container">
-                            <div class="col-md-6 col-md-offset-3 col-md-pull-3 js-fullheight slider-text">
-                                <div class="slider-text-inner">
-                                    <div class="desc">
-                                        <span class="price">$540</span>
-                                        <h2>The WW Chair</h2>
-                                        <p>Far far away, behind the word mountains, far from the countries Vokalia and
-                                            Consonantia, there live the blind texts. Separated they live in
-                                            Bookmarksgrove.</p>
-                                        <p><a href="single.html" class="btn btn-primary btn-outline btn-lg">Purchase
-                                                Now</a></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
+                    @endforeach
                 </ul>
             </div>
         </aside>
@@ -124,112 +78,54 @@
                 <div class="row animate-box">
                     <div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
                         <span>Cool Stuff</span>
-                        <h2>Products.</h2>
+                        <h2>Articles.</h2>
                         <p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem
                             provident. Odit ab aliquam dolor eius.</p>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-4 text-center animate-box">
-                        <div class="product">
-                            <div class="product-grid" style="background-image:url({{ asset('images/product-1.jpg') }});">
-                                <div class="inner">
-                                    <p>
-                                        <a href="single.html" class="icon"><i class="icon-shopping-cart"></i></a>
-                                        <a href="single.html" class="icon"><i class="icon-eye"></i></a>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="desc">
-                                <h3><a href="single.html">Hauteville Concrete Rocking Chair</a></h3>
-                                <span class="price">$350</span>
-                            </div>
+                @foreach(range(0,2) as $j)
+                    @if(count($articles2)> 3*$j)
+                        <div class="row">
+                            @foreach(range(0,2) as $i)
+                                @if(3*$j + $i + 1 <= count($articles2))
+                                    <div class="col-md-4 text-center animate-box">
+                                        <div class="product">
+                                            <div class="product-grid" 
+                                                 style="background-image:url({{ URL::to('storage/images/articles/'.$articles2[3*$j + $i]->images()->first()->image) }});">
+                                                <div class="inner">
+                                                    <p>
+                                                        @if(Auth::id() != $articles2[3*$j + $i]->boutique->user->id || Auth::guest())
+                                                            <a href="{{ route('addToPanier', $articles2[3*$j + $i]->id)}}" class="icon">
+                                                                <i class="icon-shopping-cart"></i>
+                                                            </a>
+                                                        @endif
+                                                        <a href="{{ route('articles.show', $articles2[3*$j + $i]->id) }}" class="icon">
+                                                            <i class="icon-eye"></i>
+                                                        </a>
+
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="desc">
+                                                <h3><a href="single.html">{{ $articles2[3*$j + $i]->name }}</a></h3>
+                                                <span class="price">${{ $articles2[3*$j + $i]->price }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                            @endforeach
+                        </div>
+                    @endif
+                @endforeach
+                <form action="{{ route('browse', 1) }}">
+                    <div class="form-group row mt-2">
+                        <div class="col-md-4 offset-md-5">
+                            <button type="submit" class="btn btn-primary">
+                                See more Products
+                            </button>
                         </div>
                     </div>
-                    <div class="col-md-4 text-center animate-box">
-                        <div class="product">
-                            <div class="product-grid" style="background-image:url({{ asset('images/product-2.jpg') }});">
-                                <span class="sale">Sale</span>
-                                <div class="inner">
-                                    <p>
-                                        <a href="single.html" class="icon"><i class="icon-shopping-cart"></i></a>
-                                        <a href="single.html" class="icon"><i class="icon-eye"></i></a>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="desc">
-                                <h3><a href="single.html">Pavilion Speaker</a></h3>
-                                <span class="price">$600</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 text-center animate-box">
-                        <div class="product">
-                            <div class="product-grid" style="background-image:url({{ asset('images/product-3.jpg') }});">
-                                <div class="inner">
-                                    <p>
-                                        <a href="single.html" class="icon"><i class="icon-shopping-cart"></i></a>
-                                        <a href="single.html" class="icon"><i class="icon-eye"></i></a>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="desc">
-                                <h3><a href="single.html">Ligomancer</a></h3>
-                                <span class="price">$780</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4 text-center animate-box">
-                        <div class="product">
-                            <div class="product-grid" style="background-image:url({{ asset('images/product-4.jpg') }});">
-                                <div class="inner">
-                                    <p>
-                                        <a href="single.html" class="icon"><i class="icon-shopping-cart"></i></a>
-                                        <a href="single.html" class="icon"><i class="icon-eye"></i></a>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="desc">
-                                <h3><a href="single.html">Alato Cabinet</a></h3>
-                                <span class="price">$800</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 text-center animate-box">
-                        <div class="product">
-                            <div class="product-grid" style="background-image:url({{ asset('images/product-5.jpg') }});">
-                                <div class="inner">
-                                    <p>
-                                        <a href="single.html" class="icon"><i class="icon-shopping-cart"></i></a>
-                                        <a href="single.html" class="icon"><i class="icon-eye"></i></a>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="desc">
-                                <h3><a href="single.html">Earing Wireless</a></h3>
-                                <span class="price">$100</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 text-center animate-box">
-                        <div class="product">
-                            <div class="product-grid" style="background-image:url({{ asset('images/product-6.jpg') }});">
-                                <div class="inner">
-                                    <p>
-                                        <a href="single.html" class="icon"><i class="icon-shopping-cart"></i></a>
-                                        <a href="single.html" class="icon"><i class="icon-eye"></i></a>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="desc">
-                                <h3><a href="single.html">Sculptural Coffee Table</a></h3>
-                                <span class="price">$960</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>

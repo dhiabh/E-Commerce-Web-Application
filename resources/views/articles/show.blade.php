@@ -21,18 +21,43 @@
             </div>
         </div>
     </div>
-    </header>
-    <div id="fh5co-product">
-        <div class="row animate-box">
+  </header>
+  <div id="fh5co-product">
+    <div class="row animate-box">
+      <div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
+        <p>
+          @can('belongsToUser', $article)
+          <a 
+            href="/articles/{{ $article->id }}/edit" 
+            class="btn btn-primary btn-outline btn-lg float-right"
+          >
+            Edit
+          </a>
+          @endcan
+        </p>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1 animate-box">
+          <div class="owl-carousel owl-carousel-fullwidth product-carousel">
+            @foreach($article->images as $image)
+              <div class="item">
+                <div class="active text-center">
+                  <figure>
+                    <img 
+                      src="{{ URL::to('storage/images/articles/'.$image->image) }}" 
+                      alt="user"
+                      style="width:800px; height: 500px; margin:auto;"
+                    >
+                  </figure>
+                </div>
+              </div>
+            @endforeach
+          </div>
+          <div class="row animate-box">
             <div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
-                <p>
-                    @can('belongsToUser', $article)
-                        <a href="/articles/{{ $article->id }}/edit" class="btn btn-primary btn-outline btn-lg float-right">
-                            Edit
-                        </a>
-                    @endcan
-
-                </p>
+              <h2>{{ $article->name }}</h2>
             </div>
         </div>
         <div class="container">
@@ -50,19 +75,7 @@
                             </div>
                         @endforeach
                     </div>
-                    <div class="row animate-box">
-                        <div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
-                            <h2>{{ $article->name }}</h2>
-                            @cannot('belongsToUser', $article)
-                                <div class="col-md-8 col-md-offset-2 text-center fh5co-heading d-flex">
-                                    <form method="POST" action="{{ route('paniers.store', $article->id) }}">
-                                        @csrf
-                                        <button class="btn btn-primary btn-outline btn-lg">Add to Cart</button>
-                                    </form>
-                                </div>
-                            @endcannot
-                        </div>
-                    </div>
+
                 </div>
             </div>
             <div class="row">
@@ -163,18 +176,28 @@
                 </div>
             </div>
         </div>
-        <div class="row animate-box">
-            <div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
-                <p>
-                    @can('belongsToUser', $article)
-                        <a href="{{ route('articles.delete', $article->id) }}"
-                            class="btn btn-primary btn-outline btn-lg float-right" style="text-align: center;">
-                            Supprimer l'article
-                        </a>
-                    @endcan
-                </p>
-            </div>
-        </div>
+      </div>
+    </div>
+    <div class="row animate-box">
+      <div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
+        <p>
+          @cannot('belongsToUser', $article)
+            <form method="GET" action="{{ route('addToPanier', $article->id) }}">
+              @csrf
+              <button class="btn btn-primary btn-outline btn-lg">Add to Cart</button>
+            </form>
+          @endcannot
+          @can('belongsToUser', $article)
+            <a 
+              href="{{ route('articles.delete', $article->id) }}" 
+              class="btn btn-primary btn-outline btn-lg float-right"
+              style="text-align: center;"
+            >
+              Supprimer l'article
+            </a>
+          @endcan
+        </p>
+      </div>
     </div>
 
 @endsection

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\Article;
 class HomeController extends Controller
 {
     /**
@@ -23,6 +23,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $articles = Article::inRandomOrder()->limit(4)->get();
+        $articles2 = Article::inRandomOrder()->limit(9)->get();
+        return view('home', compact('articles', 'articles2'));
     }
 }

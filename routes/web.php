@@ -31,6 +31,7 @@ Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+
 Route::resource('users', UserController::class);
 
 Route::get('/get_states', [UserController::class, 'getStates']);
@@ -39,9 +40,10 @@ Route::resource('boutiques', BoutiqueController::class);
 
 
 
-Route::resource('paniers', PanierController::class);
 
 
+
+// Routes des articles
 
 Route::resource('articles', ArticlesController::class);
 
@@ -70,15 +72,24 @@ Route::get(
     [ArticlesController::class, 'destroy']
 )->name('articles.delete');
 
+Route::get('/articles/browse/{page_number}',
+           [ArticlesController::class, 'browse']
+)->name('browse');
+
+// Routes des paniers
+
+Route::resource('paniers', PanierController::class);
+Route::get('/articles/{article}/add-to-cart', [PanierController::class, 'addArticle'])->name('addToPanier');
 
 
+// Routes des commandes, livraisons, et factures
 
 Route::resource('commandes', CommandesController::class );
-
-
 Route::resource('livraisons', LivraisonController::class );
-
 Route::resource('factures', FactureController::class);
+
+
+// Routes des payments 
 
 Route::resource('payments', PaymentsController::class );
 
@@ -86,3 +97,7 @@ Route::get('/dynamic_pdf', [DynamicPDFController::class, 'index']);
 
 Route::get('/dynamic_pdf/pdf', [DynamicPDFController::class, 'pdf']);
 
+Route::get('/checkout', [PaymentsController::class, 'checkout'])->name('checkout');
+Route::get('/payment-success/{amount}', function($amount) {
+    return view('payments.success', ['amount' => $amount]);
+});

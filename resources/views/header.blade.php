@@ -1,13 +1,22 @@
 <nav class="fh5co-nav" role="navigation">
     <div class="container">
         <div class="row align-items-center" style="height: 5em">
-            <div class="col-md-3 col-xs-2">
-                <div id="fh5co-logo"><a href="{{ url('/') }}">
-                        <h1><strong>Shop.</strong></h1>
-                    </a></div>
+            <div class="col-md-2 col-xs-2">
+                <div id="fh5co-logo">
+                    <a href="{{ route('home') }}">
+                        <h1><strong>Home.</strong></h1>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-2 col-xs-2">
+                <div id="fh5co-logo">
+                    <a href="{{ route('browse', 1) }}">
+                        <h2><strong>Shop.</strong></h2>
+                    </a>
+                </div>
             </div>
 
-            <div class="row col-md-6 align-items-center">
+            <div class="row col-md-5 ml-5 align-items-center">
                 <div class="col">
                     <input type="search" name="search" class="form-control mb-2" id="inlineFormInput"
                         placeholder="Search">
@@ -110,3 +119,17 @@
         <hr>
     </div>
 </nav>
+
+<!-- Search bar
+<div class="container">
+    <div class="row align-items-center ml-4">
+        <div class="col-9">
+            <input type="search" name="search" class="form-control mb-2 ml-3" id="inlineFormInput"
+                placeholder="Search">
+        </div>
+        <div class="col-3">
+            <button type="submit" class="btn btn-primary mb-2">Search</button>
+        </div>
+    </div>
+</div>
+-->
