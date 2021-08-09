@@ -7,6 +7,15 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Payment;
 use App\Models\Mode_payment;
+use Stripe\Stripe;
+use Stripe\Charge;
+use Stripe\PaymentIntent;
+use Session;
+use Illuminate\Support\Arr;
+use App\Http\Controllers\PaymentsController;
+
+//require '../vendor/autoload.php';
+
 
 class PaymentsController extends Controller
 {
@@ -37,34 +46,45 @@ class PaymentsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    public function addCarte(Payment $payment) {
+        return view('cartes.insert')->with('payment', $payment);
+    }
+
+
     public function store(Request $request, Facture $facture)
     {
+
         $payment = new Payment;
         $payment->date_payment = Carbon::now();
-        $payment->montant_payment = $facture->total_ttc;
+        $payment->facture_id = 1;
+        $payment->montant_payment = 2000;
         $payment->statut_payment = false;
         $mode_payment = $request->mode;
-        $payment->mode_payment_id = Mode_payment::where('name', $mode_payment)->get()->id;
+        $payment->mode_payment_id = 1;//Mode_payment::where('name', $mode_payment)->get()->first()->id;
 
         $payment->save();
 
         if($mode_payment == 'cash') {
             return view('welcome');
         }
-        return redirect()->action(
-            [PaymentController::class, 'addCarte'],
-            ['payment' => $payment]
-        );
-        /*
-            contact with banque api 
-        */
-        if(true) {
-            $payment->save();
-            return view('welcome');
-        } else {
-            return redirect()->back();
-        }
+       
+        $payment->save();
+
+        Stripe::setApiKey(env('STRIPE_SECRET'));
+
+        header('Content-Type: application/json');
+
+        $intent = PaymentIntent::create([
+          'amount' => $payment->montant_payment,
+          'currency' => 'usd',
+        ]);
         
+        $clientSecret = Arr::get($intent, 'client_secret');
+        $amount = $payment->montant_payment;
+
+        return view('checkout.index', compact('clientSecret', 'amount'));
+
 
 
     }
@@ -114,8 +134,7 @@ class PaymentsController extends Controller
         //
     }
 
-    public function addCarte($payment_id) {
-        $payment = Payment::find($payment_id);
-        return view('payments.add_carte')->with('payment', $payment);
-    }
+
+
+
 }

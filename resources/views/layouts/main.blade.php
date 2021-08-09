@@ -57,6 +57,8 @@
     <!-- Theme style  -->
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+    @yield('extra-css')
     
 
 
@@ -65,8 +67,10 @@
     <script src="{{ asset('js/modernizr-2.6.2.min.js') }}"></script>
     <!-- FOR IE9 below -->
     <!--[if lt IE 9]>
- <script src="js/respond.min.js"></script>
- <![endif]-->
+     <script src="js/respond.min.js"></script>
+     <![endif]-->
+
+    @yield('extra-script')
 
 </head>
 
@@ -94,6 +98,9 @@
     <script src="{{ asset('js/main.js') }}"></script>
 
     <script src="{{ asset('js/pdp.js') }}"></script>
+
+    @yield('extra-js')
+
 
 
 </body>

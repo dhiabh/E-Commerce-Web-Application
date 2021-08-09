@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-
+use Auth;
 use App\Http\Controllers\BoutiqueController;
 use App\Http\Controllers\CommandeController;
 
@@ -23,15 +23,13 @@ class ArticlesController extends Controller
 
     public function __construct()
     {
-       $this->middleware('auth', ['except' => ['index', 'show']]);
+       $this->middleware('auth', ['except' => ['index', 'show', 'browse']]);
     }
 
-    public function index($id)
+    public function browse($n)
     {
-        $boutique = Boutique::find($id);
-        return redirect()->action(
-            [BoutiqueController::class, 'index'], ['boutique' => $boutique]
-        );
+        $articles = Article::all();
+        return view('articles.index', compact('articles', 'n'));
     }
 
 
@@ -53,25 +51,7 @@ class ArticlesController extends Controller
         $article->description = $request->description;
         $article->quantity = $request->quantity;
         
-        if(is_null($shop_id)) {
-            $categorie_name = $request->category;
-            $categorie_id = Categorie::where('name', $categorie_name)->get();
-            $shop_id = Boutique::where([
-                ['categorie_id','=', $categorie_id],
-                ['user_id', '=', Auth::id()]
-            ]);
-            if(is_null($shop_id)) {
-                $boutique = new Boutique;
-                $boutique->categorie_id = $categorie_id;
-                $boutique->name = 'Boutique '.categorie_name.'de '.Auth::user()->name;
-                $boutique->user_id = Auth::id();
-                $boutique->save();
-
-                $shop_id = $boutique->id;
-            }
-        }
         
-
         $article->boutique_id = $shop_id;
         $boutique = Boutique::find($shop_id);
         
@@ -102,14 +82,7 @@ class ArticlesController extends Controller
             return view('welcome');
         }
 
-        $images = Image::where('article_id', $id)->get();
-        $data =  [
-            'article'=> $article,
-            'images' => $images
-        ];
-
-        return view('articles.show')->with($data);
-
+        return view('articles.show')->with('article', $article);
     }
 
 
@@ -117,16 +90,12 @@ class ArticlesController extends Controller
     {
         $article = Article::find($id);
         if(is_null($article)) {
-            return view('welcome');
+            return view('home');
         }
 
-        $images = Image::where('article_id', $id)->get();
-        $data = [
-            'article' => $article,
-            'images' => $images
-        ];
-        return view('articles.edit')->with($data);
-        
+        $this->authorize('belongsToUser', $article);
+
+        return view('articles.edit', compact('article'));        
     }
 
 
@@ -136,44 +105,15 @@ class ArticlesController extends Controller
         if(is_null($article)) {
             return view('welcome');
         }
-        // Add the possibility to change the boutique
+
+        $this->authorize('belongsToUser', $article);
+
         $article->name = $request->input('name');
         $article->price = $request->input('price');
-        $categorie_name = $request->checkbox('category');
-
-        $category_id = Categorie::select('id')->where('name', $categorie_name);
-        $boutique_id = Boutique::select('boutique_id')->where(
-            ['categorie_id', '=', $categorie_id],
-            ['user_id', '=', Auth::id()]
-        );
-        if(is_null($boutique_id)) {
-            $boutique = new Boutique;
-            $boutique->categorie_id = $categorie_id;
-            $boutique->user_id = Auth::id();
-            $boutique->name = 'Boutique '.$categorie_name.' de '.Auth::user()->name;
-            $boutique->save();
-            $boutique_id = $boutique->id;
-        }
-        $article->boutique_id = $boutique_id;
-
         $article->description = $request->input('description');
         $article->quantity = $request->input('quantity');
-        
 
         $article->save();
-
-        if($request->hasFile('image')) {
-            $image = Image::where('article_id', $id);
-
-            $filenameWithExt = $request->file('image')->getClientOriginalName();
-            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-            $extension = $request->file('image')->getClientOriginalExtension();
-            $filenameToStore = $filename.'_'.time().'.'.$extension;
-
-            $path = $request->file('image')->storeAs('public/images/articles', $filenameToStore);
-            $image->image = $filenameToStore;
-            $image->save();
-        }
 
         return redirect()->action(
             [ArticlesController::class, 'show'], ['id' => $article->id]
@@ -186,8 +126,11 @@ class ArticlesController extends Controller
     {
         $article = Article::find($id);
         if(is_null($article)) {
-            return view('/');
+            return view('home');
         }
+
+        $this->authorize('belongsToUser', $article);
+
         $boutique = Boutique::find($article->boutique_id);
 
         $images = Image::where('article_id', $id)->get();
@@ -196,7 +139,12 @@ class ArticlesController extends Controller
         }
         
         $article->images()->delete();
-        $article->paniers()->detach();
+        $paniers = Panier::all();
+        foreach($paniers as $panier){
+            $panier->articles()->detach($article->id);
+            // also works: $article->paniers()->detach($panier->id);
+        }
+        //Doesn't work :$article->paniers()->detach();
 
         $article->delete();
 
@@ -212,15 +160,29 @@ class ArticlesController extends Controller
 
     public function addImage(Request $request, $id) {
         $article = Article::find($id);
-        $image = new Image;
-        $image->article_id = $article->id;
+        if(is_null($article)) {
+            return view('home');
+        }
+
+        if(!($request->hasFile('image'))) {
+            $images = Image::where('article_id', $id)->get();
+            $data = [
+                'images' => $images,
+                'article' => $articles
+            ];
+            return view('articles.edit')->with($data);
+        }
 
         $filenameWithExt = $request->file('image')->getClientOriginalName();
         $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
         $extension = $request->file('image')->getClientOriginalExtension();
 
-        $filenameToStore = $filename.'_'.time().'_'.$extension;
+        $filenameToStore = str_slug($filename.'_'.time().'.'.$extension);
+
         $path = $request->file('image')->storeAs('public/images/articles/', $filenameToStore);
+
+        $image = new Image;
+        $image->article_id = $id;
         $image->image = $filenameToStore;
         $image->save();
 
@@ -230,9 +192,12 @@ class ArticlesController extends Controller
 
     public function deleteImage($id) {
         $image = Image::find($id);
-        $article_id = $image->article_id;
+        if(is_null($image)) {
+            return view('home');
+        }
+
         $image->delete();
-        return redirect()->back();
-        
+        Storage::delete('public/images/articles/'.$image->image);
+        return redirect()->back();  
     }
 }

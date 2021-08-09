@@ -21,8 +21,9 @@
             <div class="card-body">
                 @foreach ($articles as $article)
                 <div class="d-flex">
-                    <div><img style="width: 40%" src="{{ URL::to('/storage/images/articles/'.$article->images()->first()->image) }}" alt=""></div>
-                    <div>
+                    <div><img style="width: 150px;" src="{{ URL::to('/storage/images/articles/'.$article->images()->first()->image) }}" alt=""></div>
+                    <div class="ml-5">
+
                         <div>{{ $article->name }}</div>
                         <div>{{ $article->price }}$</div>
                         <div>Quantité</div>

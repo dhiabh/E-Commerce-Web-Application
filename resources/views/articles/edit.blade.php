@@ -26,12 +26,7 @@
                             </label>
 
                             <div class="col-md-6">
-                                <input 
-                                	name="name" 
-                                	type="text" 
-                                	class="form-control" 
-                                	placeholder="{{ $article->name }}"
-                                >
+                                <input name="name" type="text" class="form-control" value="{{ $article->name }}">                                
                             </div>
                         </div>
 
@@ -41,12 +36,7 @@
                             </label>
 
                             <div class="col-md-6">
-                                <input 
-                                	type="number" 
-                                	name="price" 
-                                	class="form-control"
-                                	placeholder="{{$article->price}}"
-                                >
+                                <input type="number" name="price" class="form-control" value="{{$article->price}}">                                   
                             </div>
                         </div>
 
@@ -56,12 +46,7 @@
                             </label>
 
                             <div class="col-md-6">
-                                <input 
-                                	type="number" 
-                                	name="quantity" 
-                                	class="form-control"
-                                	placeholder="{{$article->quantity}}"
-                                >
+                                <input type="number" name="quantity" class="form-control" value="{{$article->quantity}}">
                             </div>
                         </div>
 
@@ -70,11 +55,8 @@
                                 Description
                             </label>
                             <div class="col-md-6">
-                                <textarea 
-                                	class="form-control" 
-                                	rows="5" 
-                                	name="description"
-                                >{{ $article->description }}
+                                <textarea class="form-control" rows="6" name="description">
+                                    {{ $article->description }}
                                 </textarea>
                             </div>
                         </div>
@@ -130,20 +112,20 @@
         <hr>
 
         @foreach(range(0,3) as $j)
-            @if(count($images)> 3*$j)
+            @if(count($article->images)> 3*$j)
                 <div class="row">
                     @foreach(range(0,2) as $i)
-                        @if(3*$j + $i + 1 <= count($images))
+                        @if(3*$j + $i + 1 <= count($article->images))
                             <div class="col-md-4 text-center animate-box">
                                 <div class="product">
                                     <div 
                                         class="product-grid" 
-                                        style="background-image:url({{ URL::to('storage/images/articles/'.$images[3*$j + $i]->image) }});"
+                                        style="background-image:url({{ URL::to('storage/images/articles/'.$article->images[3*$j + $i]->image) }});"
                                     >
                                         <div class="inner">
                                             <p>
                                                 <a 
-                                                    href="{{ route('deleteImage', $images[3*$j + $i]->id) }}" 
+                                                    href="{{ route('deleteImage', $article->images[3*$j + $i]->id) }}" 
                                                     class="icon"
                                                 >
                                                     <i class="bi bi-trash"></i></a>
