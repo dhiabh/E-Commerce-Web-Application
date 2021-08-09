@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use WisdomDiala\Countrypkg\Models\State;
 
 class User extends Authenticatable
 {
@@ -24,7 +25,7 @@ class User extends Authenticatable
         'num_tel',
         'num_tel_2',
         'adresse',
-        'ville_id'
+        'state_id'
     ];
 
     /**
@@ -55,9 +56,9 @@ class User extends Authenticatable
         });
     }
 
-    public function ville()
+    public function state()
     {
-        return $this->belongsTo(Ville::class);
+        return $this->belongsTo(State::class);
     }
 
     public function panier() 

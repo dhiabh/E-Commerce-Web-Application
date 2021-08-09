@@ -17,6 +17,7 @@ class CreatesArticlePanierPivotTable extends Migration
             $table->primary(['article_id','panier_id']);
             $table->unsignedBigInteger('article_id');
             $table->unsignedBigInteger('panier_id');
+            $table->integer('quantity');
 
             $table->timestamps();
             $table->index('article_id');

@@ -56,10 +56,15 @@ class CommandesController extends Controller
         $articles = $panier->articles;
 
         $commande->articles()->sync($articles);
-
         
-
-       
+        foreach($articles as $article)
+        {
+            $commande->articles()->where('article_id', $article->id)->first()->pivot->update([
+                'quantity' => $panier->articles()->where('article_id', $article->id)->first()->pivot->quantity
+            ]); 
+                                        
+        }
+        
         
 
         return redirect()->route('livraisons.create');

@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row">
-        <div class="card mx-auto">
+        <div class="card mx-auto col-9">
             <div>
                 @if (session()->has('message'))
                     <div class="alert alert-success">

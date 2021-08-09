@@ -55,7 +55,7 @@ class LivraisonController extends Controller
 
         foreach($articles as $article)
         {
-            $total += $article->price;
+            $total += $article->price * $commande->articles()->where('article_id', $article->id)->first()->pivot->quantity;
         }
 
         $frais_livraison = $livraison->mode_livraison->frais;
@@ -70,7 +70,7 @@ class LivraisonController extends Controller
             'total_ttc' => $total + $frais_livraison,
         ]);
 
-        return view('factures.index',compact('articles','livraison', 'facture'));
+        return view('factures.index',compact('articles','livraison', 'facture','commande'));
     }
 
     /**

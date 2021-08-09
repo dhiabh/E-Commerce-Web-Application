@@ -22,6 +22,6 @@ class Panier extends Model
     public function articles()
     {
         // belongsToMany or hasMany ?
-        return $this->belongsToMany(Article::class);
+        return $this->belongsToMany(Article::class)->withPivot('quantity');
     }
 }

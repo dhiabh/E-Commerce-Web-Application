@@ -85,7 +85,7 @@ class BoutiqueController extends Controller
             'name' => $request->name
         ]);
 
-        return redirect()->route('users.index')->with('message','Informations mises à jour avec succés');
+        return redirect()->route('boutiques.show',compact('boutique'))->with('message','Informations mises à jour avec succés');
     }
 
     /**

@@ -26,11 +26,11 @@ class PanierController extends Controller
         $total = 0;
         foreach($articles as $article)
         {
-            $total += $article->price;
+            $total += $article->price * $panier->articles()->where('article_id', $article->id)->first()->pivot->quantity;
         }
 
 
-        return view('paniers.index', compact('articles', 'articles_number','total'));
+        return view('paniers.index', compact('articles', 'articles_number','total','panier'));
     }
 
     /**
@@ -49,14 +49,9 @@ class PanierController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store($id)
+    public function store(Article $article)
     {
-        auth()->user()->panier->articles->create([
-            'panier_id' => auth()->user()->panier->id,
-            'article_id' => $id
-        ]);
-
-        return redirect()->route('articles.show');
+        
     }
 
     /**
@@ -90,7 +85,23 @@ class PanierController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
+        $panier = auth()->user()->panier;
+        $articles = $panier->articles;
+        $articles_number = $articles->count();
+        $quantity = $request->{'quantity' . $id};
+
+        $panier->articles()->where('article_id', $id)->first()->pivot->update([
+            'quantity' => $quantity
+        ]);
+
+        $total = 0;
+        foreach($articles as $article)
+        {
+            $total += $article->price * $panier->articles()->where('article_id', $article->id)->first()->pivot->quantity;
+        }
+        
+        return view('paniers.index',compact('panier', 'articles_number','total','quantity'));
     }
 
     /**

@@ -7,6 +7,7 @@ use App\Http\Controllers\LivraisonController;
 use App\Http\Controllers\PanierController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CommandesController;
+use App\Http\Controllers\DynamicPDFController;
 use App\Http\Controllers\PaymentsController;
 use Illuminate\Support\Facades\Route;
 
@@ -32,6 +33,8 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 
 Route::resource('users', UserController::class);
 
+Route::get('/get_states', [UserController::class, 'getStates']);
+
 Route::resource('boutiques', BoutiqueController::class);
 
 
@@ -51,6 +54,7 @@ Route::post(
     '/boutiques/{boutique}/articles/store',
     [ArticlesController::class, 'store']
 )->name('boutiques.articles.store');
+
 
 Route::get('/images/{image}/delete', [ArticlesController::class, 'deleteImage'])->name('deleteImage');
 
@@ -77,3 +81,8 @@ Route::resource('livraisons', LivraisonController::class );
 Route::resource('factures', FactureController::class);
 
 Route::resource('payments', PaymentsController::class );
+
+Route::get('/dynamic_pdf', [DynamicPDFController::class, 'index']);
+
+Route::get('/dynamic_pdf/pdf', [DynamicPDFController::class, 'pdf']);
+

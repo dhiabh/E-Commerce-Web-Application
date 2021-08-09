@@ -20,7 +20,7 @@ class Article extends Model
     
     public function paniers()
     {
-        return $this->belongsToMany(Panier::class);
+        return $this->belongsToMany(Panier::class)->withPivot('quantity');
     }
 
     public function boutique()
@@ -30,7 +30,7 @@ class Article extends Model
 
     public function commandes()
     {
-        return $this->belongsToMany(Commande::class);
+        return $this->belongsToMany(Commande::class)->withPivot('quantity');
     }
 
     public function images()

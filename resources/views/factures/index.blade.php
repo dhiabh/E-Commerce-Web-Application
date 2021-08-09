@@ -21,11 +21,11 @@
             <div class="card-body">
                 @foreach ($articles as $article)
                 <div class="d-flex">
-                    <div><img style="width: 40%" src="{{ URL::to('/storage/images/articles/'.$article->images()->first()->image) }}" alt=""></div>
-                    <div>
+                    <div><img style="width: 150px" src="{{ URL::to('/storage/images/articles/'.$article->images()->first()->image) }}" alt=""></div>
+                    <div class="ml-5">
                         <div>{{ $article->name }}</div>
                         <div>{{ $article->price }}$</div>
-                        <div>Quantité</div>
+                        <div>Qté: {{ $commande->articles()->where('article_id', $article->id)->first()->pivot->quantity }}</div>
                     </div>
                 </div>
                 <hr>
@@ -44,6 +44,12 @@
                 <button class="btn btn-success">
                     <a href="{{ route('payments.create', $facture) }}">
                         Continuer
+                    </a>
+                </button>
+
+                <button class="btn btn-danger">
+                    <a href="{{ url('dynamic_pdf/pdf') }}" target="_blank">
+                        Imprimer votre Facture
                     </a>
                 </button>
             </div>

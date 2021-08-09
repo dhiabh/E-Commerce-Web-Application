@@ -11,6 +11,12 @@ class Commande extends Model
 
     protected $fillable = [
         'user_id',
+        'nom',
+        'prenom',
+        'tel',
+        'address',
+        'region',
+        'ville',
         'date_commande'
     ];
 
@@ -21,7 +27,7 @@ class Commande extends Model
 
     public function articles()
     {
-        return $this->belongsToMany(Article::class);
+        return $this->belongsToMany(Article::class)->withPivot('quantity');
     }
 
     public function etats_commande()

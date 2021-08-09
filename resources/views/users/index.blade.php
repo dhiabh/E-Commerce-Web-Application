@@ -41,8 +41,14 @@
                             <td>{{ $user->nom }}</td>
                             <td>{{ $user->prenom }}</td>
                             <td>{{ $user->email }}</td>
-                            <td>{{ $user->ville->pays->name }}</td>
-                            <td>{{ $user->ville->name }}</td>
+                            @isset(Auth::user()->state_id)
+                                <td>{{ $country->name }}</td>
+                                <td>{{ $state->name }}</td>
+                            @else
+                                <td></td>
+                                <td></td>
+                            @endisset
+
                             <td>{{ $user->adresse }}</td>
                             <td>{{ $user->num_tel }}</td>
                             <td>{{ $user->num_tel_2 }}</td>
@@ -56,26 +62,32 @@
                     </tbody>
                 </table>
 
-                <table class="table">
 
-                    <thead>
-                        <tr>
-                            <h3><u>Mes Boutiques</u></h3>
-                        </tr>
-                        <tr>
-                            <th scope="col">Nom</th>
-                            <th scope="col">Catégorie</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($boutiques as $boutique)
+                @if (count($boutiques))
+                    <table class="table">
+
+                        <thead>
                             <tr>
-                                <td><a href="{{ route('boutiques.show', $boutique->id)}}">{{ $boutique->name }}</a></td>
-                                <td>{{ $boutique->categorie->name }}</td>
+                                <h3><u>Mes Boutiques</u></h3>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                            <tr>
+                                <th scope="col">Nom</th>
+                                <th scope="col">Catégorie</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($boutiques as $boutique)
+                                <tr>
+                                    <td><a
+                                            href="{{ route('boutiques.show', $boutique->id) }}">{{ $boutique->name }}</a>
+                                    </td>
+                                    <td>{{ $boutique->categorie->name }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @endif
+
                 <a href="{{ route('boutiques.create') }}" class="btn btn-success">Ajouter un Boutique</a>
             </div>
         </div>

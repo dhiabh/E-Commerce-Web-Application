@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UserStoreRequest;
-use App\Models\Article;
 use App\Models\Boutique;
-use App\Models\Pays;
 use App\Models\User;
-use App\Models\Ville;
 use Illuminate\Http\Request;
+use WisdomDiala\Countrypkg\Models\Country;
+use WisdomDiala\Countrypkg\Models\State;
 
 class UserController extends Controller
 {
@@ -20,11 +18,18 @@ class UserController extends Controller
     public function index(User $user)
     {
         $user = auth()->user();
-        $boutiques = Boutique::orderBy('id','DESC')->get()->where('user_id', $user->id);
-        return view('users.index',compact('user','boutiques'));
+        $boutiques = Boutique::orderBy('id', 'DESC')->get()->where('user_id', $user->id);
+        if (isset($user->state_id)) {
+            $state = State::find($user->state_id);
+            $country = Country::find($state->country_id);
+
+            return view('users.index', compact('user', 'boutiques', 'state', 'country'));
+        } else {
+            return view('users.index', compact('user', 'boutiques'));
+        }
     }
 
-    
+
 
     /**
      * Show the form for creating a new resource.
@@ -66,9 +71,38 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        $countries = Pays::all();
-        $villes = Ville::all();
-        return view('users.edit',compact('user','countries','villes'));
+        $user = auth()->user();
+        $countries = Country::all();
+        if (isset($user->state_id)) {
+            $state = State::find($user->state_id);
+            $country = Country::find($state->country_id);
+
+            $states = State::where('country_id', $country->id)->get();
+
+            return view('users.edit', compact('user', 'state', 'countries', 'states'));
+        }else{
+
+            return view('users.edit', compact('user', 'countries'));
+        }
+
+
+
+        
+    }
+
+    public function getStates()
+    {
+        //$user = auth()->user();
+        $country_id = request('country');
+        $states = State::where('country_id', $country_id)->get();
+
+        $option = "<option value = ''>Select State</option>";
+
+        foreach ($states as $state) {
+            $option .= '<option value = "' . $state->id . '">' . $state->name . '</option>';
+        }
+        return $option;
+
     }
 
     /**
@@ -78,11 +112,20 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UserStoreRequest $request, User $user)
+    public function update(Request $request, User $user)
     {
-        $user->update($request->validated());
+        $user->update([
+            'nom' => $request->nom,
+            'prenom' => $request->prenom,
+            'email' => $request->email,
+            'state_id' => $request->state,
+            'adresse' => $request->adresse,
+            'num_tel' => $request->num_tel,
+            'num_tel2' => $request->num_tel2
+        ]);
 
-        return redirect()->route('users.index')->with('message','Informations mises à jour avec succés');
+
+        return redirect()->route('users.index')->with('message', 'Informations mises à jour avec succés');
     }
 
     /**

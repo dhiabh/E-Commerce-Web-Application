@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Route;
 
 class ArticleStoreRequest extends FormRequest
 {
@@ -22,13 +23,24 @@ class ArticleStoreRequest extends FormRequest
      * @return array
      */
     public function rules()
-    {
-        return [
-            'name' => 'required',
-            'price' => 'required',
-            'quantity' => 'required',
-            'description' => 'required',
-            'image' => 'required'
-        ];
+    {   
+        
+        
+        if(Route::currentRouteName() == "boutiques.articles.store")
+        {
+            return [
+                'name' => 'required',
+                'price' => 'required',
+                'quantity' => 'required',
+                'description' => 'required',
+                'image' => ['required', 'image']
+            ];
+        }elseif(Route::currentRouteName() == "images.upload"){
+            
+            return [
+                'image' => ['required', 'image']
+            ];
+        }
+
     }
 }

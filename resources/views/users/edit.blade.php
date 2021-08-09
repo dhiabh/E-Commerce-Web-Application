@@ -69,20 +69,25 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="pays" class="col-md-4 col-form-label text-md-right">{{ __('Pays') }}</label>
-    
+                                <label for="country"
+                                    class="col-md-4 col-form-label text-md-right">{{ __('Pays') }}</label>
+
                                 <div class="col-md-6">
-                                    <select name="pays_id" class="form-control" aria-label="Default select example">
-                                        <option selected>Select Pays</option>
-                                        @foreach ($countries as $pays)
-                                            <option value="{{ $pays->id }}" 
-                                                {{ $pays->id == $user->ville->pays_id ? 'selected' : ''  }}>
-                                                {{ $pays->name }}</option>
+                                    <select name="country" id="country" class="form-control"
+                                        aria-label="Default select example">
+                                        <option selected>Select Country</option>
+                                        @foreach ($countries as $country)
+                                            <option value="{{ $country->id }}"
+                                                 @isset($state)
+                                                    {{ $country->id == $state->country_id ? 'selected' : ' ' }} 
+                                                 @endisset
+                                                 >
+                                                {{ $country->name }}</option>
                                         @endforeach
-                                        
-                                      </select>
-    
-                                    @error('pays')
+
+                                    </select>
+
+                                    @error('country')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -91,20 +96,24 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="ville" class="col-md-4 col-form-label text-md-right">{{ __('Ville') }}</label>
-    
+                                <label for="state"
+                                    class="col-md-4 col-form-label text-md-right">{{ __('Ville') }}</label>
+
                                 <div class="col-md-6">
-                                    <select name="ville_id" class="form-control" aria-label="Default select example">
-                                        <option selected>Select Ville</option>
-                                        @foreach ($villes as $ville)
-                                            <option value="{{ $ville->id }}"
-                                                {{ $ville->id == $user->ville->id ? 'selected' : '' }}>
-                                                {{ $ville->name }}</option>
-                                        @endforeach
+                                    <select name="state" id="state" class="form-control"
+                                        aria-label="Default select example">
+                                        <option value="" selected>Select State</option>
+                                        @isset($states)
+                                            @foreach ($states as $state)
+                                                <option value="{{ $state->id }}"
+                                                    {{ $state->id == Auth::user()->state_id ? 'selected' : '' }}>
+                                                    {{ $state->name }}</option>
+                                             @endforeach
+                                        @endisset
                                         
-                                      </select>
-    
-                                    @error('ville')
+                                    </select>
+
+                                    @error('state')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -113,12 +122,13 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="adresse" class="col-md-4 col-form-label text-md-right">{{ __('Adresse') }}</label>
+                                <label for="adresse"
+                                    class="col-md-4 col-form-label text-md-right">{{ __('Adresse') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="adresse" type="text" class="form-control @error('adresse') is-invalid @enderror"
-                                        name="adresse" value="{{ old('adresse') ?? $user->adresse }}"
-                                        autocomplete="adresse">
+                                    <input id="adresse" type="text"
+                                        class="form-control @error('adresse') is-invalid @enderror" name="adresse"
+                                        value="{{ old('adresse') ?? $user->adresse }}" autocomplete="adresse">
 
                                     @error('adresse')
                                         <span class="invalid-feedback" role="alert">
@@ -129,12 +139,13 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="num_tel" class="col-md-4 col-form-label text-md-right">{{ __('Numéro de Téléphone') }}</label>
+                                <label for="num_tel"
+                                    class="col-md-4 col-form-label text-md-right">{{ __('Numéro de Téléphone') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="num_tel" type="text" class="form-control @error('num_tel') is-invalid @enderror"
-                                        name="num_tel" value="{{ old('num_tel') ?? $user->num_tel }}"
-                                        autocomplete="num_tel">
+                                    <input id="num_tel" type="text"
+                                        class="form-control @error('num_tel') is-invalid @enderror" name="num_tel"
+                                        value="{{ old('num_tel') ?? $user->num_tel }}" autocomplete="num_tel">
 
                                     @error('num_tel')
                                         <span class="invalid-feedback" role="alert">
@@ -145,12 +156,13 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="num_tel_2" class="col-md-4 col-form-label text-md-right">{{ __('Numéro de Téléphone (2)') }}</label>
+                                <label for="num_tel_2"
+                                    class="col-md-4 col-form-label text-md-right">{{ __('Numéro de Téléphone (2)') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="num_tel_2" type="text" class="form-control @error('num_tel_2') is-invalid @enderror"
-                                        name="num_tel_2" value="{{ old('num_tel_2') ?? $user->num_tel_2 }}"
-                                        autocomplete="num_tel_2">
+                                    <input id="num_tel_2" type="text"
+                                        class="form-control @error('num_tel_2') is-invalid @enderror" name="num_tel_2"
+                                        value="{{ old('num_tel_2') ?? $user->num_tel_2 }}" autocomplete="num_tel_2">
 
                                     @error('num_tel_2')
                                         <span class="invalid-feedback" role="alert">
@@ -160,7 +172,7 @@
                                 </div>
                             </div>
 
-                            
+
 
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
@@ -175,4 +187,19 @@
             </div>
         </div>
     </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script>
+        $(document).ready(function() {
+            $("#country").change(function() {
+                let country_id = this.value;
+                $.get('/get_states?country=' + country_id, function(data) {
+                    $("#state").html(data);
+                });
+            })
+        })
+    </script>
 @endsection
