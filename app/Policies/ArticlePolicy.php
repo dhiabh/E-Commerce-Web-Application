@@ -51,7 +51,7 @@ class ArticlePolicy
      * @param  \App\Models\Article  $article
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Article $article)
+    public function belongsToUser(User $user, Article $article)
     {
         return $user->id == $article->boutique->user->id;
     }

@@ -26,7 +26,7 @@
         <div class="row animate-box">
             <div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
                 <p>
-                    @can('update', $article)
+                    @can('belongsToUser', $article)
                         <a href="/articles/{{ $article->id }}/edit" class="btn btn-primary btn-outline btn-lg float-right">
                             Edit
                         </a>
@@ -53,7 +53,7 @@
                     <div class="row animate-box">
                         <div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
                             <h2>{{ $article->name }}</h2>
-                            @cannot('update', $article)
+                            @cannot('belongsToUser', $article)
                                 <div class="col-md-8 col-md-offset-2 text-center fh5co-heading d-flex">
                                     <form method="POST" action="{{ route('paniers.store', $article->id) }}">
                                         @csrf
@@ -166,7 +166,7 @@
         <div class="row animate-box">
             <div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
                 <p>
-                    @can('update', $article)
+                    @can('belongsToUser', $article)
                         <a href="{{ route('articles.delete', $article->id) }}"
                             class="btn btn-primary btn-outline btn-lg float-right" style="text-align: center;">
                             Supprimer l'article
