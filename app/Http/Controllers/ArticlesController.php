@@ -90,7 +90,7 @@ class ArticlesController extends Controller
             return view('home');
         }
 
-        $this->authorize('update',$article);
+        $this->authorize('belongsToUser',$article);
 
 
         $images = Image::where('article_id', $id)->get();
@@ -106,7 +106,7 @@ class ArticlesController extends Controller
             return view('home');
         }
 
-        $this->authorize('update',$article);
+        $this->authorize('belongsToUser',$article);
 
 
         $article->update([
@@ -127,7 +127,7 @@ class ArticlesController extends Controller
             return view('/');
         }
 
-        $this->authorize('update',$article);
+        $this->authorize('belongsToUser',$article);
 
         $boutique = Boutique::find($article->boutique_id);
 
