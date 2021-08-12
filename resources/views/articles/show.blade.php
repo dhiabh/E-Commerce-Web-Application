@@ -3,7 +3,7 @@
 @section('content')
     @if ($article->images()->count())
         <header id="fh5co-header" class="fh5co-cover fh5co-cover-sm" role="banner"
-            style="background-image:url({{ URL::to('storage/' . $article->images()->first()->image) }});">
+            style="background-image:url({{ URL::to('storage/images/articles/'.$article->images()->first()->image) }});">
 
         @else
             <header id="fh5co-header" class="fh5co-cover fh5co-cover-sm" role="banner" style="background-color: #aaa">
@@ -16,6 +16,12 @@
                 <div class="display-t">
                     <div class="display-tc animate-box" data-animate-effect="fadeIn">
                         <h1>{{ $article->name }}</h1>
+                        <h2>
+                            Artisan : 
+                            <a href="/users/{{ Auth::id() }}">
+                                {{ $article->boutique->user->prenom }} {{ $article->boutique->user->nom }}
+                            </a>
+                        </h2>
                     </div>
                 </div>
             </div>
@@ -58,26 +64,14 @@
           <div class="row animate-box">
             <div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
               <h2>{{ $article->name }}</h2>
+              <a 
+                href="/boutiques/{{$article->boutique->id }}" 
+                class="btn btn-primary btn-outline btn-lg"
+              >
+                Voir dans la boutique 
+              </a>
             </div>
         </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-10 col-md-offset-1 animate-box">
-                    <div class="owl-carousel owl-carousel-fullwidth product-carousel">
-                        @foreach ($article->images as $image)
-                            <div class="item">
-                                <div class="active text-center">
-                                    <figure>
-                                        <img src="{{ URL::to('/storage/' . $image->image) }}" alt="user"
-                                            style="width: 800px; height: 500px; margin:auto;">
-                                    </figure>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-
-                </div>
-            </div>
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
                     <div class="fh5co-tabs animate-box">
@@ -100,10 +94,6 @@
                                     <span class="price">Prix: {{ $article->price }}DH</span>
                                     <h2>{{ $article->name }}</h2>
                                     <p>{{ $article->description }}</p>
-
-                                    <!--<p>Ullam dolorum iure dolore dicta fuga ipsa velit veritatis molestias totam fugiat soluta accusantium omnis quod similique placeat at. Dolorum ducimus libero fuga molestiae asperiores obcaecati corporis sint illo facilis.</p>-->
-
-
                                 </div>
                             </div>
 
@@ -187,6 +177,7 @@
               <button class="btn btn-primary btn-outline btn-lg">Add to Cart</button>
             </form>
           @endcannot
+  
           @can('belongsToUser', $article)
             <a 
               href="{{ route('articles.delete', $article->id) }}" 

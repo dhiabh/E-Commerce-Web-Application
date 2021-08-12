@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ArticlesController;
 use App\Http\Controllers\BoutiqueController;
 use App\Http\Controllers\FactureController;
@@ -29,7 +29,7 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 
 Route::resource('users', UserController::class);
@@ -42,10 +42,19 @@ Route::resource('boutiques', BoutiqueController::class);
 
 
 
-
 // Routes des articles
 
 Route::resource('articles', ArticlesController::class);
+
+Route::post(
+        '/articles/search/',
+        [ArticlesController::class, 'search']
+)->name('articles.search');
+
+Route::get(
+        '/articles/search/{input?}/{n}',
+        [ArticlesController::class, 'browseSearchResults']
+)->name('browse.search');
 
 Route::get(
     '/boutiques/{boutique}/create',
@@ -72,7 +81,7 @@ Route::get(
     [ArticlesController::class, 'destroy']
 )->name('articles.delete');
 
-Route::get('/articles/browse/{page_number}',
+Route::get('/articles/browse/{n}/{articles_json?}',
            [ArticlesController::class, 'browse']
 )->name('browse');
 

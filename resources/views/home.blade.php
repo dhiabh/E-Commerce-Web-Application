@@ -83,40 +83,7 @@
                             provident. Odit ab aliquam dolor eius.</p>
                     </div>
                 </div>
-                @foreach(range(0,2) as $j)
-                    @if(count($articles2)> 3*$j)
-                        <div class="row">
-                            @foreach(range(0,2) as $i)
-                                @if(3*$j + $i + 1 <= count($articles2))
-                                    <div class="col-md-4 text-center animate-box">
-                                        <div class="product">
-                                            <div class="product-grid" 
-                                                 style="background-image:url({{ URL::to('storage/images/articles/'.$articles2[3*$j + $i]->images()->first()->image) }});">
-                                                <div class="inner">
-                                                    <p>
-                                                        @if(Auth::id() != $articles2[3*$j + $i]->boutique->user->id || Auth::guest())
-                                                            <a href="{{ route('addToPanier', $articles2[3*$j + $i]->id)}}" class="icon">
-                                                                <i class="icon-shopping-cart"></i>
-                                                            </a>
-                                                        @endif
-                                                        <a href="{{ route('articles.show', $articles2[3*$j + $i]->id) }}" class="icon">
-                                                            <i class="icon-eye"></i>
-                                                        </a>
-
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div class="desc">
-                                                <h3><a href="single.html">{{ $articles2[3*$j + $i]->name }}</a></h3>
-                                                <span class="price">${{ $articles2[3*$j + $i]->price }}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endif
-                            @endforeach
-                        </div>
-                    @endif
-                @endforeach
+                @include('articles.tableau', ['articles' => $articles2])
                 <form action="{{ route('browse', 1) }}">
                     <div class="form-group row mt-2">
                         <div class="col-md-4 offset-md-5">

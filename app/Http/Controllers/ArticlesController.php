@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image as ImageIntervention;
 
+
+
 use Auth;
 use App\Http\Controllers\BoutiqueController;
 use App\Http\Controllers\CommandeController;
@@ -18,6 +20,7 @@ use App\Models\Categorie;
 use App\Models\Commande;
 use App\Models\Panier;
 
+
 use App\Http\Requests\ArticleStoreRequest;
 
 class ArticlesController extends Controller
@@ -25,15 +28,8 @@ class ArticlesController extends Controller
 
     public function __construct()
     {
-       $this->middleware('auth', ['except' => ['index', 'show', 'browse']]);
+       $this->middleware('auth', ['except' => ['index', 'show', 'browse', 'search']]);
     }
-
-    public function browse($n)
-    {
-        $articles = Article::all();
-        return view('articles.index', compact('articles', 'n'));
-    }
-
 
     public function create($boutique_id)
     {
@@ -41,10 +37,8 @@ class ArticlesController extends Controller
     }
 
 
-
     public function store(ArticleStoreRequest $request, Boutique $boutique)
     {
-
         $imagePath = request('image')->store('images/articles', 'public');
 
         $image = ImageIntervention::make(public_path("storage/{$imagePath}"));
@@ -70,7 +64,7 @@ class ArticlesController extends Controller
     {
         $article = Article::find($id);
         if (is_null($article)) {
-            return view('home');
+            return redirect()->route('home');
         }
 
         $images = Image::where('article_id', $id)->get();
@@ -78,14 +72,55 @@ class ArticlesController extends Controller
         return view('articles.show', compact('article'));
     }
 
+    public function browse($input = null)
+    {
+        $articles = Article::where('id', '>', -1)->simplePaginate(9);
+        $count = count(Article::all());
+        return view('articles.index', compact('articles', 'count'));
+    }
+
+    public function search(Request $request) {
+        $input = $request->input('inlineFormInput');
+        $input_words = explode(' ', $input);
+        $produits = Article::all();
+        $biens = collect();
+        $firstTime = true;
+
+        foreach($produits as $produit) {
+            $b = false;
+            $produit_words = explode(' ', $produit->name);
+
+            foreach($produit_words as $produit_word) {
+                foreach($input_words as $input_word) {
+                    if($this->real_resemblance($produit_word, $input_word) >= 75){
+                        if($firstTime) {
+                            $didYouMean = strtolower($produit_word);
+                            $firstTime = false;    
+                        }
+                        $biens->push($produit);
+                        $b = true;
+                        break;
+                    } 
+                }
+                if($b) {
+                    break;
+                }
+            }   
+        }
+
+        $count = count($biens);
+        $articles = $biens->paginate(9);
+        return view('articles.index', compact('articles', 'input', 'count', 'didYouMean'));
+
+    }
+
 
     public function edit($id)
     {
 
-
         $article = Article::find($id);
         if(is_null($article)) {
-            return view('home');
+            return redirect()->route('home');
         }
 
         $this->authorize('belongsToUser', $article);
@@ -98,7 +133,7 @@ class ArticlesController extends Controller
     {
         $article = Article::find($id);
         if (is_null($article)) {
-            return view('home');
+            return redirect()->route('home');
         }
 
         $this->authorize('belongsToUser',$article);
@@ -119,7 +154,7 @@ class ArticlesController extends Controller
     {
         $article = Article::find($id);
         if(is_null($article)) {
-            return view('home');
+            return redirect()->route('home');
         }
 
         $this->authorize('belongsToUser', $article);
@@ -143,9 +178,10 @@ class ArticlesController extends Controller
 
         $articles = $boutique->articles;
 
-
         return redirect()->route('boutiques.show', compact('boutique'));
     }
+
+    // Handling addtional image import and image deletion
 
     public function addImage(ArticleStoreRequest $request, Article $article)
     {
@@ -161,20 +197,63 @@ class ArticlesController extends Controller
             'image' => $imagePath,
         ]);
 
-        return redirect()->back();
-
-
-        
+        return redirect()->back();        
     }
 
     public function deleteImage($id) {
         $image = Image::find($id);
         if(is_null($image)) {
-            return view('home');
+            return redirect()->route('home');
         }
 
         $image->delete();
         Storage::delete('public/images/articles/'.$image->image);
         return redirect()->back();  
+    }
+
+
+
+    // Helper functions 
+
+    public function resemblance($word1, $word2) {
+        $word1_letters = str_split(strtolower($word1));
+        $word2_letters = str_split(strtolower($word2));
+        $count_letters = count($word1_letters);
+        $resemblance = 0;
+        foreach(range(0, $count_letters - 1) as $p) {
+            if($word1_letters[$p] == $word2_letters[$p]) {
+                $resemblance = $resemblance + 1;
+            }
+        }
+        $resemblance = ($resemblance/$count_letters)*100;
+        return $resemblance;
+    }
+
+    public function real_resemblance($word1, $word2) {
+        $word1_letters = str_split($word1);
+        $word2_letters = str_split($word2);
+        $count1 = count($word1_letters);
+        $count2 = count($word2_letters);
+        $resemblance = 0;
+
+        if($count1 > $count2) {
+            return $this->real_resemblance($word2, $word1);
+        }
+
+
+        $k = 0;
+        while($k + $count1 -1 < $count2) {
+            $sub_word2 = substr($word2, $k, $count1);
+            /*if($count1 <= 2.6*count(strsplit($sub_word2)) {
+                return 0;
+            } 
+            */          
+            if($resemblance < $this->resemblance($word1, $sub_word2)) {
+                $resemblance = $this->resemblance($word1, $sub_word2);
+            }
+            $k = $k + 1;
+        }
+        return $resemblance;
+
     }
 }

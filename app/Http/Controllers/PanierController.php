@@ -67,7 +67,7 @@ class PanierController extends Controller
 
         $panier->articles()->where('article_id', $article_id)->first()->pivot->update(['quantity' => 1]);
 
-        return view('articles.show')->with('article', $article);
+        return redirect()->back();
     }
 
     /**

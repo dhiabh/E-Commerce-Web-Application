@@ -121,7 +121,7 @@ class UserController extends Controller
             'state_id' => $request->state,
             'adresse' => $request->adresse,
             'num_tel' => $request->num_tel,
-            'num_tel2' => $request->num_tel2
+            'num_tel_2' => $request->num_tel_2
         ]);
 
 
