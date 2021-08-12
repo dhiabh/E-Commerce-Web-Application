@@ -19,7 +19,7 @@
                             </label>
 
                             <div class="col-md-6">
-                                <input name="nom" type="text" class="form-control">
+                                <input name="nom" type="text" class="form-control" value="{{ Auth::user()->nom }}">
                             </div>
                         </div>
 
@@ -28,7 +28,7 @@
                                 Prénom
                             </label>
                             <div class="col-md-6">
-                                <input type="text" name="prenom" class="form-control">
+                                <input type="text" name="prenom" class="form-control" value="{{ Auth::user()->prenom }}">
                             </div>
                         </div>
 
@@ -37,7 +37,7 @@
                                 Numéro de tel
                             </label>
                             <div class="col-md-6">
-                                <input type="text" name="tel" class="form-control">
+                                <input type="text" name="tel" class="form-control" value="{{ Auth::user()->num_tel }}">
                             </div>
                         </div>
 
@@ -46,7 +46,9 @@
                                 Addresse
                             </label>
                             <div class="col-md-6">
-                                <textarea class="form-control" rows="5" name="addresse"></textarea>
+                                <textarea class="form-control" rows="5" name="addresse">
+                                    {{ Auth::user()->adresse }}
+                                </textarea>
                             </div>
                         </div>
                         <div class="form-group row">

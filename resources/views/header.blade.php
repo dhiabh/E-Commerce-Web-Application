@@ -18,8 +18,11 @@
 
             <div class="row col-md-5 ml-5 align-items-center">
                 <div class="col">
-                    <input type="search" name="search" class="form-control mb-2" id="inlineFormInput"
-                        placeholder="Search">
+                    <form method= "POST" action="{{ action('App\Http\Controllers\ArticlesController@search') }}">
+                        @csrf
+                        <input type="search" name="inlineFormInput" class="form-control mb-2" id="inlineFormInput"
+                            placeholder="Search">
+                    </form>
                 </div>
 
                 <div class="col">
