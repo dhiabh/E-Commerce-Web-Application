@@ -17,16 +17,7 @@ class UserController extends Controller
      */
     public function index(User $user)
     {
-        $user = auth()->user();
-        $boutiques = Boutique::orderBy('id', 'DESC')->get()->where('user_id', $user->id);
-        if (isset($user->state_id)) {
-            $state = State::find($user->state_id);
-            $country = Country::find($state->country_id);
-
-            return view('users.index', compact('user', 'boutiques', 'state', 'country'));
-        } else {
-            return view('users.index', compact('user', 'boutiques'));
-        }
+        
     }
 
 
@@ -58,9 +49,18 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
-        //
+        //$user = auth()->user();
+        $boutiques = Boutique::orderBy('id', 'DESC')->get()->where('user_id', $user->id);
+        if (isset($user->state_id)) {
+            $state = State::find($user->state_id);
+            $country = Country::find($state->country_id);
+
+            return view('users.show', compact('user', 'boutiques', 'state', 'country'));
+        } else {
+            return view('users.show', compact('user', 'boutiques'));
+        }
     }
 
     /**
@@ -71,6 +71,9 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+
+        $this->authorize('belongsToUser',$user);
+
         $user = auth()->user();
         $countries = Country::all();
         if (isset($user->state_id)) {
@@ -114,6 +117,7 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        $this->authorize('belongsToUser',$user);
         $user->update([
             'nom' => $request->nom,
             'prenom' => $request->prenom,
@@ -121,11 +125,11 @@ class UserController extends Controller
             'state_id' => $request->state,
             'adresse' => $request->adresse,
             'num_tel' => $request->num_tel,
-            'num_tel2' => $request->num_tel2
+            'num_tel_2' => $request->num_tel_2
         ]);
 
 
-        return redirect()->route('users.index')->with('message', 'Informations mises à jour avec succés');
+        return redirect()->route('users.show', compact('user'))->with('message', 'Informations mises à jour avec succés');
     }
 
     /**

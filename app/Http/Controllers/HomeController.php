@@ -24,7 +24,7 @@ class HomeController extends Controller
     public function index()
     {
         $articles = Article::inRandomOrder()->limit(4)->get();
-        $articles2 = Article::inRandomOrder()->limit(9)->get();
+        $articles2 = Article::inRandomOrder()->limit(6)->get();
         return view('home', compact('articles', 'articles2'));
     }
 }

@@ -12,7 +12,6 @@ use Stripe\Charge;
 use Stripe\PaymentIntent;
 use Session;
 use Illuminate\Support\Arr;
-use App\Http\Controllers\PaymentsController;
 
 //require '../vendor/autoload.php';
 

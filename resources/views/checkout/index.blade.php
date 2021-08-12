@@ -38,7 +38,7 @@
 @section('extra-js')
 
 <script>
-    var stripe = Stripe('pk_test_51JL3DSLJetNHxQ3207t13nuwhCB1KPvUJJshapsOQATnZn79vA4wK3p9Hf2yi2uUXfXXWdAtLZGRepfJGvRnd7oI006Kw6rFTC');
+    var stripe = Stripe('pk_test_51JNEK0JxcwaOyCujA67QggvSTh2gRqKLvSFn81LjMsqQ6YMm4UdofDyBggc6NJCN4N0UituEYzkz3bTsytO473as00NNjqRh46');
     document.querySelector("button").disabled = true;
     var elements = stripe.elements();
     var style = {

@@ -8,7 +8,7 @@
                 <div class="card">
                     <div class="card-header">
                         {{ __('Ajouter un Boutique') }}
-                        <a href="{{ route('users.index') }}" class="float-right">Back</a>
+                        <a href="{{ route('users.show', Auth()->user()->id) }}" class="float-right">Back</a>
                     </div>
     
                     <div class="card-body">

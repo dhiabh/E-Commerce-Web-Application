@@ -25,19 +25,20 @@ class ArticlesController extends Controller
 
     public function __construct()
     {
-       $this->middleware('auth', ['except' => ['index', 'show', 'browse']]);
+       $this->middleware('auth', ['except' => ['index', 'show', 'browse', 'search']]);
     }
 
-    public function browse($n)
+    public function browse()
     {
-        $articles = Article::all();
-        return view('articles.index', compact('articles', 'n'));
+        $articles = Article::where('id', '>', -1)->paginate(6);
+        return view('articles.index', compact('articles'));
     }
 
 
-    public function create($boutique_id)
+    public function create(Boutique $boutique)
     {
-        return view('articles.create')->with('boutique_id', $boutique_id);
+        $this->authorize('belongsToUser',$boutique);
+        return view('articles.create')->with('boutique_id', $boutique->id);
     }
 
 
@@ -70,7 +71,7 @@ class ArticlesController extends Controller
     {
         $article = Article::find($id);
         if (is_null($article)) {
-            return view('home');
+            return redirect()->route('home');
         }
 
         $images = Image::where('article_id', $id)->get();
@@ -85,7 +86,7 @@ class ArticlesController extends Controller
 
         $article = Article::find($id);
         if(is_null($article)) {
-            return view('home');
+            return redirect()->route('home');
         }
 
         $this->authorize('belongsToUser', $article);
@@ -98,7 +99,7 @@ class ArticlesController extends Controller
     {
         $article = Article::find($id);
         if (is_null($article)) {
-            return view('home');
+            return redirect()->route('home');
         }
 
         $this->authorize('belongsToUser',$article);
@@ -119,7 +120,7 @@ class ArticlesController extends Controller
     {
         $article = Article::find($id);
         if(is_null($article)) {
-            return view('home');
+            return redirect()->route('home');
         }
 
         $this->authorize('belongsToUser', $article);
@@ -170,7 +171,7 @@ class ArticlesController extends Controller
     public function deleteImage($id) {
         $image = Image::find($id);
         if(is_null($image)) {
-            return view('home');
+            return redirect()->route('home');
         }
 
         $image->delete();

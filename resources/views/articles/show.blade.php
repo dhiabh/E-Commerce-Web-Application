@@ -46,7 +46,7 @@
                 <div class="active text-center">
                   <figure>
                     <img 
-                      src="{{ URL::to('storage/images/articles/'.$image->image) }}" 
+                      src="{{ URL::to('storage/'.$image->image) }}" 
                       alt="user"
                       style="width:800px; height: 500px; margin:auto;"
                     >
@@ -60,24 +60,6 @@
               <h2>{{ $article->name }}</h2>
             </div>
         </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-10 col-md-offset-1 animate-box">
-                    <div class="owl-carousel owl-carousel-fullwidth product-carousel">
-                        @foreach ($article->images as $image)
-                            <div class="item">
-                                <div class="active text-center">
-                                    <figure>
-                                        <img src="{{ URL::to('/storage/' . $image->image) }}" alt="user"
-                                            style="width: 800px; height: 500px; margin:auto;">
-                                    </figure>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-
-                </div>
-            </div>
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
                     <div class="fh5co-tabs animate-box">
@@ -178,7 +160,7 @@
         </div>
       </div>
     </div>
-    <div class="row animate-box">
+    <div v class="row animate-box">
       <div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
         <p>
           @cannot('belongsToUser', $article)

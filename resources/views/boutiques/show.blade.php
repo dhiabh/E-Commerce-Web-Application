@@ -23,7 +23,9 @@
                 <div class="align-items-baseline d-flex mb-5">
                     <h3 class="mr-5 pr-5"><u>Catégorie</u></h3>
                     <h4 class="text-right mx-5 px-5"><strong>{{ $boutique->categorie->name }}</strong></h4>
-                    <a href="{{ route('boutiques.edit', $boutique->id) }}" class="ml-5 btn btn-success">Edit</a>
+                    @can('belongsToUser', $boutique)
+                        <a href="{{ route('boutiques.edit', $boutique->id) }}" class="ml-5 btn btn-success">Edit</a>
+                    @endcan
                 </div>
                 @if (count($articles))
                     <table class="table table-striped">
@@ -54,17 +56,18 @@
                     </table>
                 @endif
 
-
-                <div class="d-flex">
-                    <a href="{{ route('boutiques.articles.create', $boutique->id) }}" class="btn btn-success"> Ajouter un
-                        Article
-                    </a>
-                    <form method="POST" action="{{ route('boutiques.destroy', $boutique->id) }}">
-                        @csrf
-                        @method('DELETE')
-                        <button class="btn btn-danger ml-5">Supprimer ce Boutique</button>
-                    </form>
-                </div>
+                @can('belongsToUser', $boutique)
+                    <div class="d-flex">
+                        <a href="{{ route('boutiques.articles.create', $boutique->id) }}" class="btn btn-success"> Ajouter un
+                            Article
+                        </a>
+                        <form method="POST" action="{{ route('boutiques.destroy', $boutique->id) }}">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-danger ml-5">Supprimer ce Boutique</button>
+                        </form>
+                    </div>
+                @endcan
 
 
 

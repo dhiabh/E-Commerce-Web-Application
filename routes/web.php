@@ -9,6 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CommandesController;
 use App\Http\Controllers\DynamicPDFController;
 use App\Http\Controllers\PaymentsController;
+use App\Mail\NewUserWelcomeMail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -100,4 +101,10 @@ Route::get('/dynamic_pdf/pdf', [DynamicPDFController::class, 'pdf']);
 Route::get('/checkout', [PaymentsController::class, 'checkout'])->name('checkout');
 Route::get('/payment-success/{amount}', function($amount) {
     return view('payments.success', ['amount' => $amount]);
+});
+
+// Mail Route
+
+Route::get('/email', function() {
+    return new NewUserWelcomeMail();
 });

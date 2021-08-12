@@ -38,13 +38,14 @@ class BoutiqueController extends Controller
      */
     public function store(Request $request)
     {
+        $user = auth()->user();
         Boutique::create([  
-            'user_id' => auth()->user()->id,
+            'user_id' => $user->id,
             'categorie_id' => $request->categorie_id,
             'name' => $request->name
         ]);
 
-        return redirect()->route('users.index')->with('message','Boutique créé avec succés');
+        return redirect()->route('users.show', compact('user'))->with('message','Boutique créé avec succés');
     }
 
     /**
@@ -67,6 +68,7 @@ class BoutiqueController extends Controller
      */
     public function edit(Boutique $boutique)
     {
+        $this->authorize('belongsToUser',$boutique);
         $categories = Categorie::all();
         return view('boutiques.edit',compact('boutique','categories'));
     }
@@ -80,6 +82,7 @@ class BoutiqueController extends Controller
      */
     public function update(Request $request, Boutique $boutique)
     {
+        $this->authorize('belongsToUser',$boutique);
         $boutique->update([
             'categorie_id' => $request->categorie_id,
             'name' => $request->name
@@ -96,6 +99,7 @@ class BoutiqueController extends Controller
      */
     public function destroy(Boutique $boutique)
     {
+        $this->authorize('belongsToUser',$boutique);
         $boutique->delete();
 
         return redirect()->route('users.index')->with('message','Boutique supprimé avec succés');
