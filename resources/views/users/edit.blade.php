@@ -9,7 +9,7 @@
                 <div class="card">
                     <div class="card-header">
                         {{ __('Update User') }}
-                        <a href="{{ route('users.index') }}" class="float-right">Back</a>
+                        <a href="{{ route('users.show', $user->id) }}" class="float-right">Back</a>
                     </div>
 
                     <div class="card-body">
