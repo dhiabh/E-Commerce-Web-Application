@@ -54,8 +54,8 @@
                                         <div class="d-flex">
 
                                             <div>
-                                                <div>Vendeur : {{ $article->boutique->name }} </div>
-                                                <div>{{ $article->name }}</div>
+                                                <div>Vendeur : <a class="text-success" href="boutiques/{{ $article->boutique->id }}">{{ $article->boutique->name }}</a></div>
+                                                <div><a class="text-success" href="articles/{{ $article->id }}">{{ $article->name }}</a></div>
                                             </div>
                                         </div>
 

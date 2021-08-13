@@ -19,7 +19,8 @@ class Boutique extends Model
     {
         parent::boot();
 
-        static::deleted(function($boutique){
+        static::deleted(function ($boutique) {
+        
             $boutique->articles()->delete();
         });
     }

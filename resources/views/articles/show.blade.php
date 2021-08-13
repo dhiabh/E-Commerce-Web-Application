@@ -3,7 +3,7 @@
 @section('content')
     @if ($article->images()->count())
         <header id="fh5co-header" class="fh5co-cover fh5co-cover-sm" role="banner"
-            style="background-image:url({{ URL::to('storage/images/articles/'.$article->images()->first()->image) }});">
+            style="background-image:url({{ URL::to('storage/'.$article->images()->first()->image) }});">
 
         @else
             <header id="fh5co-header" class="fh5co-cover fh5co-cover-sm" role="banner" style="background-color: #aaa">
@@ -16,9 +16,9 @@
                 <div class="display-t">
                     <div class="display-tc animate-box" data-animate-effect="fadeIn">
                         <h1>{{ $article->name }}</h1>
-                        <h2>
+                        <h2 class="bg-secondary">
                             Artisan : 
-                            <a href="/users/{{ Auth::id() }}">
+                            <a href="/users/{{ $article->boutique->user->id }}">
                                 {{ $article->boutique->user->prenom }} {{ $article->boutique->user->nom }}
                             </a>
                         </h2>

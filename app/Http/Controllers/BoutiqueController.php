@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use App\Models\Boutique;
 use App\Models\Categorie;
+use App\Models\Image;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class BoutiqueController extends Controller
 {
@@ -16,7 +18,6 @@ class BoutiqueController extends Controller
      */
     public function index()
     {
-        
     }
 
     /**
@@ -27,7 +28,7 @@ class BoutiqueController extends Controller
     public function create()
     {
         $categories = Categorie::all();
-        return view('boutiques.create',compact('categories'));
+        return view('boutiques.create', compact('categories'));
     }
 
     /**
@@ -39,13 +40,13 @@ class BoutiqueController extends Controller
     public function store(Request $request)
     {
         $user = auth()->user();
-        Boutique::create([  
+        Boutique::create([
             'user_id' => $user->id,
             'categorie_id' => $request->categorie_id,
             'name' => $request->name
         ]);
 
-        return redirect()->route('users.show', compact('user'))->with('message','Boutique créé avec succés');
+        return redirect()->route('users.show', compact('user'))->with('message', 'Boutique créé avec succés');
     }
 
     /**
@@ -56,8 +57,8 @@ class BoutiqueController extends Controller
      */
     public function show(Boutique $boutique)
     {
-        $articles = Article::all()->where('boutique_id',$boutique->id);
-        return view('boutiques.show',compact('boutique','articles'));
+        $articles = Article::all()->where('boutique_id', $boutique->id);
+        return view('boutiques.show', compact('boutique', 'articles'));
     }
 
     /**
@@ -68,9 +69,9 @@ class BoutiqueController extends Controller
      */
     public function edit(Boutique $boutique)
     {
-        $this->authorize('belongsToUser',$boutique);
+        $this->authorize('belongsToUser', $boutique);
         $categories = Categorie::all();
-        return view('boutiques.edit',compact('boutique','categories'));
+        return view('boutiques.edit', compact('boutique', 'categories'));
     }
 
     /**
@@ -82,13 +83,13 @@ class BoutiqueController extends Controller
      */
     public function update(Request $request, Boutique $boutique)
     {
-        $this->authorize('belongsToUser',$boutique);
+        $this->authorize('belongsToUser', $boutique);
         $boutique->update([
             'categorie_id' => $request->categorie_id,
             'name' => $request->name
         ]);
 
-        return redirect()->route('boutiques.show',compact('boutique'))->with('message','Informations mises à jour avec succés');
+        return redirect()->route('boutiques.show', compact('boutique'))->with('message', 'Informations mises à jour avec succés');
     }
 
     /**
@@ -99,9 +100,21 @@ class BoutiqueController extends Controller
      */
     public function destroy(Boutique $boutique)
     {
-        $this->authorize('belongsToUser',$boutique);
-        $boutique->delete();
+        $this->authorize('belongsToUser', $boutique);
+        foreach ($boutique->articles as $article)
+        {
+            foreach ($article->images as $image)
+            {
+                $deleted = Storage::disk('public')->delete($image->image);
+            }
+            $article->images()->delete();
 
-        return redirect()->route('users.index')->with('message','Boutique supprimé avec succés');
+            $article->paniers()->detach();
+        }
+
+
+
+        $boutique->delete();
+        return redirect()->route('users.show', auth()->user()->id)->with('message', 'Boutique supprimé avec succés');
     }
 }

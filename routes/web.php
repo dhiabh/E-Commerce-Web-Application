@@ -29,6 +29,9 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
+// verify mail
+Auth::routes(['verify' => true]);
+
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 

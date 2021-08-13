@@ -23,6 +23,8 @@ use App\Models\Panier;
 
 use App\Http\Requests\ArticleStoreRequest;
 
+use App\Helpers\compareImages;
+
 class ArticlesController extends Controller
 {
 
@@ -33,12 +35,13 @@ class ArticlesController extends Controller
 
     public function create($boutique_id)
     {
-        return view('articles.create')->with('boutique_id', $boutique->id);
+        return view('articles.create')->with('boutique_id', $boutique_id);
     }
 
 
     public function store(ArticleStoreRequest $request, Boutique $boutique)
     {
+        
         $imagePath = request('image')->store('images/articles', 'public');
 
         $image = ImageIntervention::make(public_path("storage/{$imagePath}"));
@@ -80,14 +83,48 @@ class ArticlesController extends Controller
     }
 
     public function search(Request $request) {
+        $biens = collect();
+
+        if(isset($request->image)) {
+            $imagePath = request('image')->store('images/articles', 'public');
+        
+            $image = ImageIntervention::make(public_path("storage/{$imagePath}"));
+            $image->save();
+///////////////////////
+/*
+            $filenameWithExt = request('image')->getClientOriginalName();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $extension = request('image')->getClientOriginalExtension();
+            $fileNameToStore = $filename.'_'.time().'.'.$extension;
+    
+            $path = request('image')->storeAs('public/images/articles', $fileNameToStore);
+*/
+        ///////////////////////////////
+            $class = new compareImages;
+            $produits = Article::all();
+            foreach($produits as $produit) {
+                $images = $produit->images;
+                foreach($images as $image) {
+                    $imageArticlePath = 'storage/'.$image->image;
+                    if($class->compare('storage/'.$imagePath, $imageArticlePath) < 10) {
+                        $biens->push($produit);
+                        break;
+                    }
+                }
+            }
+            $count = count($biens);
+            $articles = $biens->paginate(9);
+            return view('articles.index', compact('articles', 'count'));
+        }
+
         $input = $request->input('inlineFormInput');
         $input_words = explode(' ', $input);
         $produits = Article::all();
-        $biens = collect();
         $firstTime = true;
 
+
         foreach($produits as $produit) {
-            $b = false;
+            $flag = false;
             $produit_words = explode(' ', $produit->name);
 
             foreach($produit_words as $produit_word) {
@@ -98,11 +135,11 @@ class ArticlesController extends Controller
                             $firstTime = false;    
                         }
                         $biens->push($produit);
-                        $b = true;
+                        $flag = true;
                         break;
                     } 
                 }
-                if($b) {
+                if($flag) {
                     break;
                 }
             }   
@@ -110,7 +147,13 @@ class ArticlesController extends Controller
 
         $count = count($biens);
         $articles = $biens->paginate(9);
-        return view('articles.index', compact('articles', 'input', 'count', 'didYouMean'));
+        if(isset($didYouMean))
+        {
+            return view('articles.index', compact('articles', 'input', 'count', 'didYouMean'));
+
+        }
+        return view('articles.index', compact('articles', 'input', 'count'));
+
 
     }
 
@@ -123,9 +166,11 @@ class ArticlesController extends Controller
             return redirect()->route('home');
         }
 
+        $boutiques = auth()->user()->boutiques;
+
         $this->authorize('belongsToUser', $article);
 
-        return view('articles.edit', compact('article'));        
+        return view('articles.edit', compact('article', 'boutiques'));        
     }
 
 
@@ -140,6 +185,7 @@ class ArticlesController extends Controller
 
 
         $article->update([
+            'boutique_id' => $request->boutique_id,
             'name' => $request->name,
             'price' => $request->price,
             'quantity' => $request->quantity,
@@ -162,11 +208,12 @@ class ArticlesController extends Controller
         $boutique = Boutique::find($article->boutique_id);
 
         $images = Image::where('article_id', $article->id)->get();
-        foreach ($images as $image) {
-            Storage::delete('public/images/articles/' . $image->image);
+        foreach ($images as $image)
+        {
+            $deleted = Storage::disk('public')->delete($image->image);
         }
 
-        $article->images()->delete();
+        //$article->images()->delete();    we did in boot method in the model
         $paniers = Panier::all();
         foreach($paniers as $panier){
             $panier->articles()->detach($article->id);

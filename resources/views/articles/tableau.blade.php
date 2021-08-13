@@ -3,7 +3,7 @@
         <div class="col-md-4 text-center animate-box">
             <div class="product">
                 <div class="product-grid" 
-                     style="background-image:url({{ URL::to('storage/images/articles/'.$article->images()->first()->image) }});">
+                     style="background-image:url({{ URL::to('storage/'.$article->images()->first()->image) }});">
                     <div class="inner">
                         <p>
                             @cannot('belongsToUser', $article)

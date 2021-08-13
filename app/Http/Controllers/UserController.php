@@ -122,6 +122,7 @@ class UserController extends Controller
             'nom' => $request->nom,
             'prenom' => $request->prenom,
             'email' => $request->email,
+            
             'state_id' => $request->state,
             'adresse' => $request->adresse,
             'num_tel' => $request->num_tel,

@@ -16,19 +16,25 @@
                 </div>
             </div>
 
+
+
             <div class="row col-md-5 ml-5 align-items-center">
                 <div class="col">
-                    <form method= "POST" action="{{ action('App\Http\Controllers\ArticlesController@search') }}">
+                    <form class="d-flex align-items-center" method="POST"
+                        action="{{ action('App\Http\Controllers\ArticlesController@search') }}"
+                        enctype="multipart/form-data">
                         @csrf
                         <input type="search" name="inlineFormInput" class="form-control mb-2" id="inlineFormInput"
                             placeholder="Search">
+                        <input type="file" id="image" name="image" hidden />
+                        <label for="image" class="bi bi-camera-fill mx-5""></label>
+                        <button type=" submit" class="btn btn-primary mb-2">Search</button>
+
                     </form>
                 </div>
 
-                <div class="col">
-                    <button type="submit" class="btn btn-primary mb-2">Search</button>
-                </div>
             </div>
+
             <div>
                 <ul>
                     <li class="has-dropdown">
@@ -48,7 +54,7 @@
                                     </a>
                                 @endif
                             @else
-                                <a href="{{ route('users.show',Auth::user()->id) }}">
+                                <a href="{{ route('users.show', Auth::user()->id) }}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                         class="bi bi-person-circle" viewBox="0 0 16 16">
                                         <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
@@ -87,7 +93,7 @@
                                 <li class="nav-item ">
 
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                         document.getElementById('logout-form').submit();">
+                                                                         document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
@@ -104,17 +110,21 @@
                     @guest
                         @if (Route::has('login'))
                             <li class="shopping-cart"><a href="{{ route('login') }}"
-                                class="cart"><span><small>{{auth()->user() ? auth()->user()->panier->articles->count() : 0}}</small><i
-                                        class="icon-shopping-cart"></i></span>&nbsp; Panier</a>
+                                    class="cart"><span><small>{{ auth()->user()
+    ? auth()->user()->panier->articles->count()
+    : 0 }}</small><i
+                                            class="icon-shopping-cart"></i></span>&nbsp; Panier</a>
                             </li>
                         @endif
                     @else
                         <li class="shopping-cart"><a href="{{ route('paniers.index') }}"
-                            class="cart"><span><small>{{auth()->user() ? auth()->user()->panier->articles->count() : 0}}</small><i
-                                    class="icon-shopping-cart"></i></span>&nbsp; Panier</a>
+                                class="cart"><span><small>{{ auth()->user()
+    ? auth()->user()->panier->articles->count()
+    : 0 }}</small><i
+                                        class="icon-shopping-cart"></i></span>&nbsp; Panier</a>
                         </li>
                     @endguest
-                   
+
                 </ul>
             </div>
 

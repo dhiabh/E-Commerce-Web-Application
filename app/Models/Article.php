@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Controllers\ArticlesController;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,6 +18,15 @@ class Article extends Model
         'description'
     ];
 
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleted(function($article){
+            $article->images()->delete();
+        });
+    }
     
     public function paniers()
     {
