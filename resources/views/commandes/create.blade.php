@@ -46,9 +46,7 @@
                                 Addresse
                             </label>
                             <div class="col-md-6">
-                                <textarea class="form-control" rows="5" name="addresse">
-                                    {{ Auth::user()->adresse }}
-                                </textarea>
+                                <textarea class="form-control" rows="5" name="addresse">{{ Auth::user()->adresse }}</textarea>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -56,7 +54,7 @@
                                 Région
                             </label>
                             <div class="col-md-6">
-                                <input type="text" name="region" class="form-control">
+                                <input type="text" name="region" class="form-control" value="{{ Auth::user()->state->name }}">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -64,7 +62,7 @@
                                 Ville
                             </label>
                             <div class="col-md-6">
-                                <input type="text" name="ville" class="form-control">
+                                <input type="text" name="ville" class="form-control" value="{{ Auth::user()->state->name }}">
                             </div>
                         </div>
                         <div class="form-group row mb-0">
