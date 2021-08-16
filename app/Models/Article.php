@@ -17,6 +17,15 @@ class Article extends Model
         'description'
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleted(function($boutique){
+            $boutique->articles()->delete();
+        });
+    }
+
     
     public function paniers()
     {

@@ -16,7 +16,8 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.3",
         "stripe/stripe-php": "^7.92",
-        "wisdom-diala/countrypkg-laravel": "^1.0"
+        "wisdom-diala/countrypkg-laravel": "^1.0",
+        "phpclasses/image-compare": ">=1.2"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
@@ -61,5 +62,18 @@
         "sort-packages": true
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+
+
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https:\/\/www.phpclasses.org\/"
+        },
+        {
+            "packagist": false
+        }
+    ]
+
+
 }

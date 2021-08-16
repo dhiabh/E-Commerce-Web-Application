@@ -148,7 +148,7 @@
                                 <div class="product">
                                     <div 
                                         class="product-grid" 
-                                        style="background-image:url({{ URL::to('storage/'.$article->images[3*$j + $i]->image) }});"
+                                        style="background-image:url({{ URL::to('storage/images/articles/'.$article->images[3*$j + $i]->image) }});"
                                     >
                                         <div class="inner">
                                             <p>

@@ -1519,6 +1519,13 @@ h1, h2, h3, h4, h5, h6, figure {
   color: #fff;
   border: 2px solid #d1c286;
 }
+.btn-primary-reverse {
+  background: #fff;
+  color: #d1c286;
+  border: 2px solid #d1c286;
+}
+
+
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active {
   background: #d8cb98 !important;
   border-color: #d8cb98 !important;

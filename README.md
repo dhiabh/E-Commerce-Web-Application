@@ -9,7 +9,7 @@
 
 ## About Laravel
 
-https://github.com/dhiabh/E-Commerce-Web-Application.git main
+git pull https://github.com/dhiabh/E-Commerce-Web-Application.git main
 
 
 

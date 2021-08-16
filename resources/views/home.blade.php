@@ -8,7 +8,7 @@
             <div class="flexslider js-fullheight">
                 <ul class="slides">
                     @foreach($articles as $article)
-                    <li style="background-image:url({{ URL::to('storage/'.$article->images()->first()->image) }});">
+                    <li style="background-image:url({{ URL::to('storage/images/articles/'.$article->images()->first()->image) }});">
                         @if($loop->first)
                             <div class="overlay-gradient"></div>
                         @endif
@@ -16,7 +16,7 @@
                             <div class="col-md-6 col-md-offset-3 col-md-pull-3 js-fullheight slider-text">
                                 <div class="slider-text-inner">
                                     <div class="desc">
-                                        <span class="price">{{ $article->price }}</span>
+                                        <span class="price">${{ $article->price }}</span>
                                         <h2>{{ $article->name }}</h2>
                                         <p>{{ $article->description }}</p>
                                         <p>

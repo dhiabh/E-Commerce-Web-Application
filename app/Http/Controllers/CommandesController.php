@@ -10,32 +10,21 @@ use App\Models\Panier;
 
 class CommandesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        //
+        $commandes = Auth::user()->commandes;
+
+        return view('commandes.index', compact('commandes'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         return view('commandes.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request )
     {
         
@@ -66,53 +55,57 @@ class CommandesController extends Controller
         }
         
         
-
         return redirect()->route('livraisons.create');
         
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
-        //
+        $commande = Commande::find($id);
+        if(is_null($commande)) {
+            return redirect()->route('home');
+        }
+        return view('commandes.show')->with('commande', $commande);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
-        //
+        $commande = Commande::find($id);
+        if(is_null($commande)) {
+            return redirect()->route('home');
+        }
+        return view('commandes.edit', compact('commande'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
-        //
+        $commande = Commande::find($id);
+        if(is_null($commande)) {
+            return redirect()->route('home');
+        }
+
+        $commande->update([
+            'nom' => $request->nom,
+            'prenom' => $request->prenom,
+            'tel' => $request->tel,
+            'address' => $request->addresse,
+            'region' => $request->region,
+            'ville' => $request->ville  
+        ]);
+
+        return redirect()->route('commandes.show', $commande->id);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
-        //
+        $commande = Commande::find($id);
+        if(is_null($commande)) {
+            return redirect()->route('home');
+        }
+        $commande->delete();
     }
 }

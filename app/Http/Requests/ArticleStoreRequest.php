@@ -24,23 +24,14 @@ class ArticleStoreRequest extends FormRequest
      */
     public function rules()
     {   
-        
-        
-        if(Route::currentRouteName() == "boutiques.articles.store")
-        {
-            return [
-                'name' => 'required',
-                'price' => 'required',
-                'quantity' => 'required',
-                'description' => 'required',
-                'image' => ['required', 'image']
-            ];
-        }elseif(Route::currentRouteName() == "images.upload"){
-            
-            return [
-                'image' => ['required', 'image']
-            ];
-        }
+        return [
+            'name' => 'required',
+            'price' => 'required',
+            'quantity' => 'required',
+            'description' => 'required',
+            'image' => ['required', 'image']
+        ];
+
 
     }
 }

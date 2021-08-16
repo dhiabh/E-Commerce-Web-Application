@@ -40,6 +40,7 @@ class Commande extends Model
         return $this->belongsToMany(Livraison::class);
     }
 
+
     public function facture()
     {
         return $this->hasOne(Facture::class);
