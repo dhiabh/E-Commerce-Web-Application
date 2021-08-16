@@ -112,9 +112,11 @@ Route::get('/dynamic_pdf', [DynamicPDFController::class, 'index']);
 Route::get('/dynamic_pdf/pdf', [DynamicPDFController::class, 'pdf']);
 
 Route::get('/checkout', [PaymentsController::class, 'checkout'])->name('checkout');
-Route::get('/payment-success/{amount}', function($amount) {
-    return view('payments.success', ['amount' => $amount]);
-});
+
+Route::get('/payment-success/', [PaymentsController::class, 'valider']);
+
+
+
 
 // Mail Route
 

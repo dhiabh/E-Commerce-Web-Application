@@ -7,12 +7,13 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Payment;
 use App\Models\Mode_payment;
+use App\Models\Commande;
 use Stripe\Stripe;
 use Stripe\Charge;
 use Stripe\PaymentIntent;
 use Session;
 use Illuminate\Support\Arr;
-
+use Auth;
 //require '../vendor/autoload.php';
 
 
@@ -51,22 +52,16 @@ class PaymentsController extends Controller
     }
 
 
-    public function store(Request $request, Facture $facture)
+    public function store(Request $request)
     {
-
+        $facture = Auth::user()->commandes()->latest()->first()->facture;
         $payment = new Payment;
         $payment->date_payment = Carbon::now();
-        $payment->facture_id = 1;
-        $payment->montant_payment = 2000;
+        $payment->facture_id = $facture->id;
+        $payment->montant_payment = $facture->total_ttc;
         $payment->statut_payment = false;
         $mode_payment = $request->mode;
-        $payment->mode_payment_id = 1;//Mode_payment::where('name', $mode_payment)->get()->first()->id;
-
-        $payment->save();
-
-        if($mode_payment == 'cash') {
-            return view('welcome');
-        }
+        $payment->mode_payment_id = Mode_payment::where('name', $mode_payment)->get()->first()->id;
        
         $payment->save();
 
@@ -84,50 +79,37 @@ class PaymentsController extends Controller
 
         return view('checkout.index', compact('clientSecret', 'amount'));
 
-
-
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    public function valider()
+    {
+        $commande = Commande::where('user_id', Auth::id())->latest()->first();
+        $payment = $commande->facture->payment;
+        $payment->update([
+            'statut_payment' => true
+        ]);
+        $amount = $payment->montant_payment;
+        return view('payments.success', compact('amount'));
+    }
+
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
         //

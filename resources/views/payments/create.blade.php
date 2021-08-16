@@ -17,7 +17,7 @@
 						<p>Quel moyen de paiement voulez-vous utiliser?</p>
 
 						<div>
-						  <input type="radio" id="carte" name="mode" value="carte_bancaire"
+						  <input type="radio" id="carte" name="mode" value="carte"
 						         checked>
 						  <label for="huey">Carte Bancaire</label>
 						</div>

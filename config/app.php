@@ -229,6 +229,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'Categorie' => App\Models\Categorie::class,
+        'Mode_livraison' => App\Models\Mode_livraison::class
 
     ],
 

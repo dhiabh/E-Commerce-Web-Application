@@ -42,7 +42,7 @@
             </div>
             <div>
                 <button class="btn btn-success">
-                    <a href="{{ route('payments.create', $facture) }}">
+                    <a href="{{ route('payments.create') }}">
                         Continuer
                     </a>
                 </button>
