@@ -3,11 +3,11 @@
         <div class="col-md-4 text-center animate-box">
             <div class="product">
                 <div class="product-grid"
-                    style="background-image:url({{ URL::to('storage/' . $article->images()->first()->image) }});">
+                    style="background-image:url({{ URL::to('storage/images/articles/' . $article->images()->first()->image) }});">
                     <div class="inner">
                         <p>
                             @cannot('belongsToUser', $article)
-                                @if (!count(Auth::user()->panier->articles->where('id', $article->id)))
+                                @if (!Auth::user() || !count(Auth::user()->panier->articles->where('id', $article->id)))
                                     <a href="{{ route('addToPanier', $article->id) }}" class="icon"><i
                                             class="icon-shopping-cart"></i></a>
                                 @endif

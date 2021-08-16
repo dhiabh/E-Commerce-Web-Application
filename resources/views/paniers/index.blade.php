@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="row">
+        
 
         @if ($articles_number == 0)
             <div class="col mx-auto bg-light text-center ">

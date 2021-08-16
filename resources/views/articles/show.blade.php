@@ -3,10 +3,11 @@
 @section('content')
     @if ($article->images()->count())
         <header id="fh5co-header" class="fh5co-cover fh5co-cover-sm" role="banner"
-            style="background-image:url({{ URL::to('storage/'.$article->images()->first()->image) }});">
-
+            style="background-image:url({{ URL::to('storage/images/articles/'.$article->images()->first()->image) }});">
         @else
-            <header id="fh5co-header" class="fh5co-cover fh5co-cover-sm" role="banner" style="background-color: #aaa">
+            <header id="fh5co-header" class="fh5co-cover fh5co-cover-sm" role="banner" 
+                    style="background-color: #aaa"
+            >
 
     @endif
     <div class="overlay"></div>
@@ -52,7 +53,7 @@
                 <div class="active text-center">
                   <figure>
                     <img 
-                      src="{{ URL::to('storage/'.$image->image) }}" 
+                      src="{{ URL::to('storage/images/articles/'.$image->image) }}" 
                       alt="user"
                       style="width:800px; height: 500px; margin:auto;"
                     >

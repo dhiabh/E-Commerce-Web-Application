@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 
 use Illuminate\Http\Request;
+use Auth;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image as ImageIntervention;
 
 
 
-use Auth;
 use App\Http\Controllers\BoutiqueController;
 use App\Http\Controllers\CommandeController;
 
@@ -20,7 +20,6 @@ use App\Models\Categorie;
 use App\Models\Commande;
 use App\Models\Panier;
 
-
 use App\Http\Requests\ArticleStoreRequest;
 
 use App\Helpers\compareImages;
@@ -28,8 +27,7 @@ use App\Helpers\compareImages;
 class ArticlesController extends Controller
 {
 
-    public function __construct()
-    {
+    public function __construct() {
        $this->middleware('auth', ['except' => ['index', 'show', 'browse', 'search']]);
     }
 
@@ -41,11 +39,13 @@ class ArticlesController extends Controller
 
     public function store(ArticleStoreRequest $request, Boutique $boutique)
     {
-        
-        $imagePath = request('image')->store('images/articles', 'public');
+               
+        $filenameWithExt = str_slug(request('image')->getClientOriginalName());
+        $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+        $extension = request('image')->getClientOriginalExtension();
+        $fileNameToStore = $filename.'_'.time().'.'.$extension;
 
-        $image = ImageIntervention::make(public_path("storage/{$imagePath}"));
-        $image->save();
+        $path = request('image')->storeAs('/public/images/articles', $fileNameToStore);
 
         $article = $boutique->articles()->create([
             'name' => $request->name,
@@ -56,15 +56,14 @@ class ArticlesController extends Controller
 
         Image::create([
             'article_id' => $article->id,
-            'image' => $imagePath,
+            'image' => $fileNameToStore,
         ]);
 
         return redirect()->route('boutiques.show', compact('boutique'));
     }
 
 
-    public function show($id)
-    {
+    public function show($id) {
         $article = Article::find($id);
         if (is_null($article)) {
             return redirect()->route('home');
@@ -75,38 +74,37 @@ class ArticlesController extends Controller
         return view('articles.show', compact('article'));
     }
 
-    public function browse($input = null)
-    {
+    public function browse($input = null) {
         $articles = Article::where('id', '>', -1)->simplePaginate(9);
         $count = count(Article::all());
-        return view('articles.index', compact('articles', 'count'));
+        $fromBrowse = true;
+        return view('articles.index', compact('articles', 'count', 'fromBrowse'));
     }
 
     public function search(Request $request) {
-        $biens = collect();
 
-        if(isset($request->image)) {
-            $imagePath = request('image')->store('images/articles', 'public');
-        
-            $image = ImageIntervention::make(public_path("storage/{$imagePath}"));
-            $image->save();
-///////////////////////
-/*
-            $filenameWithExt = request('image')->getClientOriginalName();
+        $biens = collect();
+        $produits = Article::all();
+
+        if($request->has('image')) {
+
+            $validated = $request->validate([
+                'image' => 'image'
+            ]);
+
+            $filenameWithExt = str_slug(request('image')->getClientOriginalName());
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
             $extension = request('image')->getClientOriginalExtension();
-            $fileNameToStore = $filename.'_'.time().'.'.$extension;
+            $fileNameToStore = $filename.'_'.time().'_'.Auth::id().'.'.$extension;
     
-            $path = request('image')->storeAs('public/images/articles', $fileNameToStore);
-*/
-        ///////////////////////////////
+            $path = request('image')->storeAs('/public/images/search', $fileNameToStore);
+            
             $class = new compareImages;
-            $produits = Article::all();
             foreach($produits as $produit) {
                 $images = $produit->images;
                 foreach($images as $image) {
-                    $imageArticlePath = 'storage/'.$image->image;
-                    if($class->compare('storage/'.$imagePath, $imageArticlePath) < 10) {
+                    $imageArticlePath = 'storage/images/articles/'.$image->image;
+                    if($class->compare($imageArticlePath, 'storage/images/search/'.$fileNameToStore) < 10) {
                         $biens->push($produit);
                         break;
                     }
@@ -114,13 +112,15 @@ class ArticlesController extends Controller
             }
             $count = count($biens);
             $articles = $biens->paginate(9);
+            Storage::disk('local')->delete('public/images/search/'.$fileNameToStore);
             return view('articles.index', compact('articles', 'count'));
         }
-
+        $validated = $request->validate(['inlineFormInput' => 'required']);
         $input = $request->input('inlineFormInput');
+
         $input_words = explode(' ', $input);
-        $produits = Article::all();
         $firstTime = true;
+        $didYouMean = $input;
 
 
         foreach($produits as $produit) {
@@ -160,7 +160,6 @@ class ArticlesController extends Controller
 
     public function edit($id)
     {
-
         $article = Article::find($id);
         if(is_null($article)) {
             return redirect()->route('home');
@@ -182,7 +181,6 @@ class ArticlesController extends Controller
         }
 
         $this->authorize('belongsToUser',$article);
-
 
         $article->update([
             'boutique_id' => $request->boutique_id,
@@ -230,18 +228,20 @@ class ArticlesController extends Controller
 
     // Handling addtional image import and image deletion
 
-    public function addImage(ArticleStoreRequest $request, Article $article)
-    {
+    public function addImage(Request $request, Article $article) {
+        $validated = $request->validate([
+            'image' => 'image'
+        ]);
 
-        $imagePath = request('image')->store('images/articles', 'public');
+        $filenameWithExt = str_slug(request('image')->getClientOriginalName());
+        $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+        $extension = request('image')->getClientOriginalExtension();
+        $fileNameToStore = $filename.'_'.time().'.'.$extension;
 
-        $image = ImageIntervention::make(public_path("storage/{$imagePath}"));
-        $image->save();
-
-
+        $path = request('image')->storeAs('/public/images/articles', $fileNameToStore);
         Image::create([
             'article_id' => $article->id,
-            'image' => $imagePath,
+            'image' => $fileNameToStore, 
         ]);
 
         return redirect()->back();        
@@ -254,7 +254,7 @@ class ArticlesController extends Controller
         }
 
         $image->delete();
-        Storage::delete('public/images/articles/'.$image->image);
+        Storage::disk('public')->delete('images/articles/'.$image->image);
         return redirect()->back();  
     }
 

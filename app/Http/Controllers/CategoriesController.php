@@ -2,16 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Commande;
-use App\Models\Facture;
-use App\Models\Livraison;
-use App\Models\Mode_livraison;
-use Carbon\Carbon;
-use App\Models\Panier;
 use Illuminate\Http\Request;
-use Intervention\Image\ImageManagerStatic as ImageIntervention;
-
-class LivraisonController extends Controller
+use App\Models\Categorie;
+class CategoriesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -30,9 +23,7 @@ class LivraisonController extends Controller
      */
     public function create()
     {
-        $commande = Commande::latest('id')->first();
-        $modes_livraison = Mode_livraison::all();
-        return view('mode_livraison.create',compact('modes_livraison'));
+        //
     }
 
     /**
@@ -43,29 +34,7 @@ class LivraisonController extends Controller
      */
     public function store(Request $request)
     {
-        $commande = Commande::latest('id')->first();
-        
-        $livraison = Livraison::create([
-            'mode_livraison_id' => $request->mode_livraison_id,
-            'date_livraison' => Carbon::now()
-        ]);
-        $articles = $commande->articles;
-
-        
-
-        $frais_livraison = $livraison->mode_livraison->frais;
-
-        $facture = Facture::create([
-            'commande_id' => $commande->id,
-            'date_facture' => Carbon::now(),
-            'base_ht' => $commande->total(),
-            'tva' => 0,
-            'remise' => 0,
-            'total_ht' => $commande->total(),
-            'total_ttc' => $commande->total() + $frais_livraison,
-        ]);
-
-        return view('factures.index',compact('articles','livraison', 'facture','commande'));
+        //
     }
 
     /**
@@ -76,7 +45,15 @@ class LivraisonController extends Controller
      */
     public function show($id)
     {
-        //
+        $categorie = Categorie::find($id);
+        $produits = collect();
+        foreach($categorie->boutiques as $boutique) {
+            $produits = $produits->concat($boutique->articles);
+        }
+        $count = count($produits);
+        $articles = $produits->paginate(9);
+        $categorie_name = $categorie->name;
+        return view('articles.index', compact('articles', 'count', 'categorie_name'));
     }
 
     /**

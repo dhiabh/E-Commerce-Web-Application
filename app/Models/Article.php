@@ -18,7 +18,6 @@ class Article extends Model
         'description'
     ];
 
-
     protected static function boot()
     {
         parent::boot();

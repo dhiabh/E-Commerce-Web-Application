@@ -1,41 +1,60 @@
 <nav class="fh5co-nav" role="navigation">
     <div class="container">
         <div class="row align-items-center" style="height: 5em">
-            <div class="col-md-2 col-xs-2">
+            <div class="col mb-2">
                 <div id="fh5co-logo">
                     <a href="{{ route('home') }}">
-                        <h1><strong>Home.</strong></h1>
+                        <h2><strong>Home.</strong></h2>
                     </a>
                 </div>
             </div>
-            <div class="col-md-2 col-xs-2">
+            <div class="col mb-2">
                 <div id="fh5co-logo">
                     <a href="{{ route('browse', 1) }}">
                         <h2><strong>Shop.</strong></h2>
                     </a>
                 </div>
             </div>
-
-
-
-            <div class="row col-md-5 ml-5 align-items-center">
+            <div class="col-md-2 col-xs-2">
+                <ul>
+                    <li class="has-dropdown" >
+                        <button class="btn dropdown-toggle hidden" type="button" id="a"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                                
+                        </button>
+                        <label for="a"><div id="fh5co-logo"><h3><strong>Catégories.</strong></h3></div></label>
+                        <ul class="dropdown">
+                            @foreach(Categorie::all() as $categorie)
+                            <li class="nav-item">
+                                <a class="nav-link" href="/categories/{{ $categorie->id }}">
+                                    {{ $categorie->name }}
+                                </a>
+                            </li>
+                            @endforeach
+                        </ul>
+                   </li>
+                </ul>
+            </div>
+            <div class="row col-md-5 mb-4 align-items-center">
                 <div class="col">
-                    <form class="d-flex align-items-center" method="POST"
-                        action="{{ action('App\Http\Controllers\ArticlesController@search') }}"
-                        enctype="multipart/form-data">
+                    <form 
+                          class="d-flex align-items-center" 
+                          method= "POST" 
+                          action="{{ action('App\Http\Controllers\ArticlesController@search') }}"
+                          enctype="multipart/form-data"
+                    >
                         @csrf
-                        <input type="search" name="inlineFormInput" class="form-control mb-2" id="inlineFormInput"
-                            placeholder="Search">
-                        <input type="file" id="image" name="image" hidden />
-                        <label for="image" class="bi bi-camera-fill mx-5""></label>
-                        <button type=" submit" class="btn btn-primary mb-2">Search</button>
-
+                        <input type="search" name="inlineFormInput" id="inlineFormInput"
+                               class="form-control mb-2 @error('inlineFormInput') is-invalid @enderror" 
+                               placeholder="Search"
+                        >   
+                        <input type="file" id="image" name="image" hidden class="@error('image') is-invalid @enderror"/>
+                        <label for="image" class="bi bi-camera-fill mx-5"></label>
+                        <button type="submit" class="btn btn-primary mb-2">Search</button>
                     </form>
                 </div>
-
-            </div>
-
-            <div>
+            </div>      
+            <div class="mb-4">
                 <ul>
                     <li class="has-dropdown">
 
@@ -87,7 +106,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item ">
-                                    <a href="#">commandes</a>
+                                    <a class="nav-link" href="/commandes">commandes</a>
                                 </li>
                                 <hr>
                                 <li class="nav-item ">
@@ -132,17 +151,15 @@
         <hr>
     </div>
 </nav>
-
-<!-- Search bar
-<div class="container">
-    <div class="row align-items-center ml-4">
-        <div class="col-9">
-            <input type="search" name="search" class="form-control mb-2 ml-3" id="inlineFormInput"
-                placeholder="Search">
-        </div>
-        <div class="col-3">
-            <button type="submit" class="btn btn-primary mb-2">Search</button>
-        </div>
+<div class="d-flex justify-content-center">
+@error('image')
+    <div class="alert alert-warning text-center" role="alert" style="width: 600px;">
+      {{ $message }}
     </div>
+@enderror
+@error('inlineFormInput')
+    <div class="alert alert-warning text-center" role="alert" style="width: 600px;">
+      Please write something!
+    </div>
+@enderror
 </div>
--->

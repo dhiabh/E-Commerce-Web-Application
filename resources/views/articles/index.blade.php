@@ -3,35 +3,48 @@
 @section('content')
 <div id="page">
     <div id="fh5co-product">
-        <div class="container">
-            <div class="row animate-box">
-                @if(isset($input))
-                    <div class="col-md-8 fh5co-heading">
-                        <!--<span>ARTISANAUX</span>-->
-                        <h3>{{ $count }} articles trouvés pour "{{ $input }}".</h3>
-                        @isset($didYouMean)
-                            @if($input != $didYouMean)
-                                <p>Did you mean {{ $didYouMean }}?</p>
-                            @endif
-                        @endisset
-                    </div>
+        <div class="container fh5co-heading text-center mb-5">
+            @if(isset($input))
+                @if($count > 0)
+                    <h3>{{ $count }} articles trouvés pour "{{ $input }}".</h3>
                 @else
-                    <div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
-                        <span>ARTISANAUX</span>
-                        <h2>Articles.</h2>
-                        <p>Plus de {{ $count }} pièces artisanales</p>
-                    </div>
+                    <img src="https://www.jumia.ma/assets_he/images/binoculars.41e1bc35.svg">
+                    <p></p>
+                    <h3>Aucun article correspond à "{{ $input }}".</h3>
+                    <a class="btn btn-primary mt-4" href="/">RETOUR A L'ACCEUIL</a>
                 @endif
-            </div>
+                @if(strtolower($input) != strtolower($didYouMean))
+                    <p>Did you mean {{ $didYouMean }}?</p>
+                @endif
+            @elseif(isset($fromBrowse))
+                <span>ARTISANAUX</span>
+                <h2>Articles.</h2>
+                <p>Plus de {{ $count }} pièces artisanales.</p>
+            @elseif(isset($categorie_name))
+                <h1><strong>{{ $categorie_name }}</strong></h1>
+                <p>Plus de {{ $count }} pièces artisanales.</p>
+            @else
+                @if($count > 0)
+                    <h3>{{ $count }} articles correspondent à l'image "{{ $input }}".</h3>
+                @else
+                    <img src="https://www.jumia.ma/assets_he/images/binoculars.41e1bc35.svg">
+                    <p></p>
+                    <h3>Aucun article correspond à l'image importée.</h3>
+                    <a class="btn btn-primary mt-4" href="/">RETOUR A L'ACCEUIL</a>
+                @endif
+            @endif
             @include('articles.tableau', ['articles' => $articles])
-			<nav aria-label="Page navigation example" style="text-align: center;">
-			  <div class="row">
-                <div class="col-12 d-flex justify-content-center">
-                    {{ $articles->links() }}
-                </div>         
-              </div>
-			</nav>
+			
         </div>
+        <nav aria-label="Page navigation example" style="text-align: center;">
+            <div class="row">
+              <div class="col-12 d-flex justify-content-center">
+                  {{ $articles->links() }}
+              </div>         
+            </div>
+          </nav>
     </div>
+    
+</div>
 
 @endsection

@@ -9,6 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CommandesController;
 use App\Http\Controllers\DynamicPDFController;
 use App\Http\Controllers\PaymentsController;
+use App\Http\Controllers\CategoriesController;
 use App\Mail\NewUserWelcomeMail;
 use Illuminate\Support\Facades\Route;
 
@@ -42,7 +43,7 @@ Route::get('/get_states', [UserController::class, 'getStates']);
 
 Route::resource('boutiques', BoutiqueController::class);
 
-
+Route::resource('categories', CategoriesController::class);
 
 
 

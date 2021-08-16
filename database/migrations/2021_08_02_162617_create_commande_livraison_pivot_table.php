@@ -13,7 +13,7 @@ class CreateCommandeLivraisonPivotTable extends Migration
      */
     public function up()
     {
-        Schema::create('livraison_commande', function (Blueprint $table) {
+        Schema::create('commande_livraison', function (Blueprint $table) {
             $table->primary(['commande_id', 'livraison_id']);
             
 
