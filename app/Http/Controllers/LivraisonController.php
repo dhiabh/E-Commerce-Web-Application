@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use App\Models\Panier;
 use Illuminate\Http\Request;
 use Intervention\Image\ImageManagerStatic as ImageIntervention;
+use Auth;
 
 class LivraisonController extends Controller
 {
@@ -28,12 +29,11 @@ class LivraisonController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Commande $commande)
     {
-        $commande = Commande::latest('id')->first();
-        $modes_livraison = Mode_livraison::all();
-        return view('mode_livraison.create',compact('modes_livraison'));
+        return view('livraison.create',compact('commandes'));
     }
+    
 
     /**
      * Store a newly created resource in storage.
@@ -43,31 +43,26 @@ class LivraisonController extends Controller
      */
     public function store(Request $request)
     {
-        $commande = Commande::latest('id')->first();
+        $commande = Auth::user()->commandes()->latest()->first();
         
         $livraison = Livraison::create([
             'mode_livraison_id' => $request->mode_livraison_id,
             'date_livraison' => Carbon::now()
         ]);
+        $commande->livraisons()->attach($livraison->id);
         $articles = $commande->articles;
 
-        $total = 0;
-
-        foreach($articles as $article)
-        {
-            $total += $article->price * $commande->articles()->where('article_id', $article->id)->first()->pivot->quantity;
-        }
 
         $frais_livraison = $livraison->mode_livraison->frais;
 
         $facture = Facture::create([
             'commande_id' => $commande->id,
             'date_facture' => Carbon::now(),
-            'base_ht' => $total,
+            'base_ht' => $commande->total(),
             'tva' => 0,
             'remise' => 0,
-            'total_ht' => $total,
-            'total_ttc' => $total + $frais_livraison,
+            'total_ht' => $commande->total(),
+            'total_ttc' => $commande->total() + $frais_livraison,
         ]);
 
         return view('factures.index',compact('articles','livraison', 'facture','commande'));

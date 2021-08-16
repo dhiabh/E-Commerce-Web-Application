@@ -21,8 +21,8 @@ class Article extends Model
     {
         parent::boot();
 
-        static::deleted(function($boutique){
-            $boutique->articles()->delete();
+        static::deleted(function($article){
+            $article->images()->delete();
         });
     }
 

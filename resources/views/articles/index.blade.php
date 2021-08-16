@@ -34,14 +34,14 @@
                 @endif
             @endif
             @include('articles.tableau', ['articles' => $articles])
-			<nav aria-label="Page navigation example" style="text-align: center;">
-			  <div class="row">
-                <div class="col-12 d-flex justify-content-center">
-                    {{ $articles->links() }}
-                </div>         
-              </div>
-			</nav>
         </div>
+        <nav aria-label="Page navigation example" style="text-align: center;">
+          <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+                {{ $articles->links() }}
+            </div>         
+          </div>
+        </nav>
     </div>
-
+</div>
 @endsection

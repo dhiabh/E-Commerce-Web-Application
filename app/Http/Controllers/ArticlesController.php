@@ -37,7 +37,7 @@ class ArticlesController extends Controller
 
     public function store(ArticleStoreRequest $request, Boutique $boutique) {
 
-        $filenameWithExt = request('image')->getClientOriginalName();
+        $filenameWithExt = str_slug(request('image')->getClientOriginalName());
         $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
         $extension = request('image')->getClientOriginalExtension();
         $fileNameToStore = $filename.'_'.time().'.'.$extension;

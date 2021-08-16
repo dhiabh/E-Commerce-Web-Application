@@ -14,7 +14,6 @@ class CommandesController extends Controller
     public function index()
     {
         $commandes = Auth::user()->commandes;
-
         return view('commandes.index', compact('commandes'));
     }
 
@@ -49,13 +48,14 @@ class CommandesController extends Controller
         foreach($articles as $article)
         {
             $commande->articles()->where('article_id', $article->id)->first()->pivot->update([
-                'quantity' => $panier->articles()->where('article_id', $article->id)->first()->pivot->quantity
+                'quantity' => 
+                    $panier->articles()->where('article_id', $article->id)->first()->pivot->quantity
             ]); 
                                         
         }
         
         
-        return redirect()->route('livraisons.create');
+        return view('livraisons.create');
         
     }
 
@@ -106,6 +106,9 @@ class CommandesController extends Controller
         if(is_null($commande)) {
             return redirect()->route('home');
         }
+        $commande->articles()->detach();
+        $commande->livraisons()->detach();
         $commande->delete();
+        return redirect()->route('commandes.index');
     }
 }

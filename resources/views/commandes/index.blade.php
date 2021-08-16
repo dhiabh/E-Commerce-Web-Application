@@ -39,7 +39,7 @@
 					</div>
 					<div class="col-md-2 ml-auto text-center">
 						<h4><strong>Total</strong></h4>
-						<h4>${{ $commande->articles()->sum('price') }}</h4>
+						<h4>${{ $commande->total() }}</h4>
 		  			</div>
 				</div>
 			    <a href="/commandes/{{ $commande->id }}" class="btn btn-primary mr-3">Voir la commande</a>

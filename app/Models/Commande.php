@@ -45,4 +45,13 @@ class Commande extends Model
     {
         return $this->hasOne(Facture::class);
     }
+
+    public function total() {
+        $total = 0;
+        $articles = $this->articles;
+        foreach($articles as $article) {
+            $total += $article->price * $this->articles()->where('article_id', $article->id)->first()->pivot->quantity;
+        }
+        return $total;
+    }
 }

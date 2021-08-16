@@ -22,7 +22,7 @@
             <div class="card-body">
                 <form method="POST" action="{{ route('livraisons.store') }}">
                     @csrf
-                    @foreach ($modes_livraison as $mode_livraison)
+                    @foreach (Mode_livraison::all() as $mode_livraison)
                     <div class="form-check ">
                         <input class="form-check-input" type="radio" name="mode_livraison_id" value="{{ $mode_livraison->id }}">
                         <label class="form-check-label ml-4" style="color: black">
