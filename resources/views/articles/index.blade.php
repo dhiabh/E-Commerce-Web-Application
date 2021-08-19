@@ -8,7 +8,7 @@
                 @if($count > 0)
                     <h3>{{ $count }} articles trouvés pour "{{ $input }}".</h3>
                 @else
-                    <img src="https://www.jumia.ma/assets_he/images/binoculars.41e1bc35.svg">
+                    <img src="/svg/jumia.svg">
                     <p></p>
                     <h3>Aucun article correspond à "{{ $input }}".</h3>
                     <a class="btn btn-primary mt-4" href="/">RETOUR A L'ACCEUIL</a>
@@ -27,7 +27,7 @@
                 @if($count > 0)
                     <h3>{{ $count }} articles correspondent à l'image "{{ $input }}".</h3>
                 @else
-                    <img src="https://www.jumia.ma/assets_he/images/binoculars.41e1bc35.svg">
+                    <img src="svg/jumia.svg">
                     <p></p>
                     <h3>Aucun article correspond à l'image importée.</h3>
                     <a class="btn btn-primary mt-4" href="/">RETOUR A L'ACCEUIL</a>

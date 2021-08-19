@@ -13,6 +13,7 @@
                         enctype="multipart/form-data"
                     >
                         @csrf
+                        @method("PUT")
                         <div class="form-group row">
                             <label for="nom" class="col-md-4 col-form-label text-md-right">
                                 Nom 
@@ -46,8 +47,7 @@
                                 Addresse
                             </label>
                             <div class="col-md-6">
-                                <textarea class="form-control" rows="5" name="addresse">
-                                    {{ $commande->address }}
+                                <textarea class="form-control" rows="5" name="addresse">{{ $commande->address }}
                                 </textarea>
                             </div>
                         </div>

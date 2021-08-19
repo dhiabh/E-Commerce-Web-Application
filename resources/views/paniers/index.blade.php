@@ -7,7 +7,7 @@
         @if ($articles_number == 0)
             <div class="col mx-auto bg-light text-center ">
                 <div class="m-5">
-                    <img src="storage/empty-cart.png">
+                    <img src="/svg/empty-cart.png">
                 </div>
 
                 <h3 class="text-secondary"><strong>Votre panier est vide !</strong></h3>

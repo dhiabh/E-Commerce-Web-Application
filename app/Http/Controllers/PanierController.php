@@ -58,10 +58,7 @@ class PanierController extends Controller
     {
         $panier = Auth::user()->panier;
         $article = Article::find($article_id);
-        $article_in_panier = $panier->articles->contains($article);
-        if($article_in_panier) {
-            return redirect()->back();
-        }
+        
 
         $panier->articles()->attach($article);
 

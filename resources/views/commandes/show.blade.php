@@ -29,30 +29,25 @@
             </div>
             <hr>
             @endforeach
-                       
-           <div class="text-dark"><strong>Sous Total: ${{ $commande->articles()->sum('price') }}$</strong></div>
-           <div class="text-dark">
-           		<strong>Frais Livraison: $1200</strong>
-           		</div>
-           	
+                                  	
            <hr>
 
         </div>
         <div class="mr-5" style="text-align: right">
-            <h3><strong>Total TTC: {{ $commande->articles()->sum('price') }}$</strong></h3>
+            <h3><strong>Sous Total: {{ $commande->total() }}$</strong></h3>
         </div>
-        <div>
+        <div class="d-flex">
             <button class="btn btn-success">
                 <a href="/commandes/{{ $commande->id }}/edit">
                     Modifier la commande
                 </a>
             </button>
 
-            <button class="btn btn-danger">
-                <a href="#" target="_blank">
-                    Annuler la commande
-                </a>
-            </button>
+            <form method="POST" action="{{ route('commandes.destroy', $commande->id) }}">
+                @csrf
+                @method("DELETE")
+                <button class="btn btn-danger ">Annuler la commande</button>
+            </form>
         </div>
     </div>
 </div>
