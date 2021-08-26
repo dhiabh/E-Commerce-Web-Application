@@ -116,7 +116,7 @@ class PanierController extends Controller
             $total += $article->price * $panier->articles()->where('article_id', $article->id)->first()->pivot->quantity;
         }
         
-        return view('paniers.index',compact('panier', 'articles_number','total','quantity'));
+        return redirect()->route('paniers.index',compact('panier', 'articles_number','total','quantity'));
     }
 
     /**

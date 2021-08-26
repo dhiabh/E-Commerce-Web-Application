@@ -1,4 +1,4 @@
-<div class="row d-flex">
+<div style="margin-top: 100px" class="row d-flex">
     @foreach ($articles as $article)
         <div class="col-md-4 text-center animate-box">
             <div class="product">

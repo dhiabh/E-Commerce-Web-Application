@@ -18,11 +18,8 @@
         "stripe/stripe-php": "^7.92",
         "wisdom-diala/countrypkg-laravel": "^1.0",
         "phpclasses/image-compare": ">=1.2"
-<<<<<<< HEAD
 
 
-=======
->>>>>>> 0b55855c3a838889c6703d97e2241e6164b1c524
     },
     "require-dev": {
         "facade/ignition": "^2.5",

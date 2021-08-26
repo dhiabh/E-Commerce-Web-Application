@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\ArticlesController;
+use App\Http\Controllers\CategoriesController;
+use App\Http\Resources\ArticlesResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +20,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/categories', [CategoriesController::class, 'index']);
+
+Route::get('/getArticles', [ArticlesController::class, 'getArticles']);

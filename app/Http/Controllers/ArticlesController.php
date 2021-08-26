@@ -16,19 +16,26 @@ use App\Http\Controllers\CommandeController;
 use App\Models\Article;
 use App\Models\Image;
 use App\Models\Boutique;
-use App\Models\Categorie;
-use App\Models\Commande;
+
 use App\Models\Panier;
 
 use App\Http\Requests\ArticleStoreRequest;
 
 use App\Helpers\compareImages;
+use App\Http\Resources\ArticlesResource;
 
 class ArticlesController extends Controller
 {
 
     public function __construct() {
-       $this->middleware('auth', ['except' => ['index', 'show', 'browse', 'search']]);
+       $this->middleware('auth', ['except' => ['index', 'show', 'browse', 'search', 'getArticles']]);
+    }
+
+    public function getArticles()
+    {
+        $articles = Article::all();
+
+        return ArticlesResource::collection($articles);
     }
 
     public function create($boutique_id)

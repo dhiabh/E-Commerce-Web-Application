@@ -36,7 +36,6 @@ Auth::routes(['verify' => true]);
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-
 Route::resource('users', UserController::class);
 
 Route::get('/get_states', [UserController::class, 'getStates']);
@@ -48,6 +47,9 @@ Route::resource('categories', CategoriesController::class);
 
 
 // Routes des articles
+
+//api
+Route::get('/getArticles', [ArticlesController::class, 'getArticles']);
 
 Route::resource('articles', ArticlesController::class);
 

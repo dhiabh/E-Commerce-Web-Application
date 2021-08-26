@@ -1,99 +1,196 @@
 @extends('layouts.main')
 
 @section('content')
-    <div id="page">
-
-
-        <aside id="fh5co-hero" class="js-fullheight">
-            <div class="flexslider js-fullheight">
-                <ul class="slides">
-                    @foreach($articles as $article)
-                    <li style="background-image:url({{ URL::to('storage/images/articles/'.$article->images()->first()->image) }});">
-                        @if($loop->first)
-                            <div class="overlay-gradient"></div>
-                        @endif
-                        <div class="container">
-                            <div class="col-md-6 col-md-offset-3 col-md-pull-3 js-fullheight slider-text">
-                                <div class="slider-text-inner">
-                                    <div class="desc">
-                                        <span class="price">${{ $article->price }}</span>
-                                        <h2>{{ $article->name }}</h2>
-                                        <p>{{ $article->description }}</p>
-                                        <p>
-                                            <a href="{{ route('articles.show', $article->id) }}" class="btn btn-primary btn-outline btn-lg">
-                                                Purchase Now
-                                            </a>
-                                        </p>
+    <!-- Hero -->
+    <div class="hero">
+        <div class="glide" id="glide_1">
+            <div class="glide__track" data-glide-el="track">
+                <ul class="glide__slides">
+                    @foreach ($articles as $article)
+                        <li class="glide__slide">
+                            <div class="hero__center">
+                                <div class="hero__left">
+                                    <span class="">Products Made For You With Love!</span>
+                                    <h1 class="">{{ $article->name }}</h1>
+                                    <p>{{ $article->description }}</p>
+                                    <a href="#"><button class="hero__btn">SHOP NOW</button></a>
+                                </div>
+                                <div class="hero__right">
+                                    <div class="hero__img-container">
+                                        <img class="banner_01"
+                                            src="{{ URL::to('storage/images/articles/' . $article->images()->first()->image) }}"
+                                            alt="banner2" />
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </li>
+                        </li>
                     @endforeach
+
                 </ul>
             </div>
-        </aside>
+            <div class="glide__bullets" data-glide-el="controls[nav]">
+                @for ($i = 0; $i < $articles->count(); $i++)
+                    <button class="glide__bullet" data-glide-dir="={{ $i }}"></button>
 
-        <div id="fh5co-services" class="fh5co-bg-section">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-4 col-sm-4 text-center">
-                        <div class="feature-center animate-box" data-animate-effect="fadeIn">
-                            <span class="icon">
-                                <i class="icon-credit-card"></i>
-                            </span>
-                            <h3>Credit Card</h3>
-                            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
-                                there live the blind texts. Separated they live in Bookmarksgrove</p>
-                            <p><a href="#" class="btn btn-primary btn-outline">Learn More</a></p>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-4 text-center">
-                        <div class="feature-center animate-box" data-animate-effect="fadeIn">
-                            <span class="icon">
-                                <i class="icon-wallet"></i>
-                            </span>
-                            <h3>Save Money</h3>
-                            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
-                                there live the blind texts. Separated they live in Bookmarksgrove</p>
-                            <p><a href="#" class="btn btn-primary btn-outline">Learn More</a></p>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-4 text-center">
-                        <div class="feature-center animate-box" data-animate-effect="fadeIn">
-                            <span class="icon">
-                                <i class="icon-paper-plane"></i>
-                            </span>
-                            <h3>Free Delivery</h3>
-                            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
-                                there live the blind texts. Separated they live in Bookmarksgrove</p>
-                            <p><a href="#" class="btn btn-primary btn-outline">Learn More</a></p>
-                        </div>
-                    </div>
-                </div>
+                @endfor
             </div>
-        </div>
-        <div id="fh5co-product">
-            <div class="container">
-                <div class="row animate-box">
-                    <div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
-                        <span>Cool Stuff</span>
-                        <h2>Articles.</h2>
-                        <p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem
-                            provident. Odit ab aliquam dolor eius.</p>
-                    </div>
-                </div>
-                @include('articles.tableau', ['articles' => $articles2])
-                <form action="{{ route('browse', 1) }}">
-                    <div class="form-group row mt-2">
-                        <div class="col-md-4 offset-md-5">
-                            <button type="submit" class="btn btn-primary">
-                                See more Products
-                            </button>
-                        </div>
-                    </div>
-                </form>
+
+            <div class="glide__arrows" data-glide-el="controls">
+                <button class="glide__arrow glide__arrow--left" data-glide-dir="<">
+                    <svg>
+                        <use xlink:href="./images/sprite.svg#icon-arrow-left2"></use>
+                    </svg>
+                </button>
+                <button class="glide__arrow glide__arrow--right" data-glide-dir=">">
+                    <svg>
+                        <use xlink:href="./images/sprite.svg#icon-arrow-right2"></use>
+                    </svg>
+                </button>
             </div>
         </div>
     </div>
-@endsection
+    <!-- Main -->
+    <main id="main">
+        <div class="container">
+
+
+            <!-- Latest Products -->
+            <section class="section latest__products" id="latest">
+                <div class="title__container">
+                    <div class="section__title active" data-id="Latest Products">
+                        <span class="dot"></span>
+                        <h1 class="primary__title">Latest Products</h1>
+                    </div>
+                </div>
+                <div class="container" data-aos="fade-up" data-aos-duration="1200">
+                    <div class="glide" id="glide_2">
+                        <div class="glide__track" data-glide-el="track">
+                            <ul class="glide__slides latest-center">
+                                @foreach ($articles2 as $article)
+                                    <li class="glide__slide">
+                                        <div class="product">
+                                            <div class="product__header">
+                                                <img src="{{ URL::to('storage/images/articles/' . $article->images()->first()->image) }}"
+                                                    alt="product">
+                                            </div>
+                                            <div class="product__footer">
+                                                <h3>{{ $article->name }}</h3>
+                                                <div class="rating">
+                                                    <svg>
+                                                        <use xlink:href="./images/sprite.svg#icon-star-full"></use>
+                                                    </svg>
+                                                    <svg>
+                                                        <use xlink:href="./images/sprite.svg#icon-star-full"></use>
+                                                    </svg>
+                                                    <svg>
+                                                        <use xlink:href="./images/sprite.svg#icon-star-full"></use>
+                                                    </svg>
+                                                    <svg>
+                                                        <use xlink:href="./images/sprite.svg#icon-star-full"></use>
+                                                    </svg>
+                                                    <svg>
+                                                        <use xlink:href="./images/sprite.svg#icon-star-empty"></use>
+                                                    </svg>
+                                                </div>
+                                                <div class="product__price">
+                                                    <h4>{{ $article->price }}$</h4>
+                                                </div>
+                                                @can('belongsToUser', $article)
+                                                    <a href="{{ route('articles.show', $article->id) }}"><button type="submit"
+                                                            class="product__btn">View Your own
+                                                            Product</button></a>
+                                                @else
+                                                    @if (!Auth::user() || !count(Auth::user()->panier->articles->where('id', $article->id)))
+                                                        <a href="{{ route('addToPanier', $article->id) }}"><button
+                                                                type="submit" class="product__btn">Add To
+                                                                Cart</button></a>
+                                                    @else
+                                                        <form method="POST"
+                                                            action="{{ route('paniers.destroy', $article->id) }}">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <a href="#"><button type="submit" class="product__btn">Remove from
+                                                                    Cart</button></a>
+                                                        </form>
+                                                    @endif
+                                                @endcan
+
+                                            </div>
+                                            <ul>
+                                                <li>
+                                                    <a data-tip="Quick View" data-place="left" href="#">
+                                                        <svg>
+                                                            <use xlink:href="./images/sprite.svg#icon-eye"></use>
+                                                        </svg>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a data-tip="Add To Wishlist" data-place="left" href="#">
+                                                        <svg>
+                                                            <use xlink:href="./images/sprite.svg#icon-heart-o"></use>
+                                                        </svg>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a data-tip="Add To Compare" data-place="left" href="#">
+                                                        <svg>
+                                                            <use xlink:href="./images/sprite.svg#icon-loop2"></use>
+                                                        </svg>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                @endforeach
+
+                            </ul>
+                        </div>
+
+                        <div class="glide__arrows" data-glide-el="controls">
+                            <button class="glide__arrow glide__arrow--left" data-glide-dir="<">
+                                <svg>
+                                    <use xlink:href="./images/sprite.svg#icon-arrow-left2"></use>
+                                </svg>
+                            </button>
+                            <button class="glide__arrow glide__arrow--right" data-glide-dir=">">
+                                <svg>
+                                    <use xlink:href="./images/sprite.svg#icon-arrow-right2"></use>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div id="app">
+                <articles-index></articles-index>
+            </div>
+        </div>
+        <!-- PopUp -->
+        <div class="popup hide__popup">
+            <div class="popup__content">
+                <div class="popup__close">
+                    <svg>
+                        <use xlink:href="./images/sprite.svg#icon-cross"></use>
+                    </svg>
+                </div>
+                <div class="popup__left">
+                    <div class="popup-img__container">
+                        <img class="popup__img" src="./images/popup.jpg" alt="popup">
+                    </div>
+                </div>
+                <div class="popup__right">
+                    <div class="right__content">
+                        <h1>Get Discount <span>30%</span> Off</h1>
+                        <p>Sign up to our newsletter and save 30% for you next purchase. No spam, we promise!
+                        </p>
+                        <form action="#">
+                            <input type="email" placeholder="Enter your email..." class="popup__form">
+                            <a href="#">Subscribe</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    @endsection
