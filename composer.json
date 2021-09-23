@@ -17,7 +17,8 @@
         "laravel/ui": "^3.3",
         "stripe/stripe-php": "^7.92",
         "wisdom-diala/countrypkg-laravel": "^1.0",
-        "phpclasses/image-compare": ">=1.2"
+        "phpclasses/image-compare": ">=1.2",
+        "cartalyst/stripe": "~2.0"
 
 
     },

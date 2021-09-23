@@ -13,6 +13,7 @@ import { routes } from "./routes";
 
 Vue.use(VueRouter);
 
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -26,7 +27,7 @@ Vue.use(VueRouter);
 
 //Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('articles-index', require('./components/articles/index.vue').default);
-
+Vue.component('panier-index', require('./components/panier/index.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

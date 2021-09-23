@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row">
-        <div class="card mx-auto">
+        <div class="card show_table mt-5 mb-5 mx-auto py-4">
             <div>
                 @if (session()->has('message'))
                     <div class="alert alert-success">
@@ -21,22 +21,22 @@
             </div>
             <div class="card-body">
                 <div class="align-items-baseline d-flex mb-5">
-                    <h3 class="mr-5 pr-5"><u>Catégorie</u></h3>
-                    <h4 class="text-right mx-5 px-5"><strong>{{ $boutique->categorie->name }}</strong></h4>
+                    <h2 class="mr-5 pr-5"><u>Category</u></h2>
+                    <h3 class="text-right mx-5 px-5"><strong>{{ $boutique->categorie->name }}</strong></h3>
                     @can('belongsToUser', $boutique)
-                        <a href="{{ route('boutiques.edit', $boutique->id) }}" class="ml-5 btn btn-success">Edit</a>
+                        <a href="{{ route('boutiques.edit', $boutique->id) }}" class="ml-5 btn btn-success px-4">Edit</a>
                     @endcan
                 </div>
                 @if (count($articles))
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <h3><u>Articles</u></h3>
+                                <h2><u>Products</u></h2>
                             </tr>
                             <tr>
-                                <th scope="col">Nom</th>
-                                <th scope="col">Prix</th>
-                                <th scope="col">Quantité Disponible</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Quantity Available</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -58,13 +58,13 @@
 
                 @can('belongsToUser', $boutique)
                     <div class="d-flex">
-                        <a href="{{ route('boutiques.articles.create', $boutique->id) }}" class="btn btn-success"> Ajouter un
-                            Article
+                        <a href="{{ route('boutiques.articles.create', $boutique->id) }}" class="btn btn-success px-4"> 
+                            Add Product
                         </a>
                         <form method="POST" action="{{ route('boutiques.destroy', $boutique->id) }}">
                             @csrf
                             @method('DELETE')
-                            <button class="btn btn-danger ml-5">Supprimer ce Boutique</button>
+                            <button class="btn btn-danger ml-5 px-4">Delete this Store</button>
                         </form>
                     </div>
                 @endcan

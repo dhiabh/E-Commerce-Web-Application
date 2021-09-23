@@ -59,11 +59,11 @@ class LivraisonController extends Controller
         $facture = Facture::create([
             'commande_id' => $commande->id,
             'date_facture' => Carbon::now(),
-            'base_ht' => $commande->total(),
+            'base_ht' => $commande->total,
             'tva' => 0,
             'remise' => 0,
-            'total_ht' => $commande->total(),
-            'total_ttc' => $commande->total() + $frais_livraison,
+            'total_ht' => $commande->total,
+            'total_ttc' => $commande->total + $frais_livraison,
         ]);
 
         return view('factures.index',compact('articles','livraison', 'facture','commande'));

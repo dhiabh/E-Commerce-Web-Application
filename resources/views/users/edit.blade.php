@@ -3,14 +3,12 @@
 @section('content')
     <!-- Page Heading -->
 
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">
+        <div class="row ">
+                <div class="card edit_table mt-5 mb-5 mx-auto py-4">
+                    <h3 class="card-header">
                         {{ __('Update User') }}
-                        <a href="{{ route('users.show', $user->id) }}" class="float-right">Back</a>
-                    </div>
+                        <a href="{{ route('users.show', $user->id) }}" class="float-right"><small>Back</small></a>
+                    </h3>
 
                     <div class="card-body">
                         <form method="POST" action="{{ route('users.update', $user->id) }}">
@@ -18,7 +16,7 @@
                             @method('PUT')
 
                             <div class="form-group row">
-                                <label for="nom" class="col-md-4 col-form-label text-md-right">{{ __('Nom') }}</label>
+                                <label for="nom" class="col-md-4 col-form-label text-md-right">{{ __('Last Nmae') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="nom" type="text" class="form-control @error('nom') is-invalid @enderror"
@@ -35,7 +33,7 @@
 
                             <div class="form-group row">
                                 <label for="prenom"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('Prénom') }}</label>
+                                    class="col-md-4 col-form-label text-md-right">{{ __('First Name') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="prenom" type="text"
@@ -70,7 +68,7 @@
 
                             <div class="form-group row">
                                 <label for="country"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('Pays') }}</label>
+                                    class="col-md-4 col-form-label text-md-right">{{ __('Country') }}</label>
 
                                 <div class="col-md-6">
                                     <select name="country" id="country" class="form-control"
@@ -97,7 +95,7 @@
 
                             <div class="form-group row">
                                 <label for="state"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('Ville') }}</label>
+                                    class="col-md-4 col-form-label text-md-right">{{ __('City') }}</label>
 
                                 <div class="col-md-6">
                                     <select name="state" id="state" class="form-control"
@@ -123,7 +121,7 @@
 
                             <div class="form-group row">
                                 <label for="adresse"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('Adresse') }}</label>
+                                    class="col-md-4 col-form-label text-md-right">{{ __('Address') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="adresse" type="text"
@@ -140,7 +138,7 @@
 
                             <div class="form-group row">
                                 <label for="num_tel"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('Numéro de Téléphone') }}</label>
+                                    class="col-md-4 col-form-label text-md-right">{{ __('Phone Number') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="num_tel" type="text"
@@ -157,7 +155,7 @@
 
                             <div class="form-group row">
                                 <label for="num_tel_2"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('Numéro de Téléphone (2)') }}</label>
+                                    class="col-md-4 col-form-label text-md-right">{{ __('Phone Number (2)') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="num_tel_2" type="text"
@@ -174,19 +172,17 @@
 
 
 
-                            <div class="form-group row mb-0">
+                            <div class=" form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        {{ __('Update User') }}
+                                    <button type="submit" class="link btn btn-primary">
+                                        Update User
                                     </button>
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
-            </div>
         </div>
-    </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
         integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="

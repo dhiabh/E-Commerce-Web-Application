@@ -24,6 +24,7 @@ class CreateArticleCommandePivotTable extends Migration
             $table->index('commande_id');
             
             $table->unsignedBigInteger('quantity')->nullable();
+            $table->float('total')->nullable();
             $table->timestamps();
         });
     }

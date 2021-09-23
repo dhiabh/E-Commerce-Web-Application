@@ -4,10 +4,11 @@ namespace App\Helpers;
 
 class compareImages
 {
-    private function mimeType($i)
+    public function mimeType($i)
     {
         /*returns array with mime type and if its jpg or png. Returns false if it isn't jpg or png*/
         $mime = getimagesize($i);
+        
         $return = array($mime[0],$mime[1]);
      
         switch ($mime['mime'])
@@ -17,6 +18,9 @@ class compareImages
                 return $return;
             case 'image/png':
                 $return[] = 'png';
+                return $return;
+            case 'image/webp':
+                $return[] = 'webp';
                 return $return;
             default:
                 return false;
@@ -35,6 +39,10 @@ class compareImages
         else if ($mime[2] == 'png')
         {
             return imagecreatefrompng ($i);
+        }
+        else if ($mime[2] == 'webp')
+        {
+            return imagecreatefromwebp ($i);
         }
         else
         {

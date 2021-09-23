@@ -37,9 +37,7 @@
     .payment
 	{
 		border:5px solid #f2f2f2;
-		padding: 2px;
-		//height:280px;
-        //border-radius:20px;
+		padding: 2rem;
         background:#fff;
 	}
    .payment_header

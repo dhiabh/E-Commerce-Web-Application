@@ -4,11 +4,10 @@
 
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
+                <div class="card edit_table mt-5 mb-5 mx-auto py-4">
 
                     <div class="card-header">
-                        Ajouter un Article
+                        Add Product
                         <a href="{{ route('boutiques.show', $boutique_id) }}" class="float-right">Back</a>
                     </div>
 
@@ -18,7 +17,7 @@
                             @csrf
                             <div class="form-group row">
                                 <label for="name"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('Nom d\'article') }}</label>
+                                    class="col-md-4 col-form-label text-md-right">{{ __('Product Name') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
@@ -33,7 +32,7 @@
                             </div>
 
                             <div class="form-group row">
-                                <label for="price" class="col-md-4 col-form-label text-md-right">{{ __('Prix') }}</label>
+                                <label for="price" class="col-md-4 col-form-label text-md-right">{{ __('Price') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="price" type="text" class="form-control @error('price') is-invalid @enderror"
@@ -49,7 +48,7 @@
 
                             <div class="form-group row">
                                 <label for="quantity"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('Quantité en stock') }}</label>
+                                    class="col-md-4 col-form-label text-md-right">{{ __('Quantity in stock') }}</label>
 
                                 <div class="col-md-6">
                                     <input id="quantity" type="number"
@@ -94,7 +93,7 @@
 
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
+                                    <button type="submit" class="btn btn-primary px-5">
                                         Ajouter
                                     </button>
                                 </div>

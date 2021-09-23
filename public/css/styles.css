@@ -39,6 +39,7 @@ input {
   font-weight: 400;
   font-family: "Archivo", sans-serif;
   color: var(--black);
+  background-color: #ddd;
 }
 
 a {
@@ -83,7 +84,33 @@ Navigation
 input[type=search] {
   width: 15vw;
   height: 5vh;
-  font-size: 2vh;
+  font-size: 1.5rem;
+}
+
+input[type=text], input[type=email], input[type=password] {
+  width: 100%;
+  height: 4rem;
+  font-size:1.5rem;
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  height: 4rem;
+  padding: 0.375rem 0.75rem;
+  font-size:1.5rem;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-select {
+  padding: 0.7rem;
 }
 
 
@@ -873,7 +900,7 @@ span.dot::before {
   text-transform: uppercase;
   width: 100%;
   padding: 1.4rem 0;
-  border: 1px solid var(--black);
+  border: 0 ;
   color: var(--black);
   cursor: pointer;
 }
@@ -1428,13 +1455,25 @@ Testimonial
 ======================
 */
 
-.testimonial {
-  position: relative;
-  background: url("./images/testimonial.jpg") center/cover no-repeat;
-  height: 50rem;
-  padding: 5rem 0;
-  z-index: 1;
-  text-align: center;
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  display: none;
+  float: left;
+  min-width: 15rem;
+  padding: 0.5rem 0.5rem;
+  margin: 0.125rem 0 0;
+  font-size: 0.9rem;
+  color: #212529;
+  text-align: left;
+  list-style: none;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.25rem;
+  font-size: 1.5rem;
 }
 
 .testimonial::before {
@@ -1873,7 +1912,7 @@ Product Details
 .product-details__btn a {
   flex: 0 0 47%;
   display: inline-block;
-  padding: 1.6rem 3rem;
+  padding: 0;
   text-align: center;
   color: var(--black);
   border: 1px solid var(--black);
@@ -2174,7 +2213,7 @@ Product Details Media Query
   }
 
   .product-details__btn a {
-    padding: 1rem 2.5rem;
+    padding: 0;
     font-size: 1.4rem;
   }
 
@@ -2361,20 +2400,23 @@ Cart Area
   border: 1px solid var(--black);
 }
 
+
+
 .cart__totals {
   width: 60rem;
-  /* height: 30rem; */
   margin: 5rem auto 0 auto;
   color: var(--black5);
   padding: 4rem 5rem;
   background-color: rgba(255, 255, 255, 0.8);
   box-shadow: 0px 2px 30px 10px rgba(0, 0, 0, 0.09);
   border-radius: 0.5rem;
+  text-align: center;
 }
 
 .cart__totals h3 {
-  font-weight: 500;
-  font-size: 1.8rem;
+  font-weight: bold;
+  font-size: 2.3rem;
+  color: #112C3E;
   margin-bottom: 1.6rem;
 }
 
@@ -2440,3 +2482,240 @@ Cart Area Media Query
     height: 1.5rem;
   }
 }
+
+.user_table {
+  width: 130rem;
+  margin: 5rem auto 0 auto;
+  color: var(--black5);
+  padding: 4rem 5rem;
+  background-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0px 2px 30px 10px rgba(0, 0, 0, 0.09);
+  border-radius: 0.5rem;
+  
+}
+
+.user_table h1 {
+  font-weight: bold;
+  font-size: 4rem;
+  color: #112C3E;
+  margin-bottom: 1.6rem;
+}
+
+.user_table h3 {
+  font-weight: bold;
+  font-size: 2rem;
+  color: #112C3E;
+  margin-bottom: 1.6rem;
+}
+
+.user_table col {
+  background-color: #fff;
+}
+
+.user_table .new__price {
+  font-size: 1.5rem;
+}
+
+.user_table ul {
+  margin-bottom: 2.5rem;
+}
+
+.user_table li {
+  border: 1px solid var(--primaryColor);
+  padding: 1.4rem 0.5rem;
+  position: relative;
+}
+
+.user_table li:not(:last-child) {
+  border-bottom-color: transparent;
+}
+
+.user_table li span {
+  position: absolute;
+  right: 1rem;
+}
+
+.user_table .link:link,
+.user_table .link:visited {
+  font-size: 1.5rem;
+  padding: 1.2rem 3rem;
+  color: var(--black);
+  text-transform: uppercase;
+  border: 1px solid var(--black);
+  transition: all 0.4s ease-in-out;
+}
+
+.user_table .link:hover {
+  background-color: var(--black);
+  color: var(--white);
+  border: 1px solid var(--black);
+}
+
+.store_link {
+  color: #461582;
+}
+
+.edit_table {
+  width: 75rem;
+  margin: 5rem auto 0 auto;
+  color: var(--black5);
+  padding: 4rem 5rem;
+  background-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0px 2px 30px 10px rgba(0, 0, 0, 0.09);
+  border-radius: 0.5rem;
+  
+}
+
+.edit_table h1 {
+  font-weight: bold;
+  font-size: 4rem;
+  color: #112C3E;
+  margin-bottom: 1.6rem;
+}
+
+.edit_table h3 {
+  font-weight: bold;
+  font-size: 2rem;
+  color: #112C3E;
+  margin-bottom: 1.6rem;
+}
+
+.edit_table col {
+  background-color: #fff;
+}
+
+.edit_table .new__price {
+  font-size: 1.5rem;
+}
+
+.edit_table ul {
+  margin-bottom: 2.5rem;
+}
+
+.edit_table li {
+  border: 1px solid var(--primaryColor);
+  padding: 1.4rem 0.5rem;
+  position: relative;
+}
+
+.edit_table li:not(:last-child) {
+  border-bottom-color: transparent;
+}
+
+.edit_table li span {
+  position: absolute;
+  right: 1rem;
+}
+
+.edit_table .link:link,
+.edit_table .link:visited {
+  font-size: 1.5rem;
+  padding: 1.2rem 3rem;
+  color: var(--black);
+  text-transform: uppercase;
+  border: 1px solid var(--black);
+  transition: all 0.4s ease-in-out;
+}
+
+.edit_table .link:hover {
+  background-color: var(--black);
+  color: var(--white);
+  border: 1px solid var(--black);
+}
+
+.store_link {
+  color: #461582;
+}
+
+.btn {
+  font-size: 1.7rem;
+}
+
+.show_table {
+  width: 50rem;
+  margin: 5rem auto 0 auto;
+  color: var(--black5);
+  padding: 4rem 5rem;
+  background-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0px 2px 30px 10px rgba(0, 0, 0, 0.09);
+  border-radius: 0.5rem;
+  
+}
+
+.show_table h1 {
+  font-weight: bold;
+  font-size: 4rem;
+  color: #112C3E;
+  margin-bottom: 1.6rem;
+}
+
+.show_table h2 {
+  font-weight: bold;
+  font-size: 2rem;
+  color: #112C3E;
+  margin-bottom: 1.6rem;
+}
+
+.show_table col {
+  background-color: #fff;
+}
+
+.show_table .new__price {
+  font-size: 1.5rem;
+}
+
+.show_table ul {
+  margin-bottom: 2.5rem;
+}
+
+.show_table li {
+  border: 1px solid var(--primaryColor);
+  padding: 1.4rem 0.5rem;
+  position: relative;
+}
+
+.show_table li:not(:last-child) {
+  border-bottom-color: transparent;
+}
+
+.show_table li span {
+  position: absolute;
+  right: 1rem;
+}
+
+.show_table .link:link,
+.show_table .link:visited {
+  font-size: 1.5rem;
+  padding: 1.2rem 3rem;
+  color: var(--black);
+  text-transform: uppercase;
+  border: 1px solid var(--black);
+  transition: all 0.4s ease-in-out;
+}
+
+.show_table .link:hover {
+  background-color: var(--black);
+  color: var(--white);
+  border: 1px solid var(--black);
+}
+
+.order_table {
+  width: 60rem;
+  margin: 5rem auto 0 auto;
+  color: var(--black5);
+  padding: 4rem 5rem;
+  background-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0px 2px 30px 10px rgba(0, 0, 0, 0.09);
+  border-radius: 0.5rem;
+  
+}
+
+.order_table h1 {
+  font-weight: bold;
+  font-size: 4rem;
+  color: #112C3E;
+  margin-bottom: 1.6rem;
+}
+
+
+  

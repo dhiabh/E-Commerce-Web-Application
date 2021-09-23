@@ -3,27 +3,33 @@
 @section('content')
     <div id="page">
         <div id="fh5co-product">
-            <div class="container fh5co-heading text-center mb-5">
+            <div class="container fh5co-heading text-center my-5">
                 @if (isset($input))
                     @if ($count > 0)
-                        <h3>{{ $count }} articles trouvés pour "{{ $input }}".</h3>
+                        <h2 class="mt-5">{{ $count }} item(s) found for
+                            "<strong>{{ $input }}</strong>".</h2>
                     @else
                         <img src="/svg/jumia.svg">
                         <p></p>
-                        <h3>Aucun article correspond à "{{ $input }}".</h3>
-                        <a class="btn btn-primary mt-4" href="/">RETOUR A L'ACCEUIL</a>
+                        <h2>No items matched "<strong>{{ $input }}</strong>".</h2>
+                        <a class="btn btn-primary mt-4" href="/">Go To Home</a>
                     @endif
                     @if (strtolower($input) != strtolower($didYouMean))
-                        <p>Did you mean {{ $didYouMean }}?</p>
+                        <h2>Did you mean <strong>"{{ $didYouMean }}"</strong>?</h2>
                     @endif
-                @elseif(isset($fromBrowse))
-                    <span>ARTISANAUX</span>
-                    <h2>Articles.</h2>
-                    <p>Plus de {{ $count }} pièces artisanales.</p>
                 @elseif(isset($categorie_name))
                     <h1><strong>{{ $categorie_name }}</strong></h1>
                     <p>Plus de {{ $count }} pièces artisanales.</p>
-                
+                @else
+                    @if ($count > 0)
+                        <h2 class="mt-5">{{ $count }} item(s) matched your image.</h2>
+                    @else
+                        <img src="/svg/jumia.svg">
+                        <p></p>
+                        <h2>No item matched your image</h2>
+                        <a class="btn btn-primary mt-4" href="/">Go To Home</a>
+                    @endif
+
                 @endif
                 @include('articles.tableau', ['articles' => $articles])
 

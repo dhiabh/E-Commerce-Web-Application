@@ -7,7 +7,7 @@
                         <div class="form-check" data-id="All Products">
                             <input
                                 class="form-check-input"
-                                @change="getArticles()"
+                                @change="getArticlesCategories()"
                                 type="radio"
                                 value="all"
                                 v-model="picked"
@@ -24,7 +24,7 @@
                         <div class="form-check" data-id="Trending Products">
                             <input
                                 class="form-check-input"
-                                @change="getArticles()"
+                                @change="getArticlesCategories()"
                                 type="radio"
                                 :value="category.id"
                                 v-model="picked"
@@ -36,15 +36,11 @@
                     </div>
                 </div>
             </div>
-            <div
-                class="category__container"
-                data-aos="fade-up"
-                data-aos-duration="1200"
-            >
+            <div class="category__container">
                 <div class="category__center">
                     <div
                         class="product category__products"
-                        v-for="article in articles"
+                        v-for="article in produits"
                         :key="article.id"
                     >
                         <div class="product__header">
@@ -52,78 +48,52 @@
                         </div>
                         <div class="product__footer">
                             <h3>{{ article.name }}</h3>
-                            <div class="rating">
-                                <svg>
-                                    <use
-                                        xlink:href="/images/sprite.svg#icon-star-full"
-                                    ></use>
-                                </svg>
-                                <svg>
-                                    <use
-                                        xlink:href="/images/sprite.svg#icon-star-full"
-                                    ></use>
-                                </svg>
-                                <svg>
-                                    <use
-                                        xlink:href="/images/sprite.svg#icon-star-full"
-                                    ></use>
-                                </svg>
-                                <svg>
-                                    <use
-                                        xlink:href="/images/sprite.svg#icon-star-full"
-                                    ></use>
-                                </svg>
-                                <svg>
-                                    <use
-                                        xlink:href="/images/sprite.svg#icon-star-empty"
-                                    ></use>
-                                </svg>
-                            </div>
                             <div class="product__price">
-                                <h4>{{ article.price }}</h4>
+                                <h4>{{ article.price }}$</h4>
                             </div>
-                            <a href="#"
+                            <a
+                                v-if="
+                                    article.panier !== undefined &&
+                                        article.panier === 2
+                                "
+                                :href="'/articles/'+article.id"
+                            >
+                                <button type="submit" class="product__btn">
+                                    View Your own Product
+                                </button>
+                            </a>
+                            <a
+                                v-if="
+                                    article.panier === undefined ||
+                                        article.panier === 0
+                                "
+                                @click="AddToCart(article.id)"
                                 ><button type="submit" class="product__btn">
                                     Add To Cart
-                                </button></a
-                            >
+                                </button>
+                            </a>
+
+                            <a
+                                v-if="
+                                    article.panier !== undefined &&
+                                        article.panier === 1
+                                "
+                                @click="RemoveFromCart(article.id)"
+                                ><button type="submit" class="product__btn">
+                                    Remove from Cart
+                                </button>
+                            </a>
                         </div>
                         <ul>
                             <li>
                                 <a
                                     data-tip="Quick View"
                                     data-place="left"
-                                    href="#"
+                                    :href="'/articles/'+article.id"
                                 >
                                     <svg>
                                         <use
                                             xlink:href="/images/sprite.svg#icon-eye"
-                                        ></use>
-                                    </svg>
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    data-tip="Add To Wishlist"
-                                    data-place="left"
-                                    href="#"
-                                >
-                                    <svg>
-                                        <use
-                                            xlink:href="/images/sprite.svg#icon-heart-o"
-                                        ></use>
-                                    </svg>
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    data-tip="Add To Compare"
-                                    data-place="left"
-                                    href="#"
-                                >
-                                    <svg>
-                                        <use
-                                            xlink:href="/images/sprite.svg#icon-loop2"
                                         ></use>
                                     </svg>
                                 </a>
@@ -142,6 +112,7 @@ export default {
         return {
             categories: [],
             articles: [],
+            produits: [],
             picked: "all"
         };
     },
@@ -154,22 +125,27 @@ export default {
     methods: {
         getArticles() {
             axios
-                .get("api/getArticles")
+                .get("getArticles")
                 .then(res => {
-                    if (this.picked === "all") {
-                        this.articles = res.data.data;
-                    } else {
-                        this.articles = [];
-                        for (let i = 0; i < res.data.data.length; i++) {
-                            if (res.data.data[i]["category"] === this.picked) {
-                                this.articles.push(res.data.data[i]);
-                            }
-                        }
-                    }
+                    this.articles = [...res.data.data];
+                    this.produits = [...this.articles];
                 })
                 .catch(error => {
                     console.log(error);
                 });
+        },
+
+        getArticlesCategories() {
+            if (this.picked == "all") {
+                this.produits = [...this.articles];
+            } else {
+                this.produits = [];
+                for (let i = 0; i < this.articles.length; i++) {
+                    if (this.articles[i].category === this.picked) {
+                        this.produits.push(this.articles[i]);
+                    }
+                }
+            }
         },
 
         getCategories() {
@@ -181,7 +157,24 @@ export default {
                 .catch(error => {
                     console.log(error);
                 });
-        }
+        },
+
+        AddToCart(id) {
+            axios.get("/articles/" + id + "/add-to-cart")
+            .then(res =>{
+                window.location.reload();
+            } )
+            .catch(errors => {
+                if (errors.response.status == 401) {      //401: unauthorized error
+                    window.location = "/login";
+                }
+            });
+        },
+
+        RemoveFromCart(id) {
+            axios.delete("/paniers/" + id).then(window.location.reload());
+        },
+
     }
 };
 </script>

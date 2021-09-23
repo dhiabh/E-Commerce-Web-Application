@@ -11,6 +11,8 @@ class Commande extends Model
 
     protected $fillable = [
         'user_id',
+        'total',
+        'nbre_articles',
         'nom',
         'prenom',
         'tel',
@@ -27,7 +29,7 @@ class Commande extends Model
 
     public function articles()
     {
-        return $this->belongsToMany(Article::class)->withPivot('quantity');
+        return $this->belongsToMany(Article::class)->withPivot('quantity', 'total');
     }
 
     public function etats_commande()
@@ -46,13 +48,4 @@ class Commande extends Model
         return $this->hasOne(Facture::class);
     }
 
-    public function total()
-    {
-        $total = 0;
-        foreach($this->articles as $article)
-        {
-            $total += $article->price * $this->articles()->where('article_id', $article->id)->first()->pivot->quantity; 
-        }
-        return $total;
-    }
 }

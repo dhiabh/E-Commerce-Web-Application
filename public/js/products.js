@@ -1,4 +1,15 @@
+/*const getProducts = async () => {
+  try {
+    const response = await axios.get("api/getArticles");
+    const products = response.data.data;
+    return products;    
+  } catch (err) {
+    console.log(err);
+  }
+};
+/*
 const getProducts = async () => {
+  const results
   try {
     const results = await fetch("./data/products.json");
     const data = await results.json();
@@ -7,13 +18,13 @@ const getProducts = async () => {
   } catch (err) {
     console.log(err);
   }
-};
+};*/
 
 /*
 =============
 Load Category Products
 =============
- */
+ 
 const categoryCenter = document.querySelector(".category__center");
 
 window.addEventListener("DOMContentLoaded", async function () {
@@ -29,7 +40,7 @@ const displayProductItems = items => {
                       <img src=${product.image} alt="product">
                     </div>
                     <div class="product__footer">
-                      <h3>${product.title}</h3>
+                      <h3>${product.name}</h3>
                       <div class="rating">
                         <svg>
                           <use xlink:href="./images/sprite.svg#icon-star-full"></use>
@@ -49,8 +60,17 @@ const displayProductItems = items => {
                       </div>
                       <div class="product__price">
                         <h4>$${product.price}</h4>
-                      </div>
-                      <a href="#"><button type="submit" class="product__btn">Add To Cart</button></a>
+                      </div>`+ (product.panier == 0 ? `<a href="{{ route('addToPanier', $article->id) }}"><button
+                      type="submit" class="product__btn">Add To
+                      Cart</button>` : (product.panier == 1 ? `<form method="POST"
+                      action="{{ route('paniers.destroy', $article->id) }}">
+                      @csrf
+                      @method('DELETE')
+                      <a href="#"><button type="submit" class="product__btn">Remove from
+                              Cart</button></a>
+                  </form>` : `<a href="{{ route('articles.show', $article->id) }}"><button type="submit"
+                  class="product__btn">View Your own
+                  Product</button></a>` ) ) + `
                     </div>
                   <ul>
                       <li>
@@ -89,7 +109,7 @@ const displayProductItems = items => {
 =============
 Filtering
 =============
- */
+ 
 
 const filterBtn = document.querySelectorAll(".filter-btn");
 const categoryContainer = document.getElementById("category");
@@ -111,7 +131,7 @@ if (categoryContainer) {
 
       // Load Products
       let menuCategory = products.filter(product => {
-        if (product.category === id) {
+        if (product.category == id) {
           return product;
         }
       });
@@ -129,7 +149,21 @@ if (categoryContainer) {
 =============
 Product Details Left
 =============
- */
+*/
+/* get files of the directory didnt work
+//const fs = require('fs'); 
+import fs from '/fs'
+ 
+var directory = './storage/image/articles'; 
+ 
+fs.readdir(directory, (err, files) => { 
+	if(err) { 
+		console.log(err)
+	} 
+	console.log(fs);
+});
+
+
 const pic1 = document.getElementById("pic1");
 const pic2 = document.getElementById("pic2");
 const pic3 = document.getElementById("pic3");
@@ -151,7 +185,7 @@ let picActive = 1;
       const target = e.target.closest("img");
       if (!target) return;
       const id = target.id.slice(3);
-      changeImage(`./images/products/iPhone/iphone${id}.jpeg`, id);
+      changeImage(`./storage/image/articles/${id}`, id);
     });
   }
 });
@@ -175,6 +209,7 @@ const changeImage = (imgSrc, n) => {
 Product Details Bottom
 =============
  */
+
 
 const btns = document.querySelectorAll(".detail-btn");
 const detail = document.querySelector(".product-detail__bottom");

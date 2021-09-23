@@ -29,9 +29,13 @@ class CommandesController extends Controller
         
         $panier = auth()->user()->panier;
 
+        $articles = $panier->articles;
+
         $commande = new Commande;
 
         $commande->user_id = Auth::id();
+        $commande->total = $panier->total;
+        $commande->nbre_articles = $panier->nbre_articles;
         $commande->nom = $request->input("nom");
         $commande->prenom = $request->input("prenom");
         $commande->tel = $request->input("tel");
@@ -41,18 +45,21 @@ class CommandesController extends Controller
         $commande->date_commande = Carbon::now();
         $commande->save();
 
-        $articles = $panier->articles;
-
+        
         $commande->articles()->sync($articles);
         
         foreach($articles as $article)
         {
             $commande->articles()->where('article_id', $article->id)->first()->pivot->update([
                 'quantity' => 
-                    $panier->articles()->where('article_id', $article->id)->first()->pivot->quantity
+                    $panier->articles()->where('article_id', $article->id)->first()->pivot->quantity,
+                'total' =>
+                    $panier->articles()->where('article_id', $article->id)->first()->pivot->total
             ]); 
                                         
         }
+
+        
         
         
         return view('livraisons.create');

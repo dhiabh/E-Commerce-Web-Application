@@ -5,31 +5,40 @@
             <nav class="nav navbar navbar-expand navbar-expand-sm navbar-expand-md navbar-expand-lg">
                 <div class="nav__hamburger">
                     <svg>
-                        <use xlink:href="./images/sprite.svg#icon-menu"></use>
+                        <use xlink:href="{{ URL::to('images/sprite.svg#icon-menu') }}"></use>
                     </svg>
                 </div>
 
                 <div class="nav__logo">
-                    <a href="{{ route('home') }}" class="scroll-link">
-                        HandArt
-                    </a>
+                    <a href="/">HandArt</a>
                 </div>
 
                 <div class="nav__menu">
                     <div class="menu__top">
                         <span class="nav__category">HandArt</span>
-                        <a href="{{ route('home') }}" class="close__toggle">
+                        <a href="#" class="close__toggle">
                             <svg>
-                                <use xlink:href="./images/sprite.svg#icon-cross"></use>
+                                <use xlink:href="{{ URL::to('images/sprite.svg#icon-cross') }}"></use>
                             </svg>
                         </a>
                     </div>
                     <ul class="nav__list col-md-3">
                         <li class="nav__item">
-                            <a href="#header" class="nav__link scroll-link">Home</a>
+                            <a href="/" class="nav__link">Home</a>
                         </li>
-                        <li class="nav__item">
-                            <a href="#category" class="nav__link scroll-link">Category</a>
+                        <li class="nav-item dropdown mx-3">
+                            <a class="nav__link scroll-link" href="#" id="navbarDropdown" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">Category</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                @foreach (Categorie::all() as $categorie)
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" href="/categories/{{ $categorie->id }}">
+                                            {{ $categorie->name }}
+                                        </a>
+                                    </li>
+                                    <hr class="dropdown-divider">
+                                @endforeach
+                            </ul>
                         </li>
                         <li class="nav__item">
                             <a href="#news" class="nav__link scroll-link">Blog</a>
@@ -47,24 +56,24 @@
                         enctype="multipart/form-data">
                         @csrf
                         <input type="search" name="inlineFormInput" id="inlineFormInput"
-                            class="form-control @error('inlineFormInput') is-invalid @enderror"
-                            placeholder="Search">
-                        <input type="file" id="image" name="image" class="form-control @error('image') is-invalid @enderror"  hidden>
+                            class="form-control @error('inlineFormInput') is-invalid @enderror" placeholder="Search">
+                        <input type="file" id="image" name="image"
+                            class="form-control @error('image') is-invalid @enderror" hidden>
                         <label for="image" style="font-size:20px" class="btn bi bi-camera my-auto"></label>
                         <button type="submit" class="icon__item mx-3">
                             <svg class="icon__search">
-                                <use xlink:href="./images/sprite.svg#icon-search"></use>
+                                <use xlink:href="{{ URL::to('images/sprite.svg#icon-search') }}"></use>
                             </svg>
                         </button>
                     </form>
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item dropdown mx-3">
-                            <a href="#" class="icon__item nav-link" id="navbarDropdown" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
+                            <button class="icon__item nav-link" id="navbarDropdown" type="button" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
                                 <svg class="icon__user">
-                                    <use xlink:href="./images/sprite.svg#icon-user"></use>
+                                    <use xlink:href="{{ URL::to('images/sprite.svg#icon-user') }}"></use>
                                 </svg>
-                            </a>
+                            </button>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 @guest
                                     @if (Route::has('login'))
@@ -86,7 +95,7 @@
                                         <a href="{{ route('users.show', Auth::user()->id) }}">Your Account</a>
                                     </li>
                                     <li class="dropdown-item">
-                                        <a href="/commandes">Your Commands</a>
+                                        <a href="/commandes">Your Orders ({{ Auth::user()->commandes()->count() }})</a>
                                     </li>
                                     <li>
                                         <hr class="dropdown-divider">
@@ -95,7 +104,7 @@
 
                                         <a class="dropdown-item" href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
-                                                                             document.getElementById('logout-form').submit();">
+                                                                                 document.getElementById('logout-form').submit();">
                                             {{ __('Logout') }}
                                         </a>
 
@@ -114,9 +123,10 @@
                     <div>
                         <a href="/paniers" class="icon__item">
                             <svg class="icon__cart">
-                                <use xlink:href="./images/sprite.svg#icon-shopping-basket"></use>
+                                <use xlink:href="{{ URL::to('images/sprite.svg#icon-shopping-basket') }}"></use>
                             </svg>
-                            <span id="cart__total">0</span>
+                            <span
+                                id="cart__total">{{ Auth::user() ? Auth::user()->panier->nbre_articles : 0 }}</span>
                         </a>
                     </div>
 

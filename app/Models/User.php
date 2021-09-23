@@ -54,7 +54,10 @@ class User extends Authenticatable implements MustVerifyEmail
         parent::boot();
 
         static::created(function ($user) {
-            $user->panier()->create();
+            $user->panier()->create([
+                'nbre_articles' => 0,
+                'total' => 0
+            ]);
             Mail::to($user->email)->send(new NewUserWelcomeMail());
         });
 

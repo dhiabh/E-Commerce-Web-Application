@@ -16,6 +16,8 @@ class CreateCommandesTable extends Migration
         Schema::create('commandes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
+            $table->float('total');
+            $table->integer('nbre_articles');
             $table->string('nom');
             $table->string('prenom');
             $table->string('tel');

@@ -1,8 +1,8 @@
 @extends('layouts.main')
 
 @section('content')
-    <div class="row">
-        <div class="card mx-auto">
+    <div class="row ">
+        <div class="card user_table mt-5 mb-5 mx-auto py-4">
             <div>
                 @if (session()->has('message'))
                     <div class="alert alert-success">
@@ -12,10 +12,9 @@
                 @endif
                 @can('belongsToUser', $user)
                     <div class="card-header text-center">
-
                         <div class="row">
                             <div class="col">
-                                <h1><strong>Votre Compte</strong></h1>
+                                <h1><strong>Your Account</strong></h1>
                             </div>
                         </div>
                     </div>
@@ -24,35 +23,35 @@
 
                         <div class="row">
                             <div class="col">
-                                <h1><strong>Artisan Page</strong></h1>
+                                <h1><strong>HandArtist Page</strong></h1>
                             </div>
                         </div>
                     </div>
                 @endcan
-                <div class="card-body">
+                <div class="col">
                     <table class="table">
 
                         <thead>
                             <tr>
-                                <h3><u>Informations Personnelles</u></h3>
+                                <h3 class="mt-4"><u>Personal Informations</u></h3>
                             </tr>
                             <tr>
-                                <th scope="col">Nom</th>
-                                <th scope="col">Prenom</th>
+                                <th scope="col">First name</th>
+                                <th scope="col">Last Name</th>
                                 <th scope="col">Email</th>
-                                <th scope="col">Pays</th>
-                                <th scope="col">Ville</th>
-                                <th scope="col">Adresse</th>
-                                <th scope="col">Numéro de téléphone</th>
-                                <th scope="col">Numéro de téléphone (2)</th>
+                                <th scope="col">Country</th>
+                                <th scope="col">City</th>
+                                <th scope="col">Adress</th>
+                                <th scope="col">Phone Number</th>
+                                <th scope="col">Phone Number (2)</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>{{ $user->nom }}</td>
                                 <td>{{ $user->prenom }}</td>
+                                <td>{{ $user->nom }}</td>
                                 <td>{{ $user->email }}</td>
-                                @isset(Auth::user()->state_id)
+                                @isset($user->state_id)
                                     <td>{{ $country->name }}</td>
                                     <td>{{ $state->name }}</td>
                                 @else
@@ -65,7 +64,7 @@
                                 <td>{{ $user->num_tel_2 }}</td>
                                 @can('belongsToUser', $user)
                                 <td>
-                                    <a href="{{ route('users.edit', $user->id) }}" class="btn btn-success">Edit</a>
+                                    <a class="link btn btn-secondary" href="{{ route('users.edit', $user->id) }}">Edit</a>
                                 </td>
                                 @endcan
                             </tr>
@@ -81,22 +80,22 @@
                             <thead>
                                 @can('belongsToUser', $user)
                                 <tr>
-                                    <h3><u>Mes Boutiques</u></h3>
+                                    <h3><u>My Stores</u></h3>
                                 </tr>
                                 @else 
                                 <tr>
-                                    <h3><u>Boutiques</u></h3>
+                                    <h3><u>Stores</u></h3>
                                 </tr>
                                 @endcan
                                 <tr>
-                                    <th scope="col">Nom</th>
-                                    <th scope="col">Catégorie</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Category</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($boutiques as $boutique)
-                                    <tr>
-                                        <td><a
+                                    <tr class="mb-5">
+                                        <td ><a class="store_link"
                                                 href="{{ route('boutiques.show', $boutique->id) }}">{{ $boutique->name }}</a>
                                         </td>
                                         <td>{{ $boutique->categorie->name }}</td>
@@ -106,7 +105,7 @@
                         </table>
                     @endif
                     @can('belongsToUser', $user)
-                    <a href="{{ route('boutiques.create') }}" class="btn btn-success">Ajouter un Boutique</a>
+                    <a href="{{ route('boutiques.create') }}" class="link btn btn-success">Add Store</a>
                     @endcan
                 </div>
 

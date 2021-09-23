@@ -10,10 +10,11 @@
                         <li class="glide__slide">
                             <div class="hero__center">
                                 <div class="hero__left">
-                                    <span class="">Products Made For You With Love!</span>
-                                    <h1 class="">{{ $article->name }}</h1>
+                                    <span>Products Made For You With Love!</span>
+                                    <h1>{{ $article->name }}</h1>
                                     <p>{{ $article->description }}</p>
-                                    <a href="#"><button class="hero__btn">SHOP NOW</button></a>
+                                    <a href="{{ route('articles.show', $article->id) }}"><button
+                                            class="hero__btn">SHOP NOW</button></a>
                                 </div>
                                 <div class="hero__right">
                                     <div class="hero__img-container">
@@ -59,11 +60,11 @@
                 <div class="title__container">
                     <div class="section__title active" data-id="Latest Products">
                         <span class="dot"></span>
-                        <h1 class="primary__title">Latest Products</h1>
+                        <h1 class="primary__title">Our Products</h1>
                     </div>
                 </div>
                 <div class="container" data-aos="fade-up" data-aos-duration="1200">
-                    <div class="glide" id="glide_2">
+                    <div class="glide" id="glide_3">
                         <div class="glide__track" data-glide-el="track">
                             <ul class="glide__slides latest-center">
                                 @foreach ($articles2 as $article)
@@ -75,23 +76,6 @@
                                             </div>
                                             <div class="product__footer">
                                                 <h3>{{ $article->name }}</h3>
-                                                <div class="rating">
-                                                    <svg>
-                                                        <use xlink:href="./images/sprite.svg#icon-star-full"></use>
-                                                    </svg>
-                                                    <svg>
-                                                        <use xlink:href="./images/sprite.svg#icon-star-full"></use>
-                                                    </svg>
-                                                    <svg>
-                                                        <use xlink:href="./images/sprite.svg#icon-star-full"></use>
-                                                    </svg>
-                                                    <svg>
-                                                        <use xlink:href="./images/sprite.svg#icon-star-full"></use>
-                                                    </svg>
-                                                    <svg>
-                                                        <use xlink:href="./images/sprite.svg#icon-star-empty"></use>
-                                                    </svg>
-                                                </div>
                                                 <div class="product__price">
                                                     <h4>{{ $article->price }}$</h4>
                                                 </div>
@@ -118,23 +102,10 @@
                                             </div>
                                             <ul>
                                                 <li>
-                                                    <a data-tip="Quick View" data-place="left" href="#">
+                                                    <a data-tip="Quick View" data-place="left"
+                                                        href="{{ route('articles.show', $article->id) }}">
                                                         <svg>
                                                             <use xlink:href="./images/sprite.svg#icon-eye"></use>
-                                                        </svg>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a data-tip="Add To Wishlist" data-place="left" href="#">
-                                                        <svg>
-                                                            <use xlink:href="./images/sprite.svg#icon-heart-o"></use>
-                                                        </svg>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a data-tip="Add To Compare" data-place="left" href="#">
-                                                        <svg>
-                                                            <use xlink:href="./images/sprite.svg#icon-loop2"></use>
                                                         </svg>
                                                     </a>
                                                 </li>
@@ -161,10 +132,18 @@
                     </div>
                 </div>
             </section>
+            @if (Auth::user())
+                <div id="app">
+                    <articles-index></articles-index>
+                </div>
+            @else
+                <div id="app">
+                    <articles-index></articles-index>
+                </div>
+            @endif
 
-            <div id="app">
-                <articles-index></articles-index>
-            </div>
+
+
         </div>
         <!-- PopUp -->
         <div class="popup hide__popup">

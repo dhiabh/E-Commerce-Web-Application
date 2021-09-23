@@ -2,7 +2,6 @@
 
 @section('extra-script')
 
-<script src="https://js.stripe.com/v3/"></script>
 
 @endsection
 
@@ -11,13 +10,10 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
+            <div class="card order_table my-5 mx-auto py-4">
                 <div class="card-body">
                     <form id="payment-form">
-                        <div id="card-element" class="mb-4">
-                        </div>
-
+                        <div id="card-element" class="mb-4"></div>
                         <div id="card-errors" role="alert"></div>
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
@@ -29,13 +25,14 @@
                     </form>
                 </div>
             </div>
-        </div>
     </div>
 </div>
 
 @endsection
 
 @section('extra-js')
+
+<script src="https://js.stripe.com/v3/"></script>
 
 <script>
     var stripe = Stripe('pk_test_51JNEK0JxcwaOyCujA67QggvSTh2gRqKLvSFn81LjMsqQ6YMm4UdofDyBggc6NJCN4N0UituEYzkz3bTsytO473as00NNjqRh46');

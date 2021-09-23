@@ -51,6 +51,7 @@ Route::resource('categories', CategoriesController::class);
 //api
 Route::get('/getArticles', [ArticlesController::class, 'getArticles']);
 
+
 Route::resource('articles', ArticlesController::class);
 
 Route::post(
@@ -94,8 +95,16 @@ Route::get('/articles/browse/{n}/{articles_json?}',
 
 // Routes des paniers
 
+Route::get('/paniers/{article}', [PanierController::class, 'destroy']);
+
 Route::resource('paniers', PanierController::class);
+
 Route::get('/articles/{article}/add-to-cart', [PanierController::class, 'addArticle'])->name('addToPanier');
+
+//api
+Route::get('/getPanier', [PanierController::class, 'getPanier']);
+Route::get('/getArticles_Panier', [PanierController::class, 'getArticles_Panier']);
+Route::put('/updateArticlePanier/{article}', [PanierController::class, 'updateArticlePanier']);
 
 
 // Routes des commandes, livraisons, et factures

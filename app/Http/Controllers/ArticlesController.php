@@ -6,12 +6,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Facades\Image as ImageIntervention;
 
 
 
-use App\Http\Controllers\BoutiqueController;
-use App\Http\Controllers\CommandeController;
+
 
 use App\Models\Article;
 use App\Models\Image;
@@ -23,6 +21,7 @@ use App\Http\Requests\ArticleStoreRequest;
 
 use App\Helpers\compareImages;
 use App\Http\Resources\ArticlesResource;
+use App\Http\Resources\ImagesResource;
 
 class ArticlesController extends Controller
 {
@@ -33,9 +32,13 @@ class ArticlesController extends Controller
 
     public function getArticles()
     {
+       
+        //$articles = Article::where('id','>=',-1)->with(['images', 'boutique'] )->get();
+        //return response()->json($articles);
         $articles = Article::all();
 
         return ArticlesResource::collection($articles);
+
     }
 
     public function create($boutique_id)
@@ -76,17 +79,16 @@ class ArticlesController extends Controller
             return redirect()->route('home');
         }
 
+        $articles = Article::inRandomOrder()->limit(6)->get();
+        return view('articles.show', compact('article','articles'));
+    }
+
+    public function getImages($id) {
+        
         $images = Image::where('article_id', $id)->get();
-
-        return view('articles.show', compact('article'));
+        return ImagesResource::collection($images);
     }
 
-    public function browse($input = null) {
-        $articles = Article::where('id', '>', -1)->simplePaginate(9);
-        $count = count(Article::all());
-        $fromBrowse = true;
-        return view('articles.index', compact('articles', 'count', 'fromBrowse'));
-    }
 
     public function search(Request $request) {
 
@@ -111,6 +113,7 @@ class ArticlesController extends Controller
                 $images = $produit->images;
                 foreach($images as $image) {
                     $imageArticlePath = 'storage/images/articles/'.$image->image;
+                    //dd($class->compare($imageArticlePath, 'storage/images/search/'.$fileNameToStore));
                     if($class->compare($imageArticlePath, 'storage/images/search/'.$fileNameToStore) < 10) {
                         $biens->push($produit);
                         break;
@@ -118,7 +121,7 @@ class ArticlesController extends Controller
                 }
             }
             $count = count($biens);
-            $articles = $biens->paginate(9);
+            $articles = $biens->paginate(4);
             Storage::disk('local')->delete('public/images/search/'.$fileNameToStore);
             return view('articles.index', compact('articles', 'count'));
         }
@@ -153,7 +156,7 @@ class ArticlesController extends Controller
         }
 
         $count = count($biens);
-        $articles = $biens->paginate(9);
+        $articles = $biens->paginate(4);
         if(isset($didYouMean))
         {
             return view('articles.index', compact('articles', 'input', 'count', 'didYouMean'));
@@ -268,7 +271,7 @@ class ArticlesController extends Controller
 
 
     // Helper functions 
-
+    
     public function resemblance($word1, $word2) {
         $word1_letters = str_split(strtolower($word1));
         $word2_letters = str_split(strtolower($word2));

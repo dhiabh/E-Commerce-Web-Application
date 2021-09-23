@@ -2,12 +2,9 @@
 
 @section('content')
 
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
+                <div class="card show_table mt-5 mb-5 mx-auto py-4">
                     <div class="card-header">
-                        {{ __('Modifier votre Boutique') }}
+                        {{ __('Update Your Store') }}
                         <a href="{{ route('boutiques.show', $boutique->id) }}" class="float-right">Back</a>
                     </div>
     
@@ -17,7 +14,7 @@
                             @method('PUT')
     
                             <div class="form-group row">
-                                <label for="categorie" class="col-md-4 col-form-label text-md-right">{{ __('Catégorie') }}</label>
+                                <label for="categorie" class="col-md-4 col-form-label text-md-right">{{ __('Category') }}</label>
     
                                 <div class="col-md-6">
                                     <select name="categorie_id" class="form-control" aria-label="Default select example">
@@ -39,7 +36,7 @@
                             </div>
     
                             <div class="form-group row">
-                                <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nom de Votre Boutique') }}</label>
+                                <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Store Name') }}</label>
     
                                 <div class="col-md-6">
                                     <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name', $boutique->name) }}" required autocomplete="name" autofocus>
@@ -62,7 +59,4 @@
                         </form>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
 @endsection

@@ -11,7 +11,9 @@ class Panier extends Model
 
     protected $fillable = [
         'user_id',
-        'article_id'
+        'article_id',
+        'nbre_articles',
+        'total'
     ];
 
     public function user()
@@ -22,6 +24,6 @@ class Panier extends Model
     public function articles()
     {
         // belongsToMany or hasMany ?
-        return $this->belongsToMany(Article::class)->withPivot('quantity');
+        return $this->belongsToMany(Article::class)->withPivot('quantity','total');
     }
 }

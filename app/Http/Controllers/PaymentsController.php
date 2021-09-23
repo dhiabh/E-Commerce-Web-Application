@@ -37,7 +37,8 @@ class PaymentsController extends Controller
 
     public function create(Facture $facture)
     {
-        return view('payments.create')->with('facture', $facture);
+        $modes_payment = Mode_payment::all();
+        return view('payments.create', compact('facture','modes_payment'));
     }
 
     /**
@@ -61,10 +62,15 @@ class PaymentsController extends Controller
         $payment->montant_payment = $facture->total_ttc;
         $payment->statut_payment = false;
         $mode_payment = $request->mode;
-        $payment->mode_payment_id = Mode_payment::where('name', $mode_payment)->get()->first()->id;
+        $payment->mode_payment_id = $mode_payment;
        
         $payment->save();
 
+        if($mode_payment == 2)
+        {
+            return redirect('');
+        }
+        
         Stripe::setApiKey(env('STRIPE_SECRET'));
 
         header('Content-Type: application/json');
@@ -77,6 +83,7 @@ class PaymentsController extends Controller
         $clientSecret = Arr::get($intent, 'client_secret');
         $amount = $payment->montant_payment;
 
+        
         return view('checkout.index', compact('clientSecret', 'amount'));
 
     }

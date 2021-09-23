@@ -1,18 +1,18 @@
 @extends('layouts.main')
 
 @section('content')
-<div class="container mt-5">
+<div class="container my-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+                <div class="card-header font-weight-bold">{{ __('Register') }}</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 
                         <div class="form-group row">
-                            <label for="nom" class="col-md-4 col-form-label text-md-right">{{ __('Nom') }}</label>
+                            <label for="nom" class="col-md-4 col-form-label text-md-right">{{ __('Last Name') }}</label>
 
                             <div class="col-md-6">
                                 <input id="nom" type="text" class="form-control @error('nom') is-invalid @enderror" name="nom" value="{{ old('nom') }}" required autocomplete="nom" autofocus>
@@ -26,7 +26,7 @@
                         </div>
 
                         <div class="form-group row">
-                          <label for="prenom" class="col-md-4 col-form-label text-md-right">{{ __('Prénom') }}</label>
+                          <label for="prenom" class="col-md-4 col-form-label text-md-right">{{ __('First Name') }}</label>
 
                           <div class="col-md-6">
                               <input id="prenom" type="text" class="form-control @error('prenom') is-invalid @enderror" name="prenom" value="{{ old('prenom') }}" required autocomplete="prenom" autofocus>

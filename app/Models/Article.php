@@ -29,7 +29,7 @@ class Article extends Model
     
     public function paniers()
     {
-        return $this->belongsToMany(Panier::class)->withPivot('quantity');
+        return $this->belongsToMany(Panier::class)->withPivot('quantity', 'total');
     }
 
     public function boutique()

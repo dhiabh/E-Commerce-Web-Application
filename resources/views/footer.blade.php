@@ -5,7 +5,7 @@
         <div class="facility__box">
           <div class="facility-img__container">
             <svg>
-              <use xlink:href="./images/sprite.svg#icon-airplane"></use>
+              <use xlink:href="{{ URL::to('images/sprite.svg#icon-airplane') }}"></use>
             </svg>
           </div>
           <p>FREE SHIPPING WORLD WIDE</p>
@@ -14,7 +14,7 @@
         <div class="facility__box">
           <div class="facility-img__container">
             <svg>
-              <use xlink:href="./images/sprite.svg#icon-credit-card-alt"></use>
+              <use xlink:href="{{ URL::to('images/sprite.svg#icon-credit-card-alt') }}"></use>
             </svg>
           </div>
           <p>100% MONEY BACK GUARANTEE</p>
@@ -23,7 +23,7 @@
         <div class="facility__box">
           <div class="facility-img__container">
             <svg>
-              <use xlink:href="./images/sprite.svg#icon-credit-card"></use>
+              <use xlink:href="{{ URL::to('images/sprite.svg#icon-credit-card') }}"></use>
             </svg>
           </div>
           <p>MANY PAYMENT GATWAYS</p>
@@ -32,7 +32,7 @@
         <div class="facility__box">
           <div class="facility-img__container">
             <svg>
-              <use xlink:href="./images/sprite.svg#icon-headphones"></use>
+              <use xlink:href="{{ URL::to('images/sprite.svg#icon-headphones') }}"></use>
             </svg>
           </div>
           <p>24/7 ONLINE SUPPORT</p>
@@ -50,7 +50,7 @@
             <li class="glide__slide">
               <div class="testimonial__box">
                 <div class="client__image">
-                  <img src="./images/profile1.jpg" alt="profile">
+                  <img src="{{ URL::to('images/profile1.jpg') }}" alt="profile">
                 </div>
                 <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Recusandae fuga hic nesciunt tempore
                   quibusdam consequatur eligendi unde officia ex quae.ipsum dolor sit amet consectetur adipisicing
@@ -65,7 +65,7 @@
             <li class="glide__slide">
               <div class="testimonial__box">
                 <div class="client__image">
-                  <img src="./images/profile2.jpg" alt="profile">
+                  <img src="{{ URL::to('images/profile2.jpg') }}" alt="profile">
                 </div>
                 <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Recusandae fuga hic nesciunt tempore
                   quibusdam consequatur
@@ -83,7 +83,7 @@
             <li class="glide__slide">
               <div class="testimonial__box">
                 <div class="client__image">
-                  <img src="./images/profile3.jpg" alt="profile">
+                  <img src="{{ URL::to('images/profile3.jpg') }}" alt="profile">
                 </div>
                 <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Recusandae fuga hic nesciunt tempore
                   quibusdam consequatur
@@ -102,7 +102,7 @@
             <li class="glide__slide">
               <div class="testimonial__box">
                 <div class="client__image">
-                  <img src="./images/profile4.jpg" alt="">
+                  <img src="{{ URL::to('images/profile4.jpg') }}" alt="">
                 </div>
                 <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Recusandae fuga hic nesciunt tempore
                   quibusdam consequatur
@@ -138,7 +138,7 @@
         <div class="section__titles">
           <div class="section__title active">
             <span class="dot"></span>
-            <h1 class="primary__title">Phone News</h1>
+            <h1 class="primary__title">HandArt News</h1>
           </div>
         </div>
       </div>
@@ -149,7 +149,7 @@
               <li class="glide__slide">
                 <div class="new__card">
                   <div class="card__header">
-                    <img src="./images/news1.jpg" alt="">
+                    <img src="{{ URL::to('images/news1.jpg') }}" alt="">
                   </div>
                   <div class="card__footer">
                     <h3>Styling White Shirts After A Cool Day</h3>
@@ -163,7 +163,7 @@
               <li class="glide__slide">
                 <div class="new__card">
                   <div class="card__header">
-                    <img src="./images/news2.jpg" alt="">
+                    <img src="{{ URL::to('images/news2.jpg') }}" alt="">
                   </div>
                   <div class="card__footer">
                     <h3>Styling White Shirts After A Cool Day</h3>
@@ -177,7 +177,7 @@
               <li class="glide__slide">
                 <div class="new__card">
                   <div class="card__header">
-                    <img src="./images/news3.jpg" alt="">
+                    <img src="{{ URL::to('images/news3.jpg') }}" alt="">
                   </div>
                   <div class="card__footer">
                     <h3>Styling White Shirts After A Cool Day</h3>
@@ -191,7 +191,7 @@
               <li class="glide__slide">
                 <div class="new__card">
                   <div class="card__header">
-                    <img src="./images/news4.jpg" alt="">
+                    <img src="{{ URL::to('images/news4.jpg') }}" alt="">
                   </div>
                   <div class="card__footer">
                     <h3>Styling White Shirts After A Cool Day</h3>
@@ -205,7 +205,7 @@
               <li class="glide__slide">
                 <div class="new__card">
                   <div class="card__header">
-                    <img src="./images/news5.jpg" alt="">
+                    <img src="{{ URL::to('images/news5.jpg') }}" alt="">
                   </div>
                   <div class="card__footer">
                     <h3>Styling White Shirts After A Cool Day</h3>
@@ -277,34 +277,34 @@
         <div>
           <span>
             <svg>
-              <use xlink:href="./images/sprite.svg#icon-location"></use>
+              <use xlink:href="{{ URL::to('images/sprite.svg#icon-location') }}"></use>
             </svg>
           </span>
-          42 Dream House, Dreammy street, 7131 Dreamville, USA
+          173 Résidence RIDA Av ALWAFAA Etage 3, App 5, Fès-MAROC
         </div>
         <div>
           <span>
             <svg>
-              <use xlink:href="./images/sprite.svg#icon-envelop"></use>
+              <use xlink:href="{{ URL::to('images/sprite.svg#icon-envelop') }}"></use>
             </svg>
           </span>
-          company@gmail.com
+          contact@imcreative.ma
         </div>
         <div>
           <span>
             <svg>
-              <use xlink:href="./images/sprite.svg#icon-phone"></use>
+              <use xlink:href="{{ URL::to('images/sprite.svg#icon-phone') }}"></use>
             </svg>
           </span>
-          456-456-4512
+          (+212) 06 6180 1175
         </div>
         <div>
           <span>
             <svg>
-              <use xlink:href="./images/sprite.svg#icon-paperplane"></use>
+              <use xlink:href="{{ URL::to('images/sprite.svg#icon-paperplane') }}"></use>
             </svg>
           </span>
-          Dream City, USA
+          Fès, MAROC
         </div>
       </div>
     </div>
@@ -327,6 +327,6 @@
 
 <a href="#header" class="goto-top scroll-link">
   <svg>
-    <use xlink:href="./images/sprite.svg#icon-arrow-up"></use>
+    <use xlink:href="{{ URL::to('images/sprite.svg#icon-arrow-up') }}"></use>
   </svg>
 </a>
