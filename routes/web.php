@@ -102,6 +102,11 @@ Route::resource('paniers', PanierController::class);
 Route::get('/articles/{article}/add-to-cart', [PanierController::class, 'addArticle'])->name('addToPanier');
 
 //api
+Route::get('/panier-count', function() {
+    return response()->json(count(Auth::user()->panier->articles));
+});
+
+//api
 Route::get('/getPanier', [PanierController::class, 'getPanier']);
 Route::get('/getArticles_Panier', [PanierController::class, 'getArticles_Panier']);
 Route::put('/updateArticlePanier/{article}', [PanierController::class, 'updateArticlePanier']);

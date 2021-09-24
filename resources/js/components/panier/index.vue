@@ -151,7 +151,12 @@
 </template>
 
 <script>
+import countArticlesPanier from "../countArticles_Panier.vue";
+
 export default {
+    components: {
+        countArticlesPanier,
+    },
     data() {
         return {
             panier: {},
@@ -159,8 +164,14 @@ export default {
             index: 0, 
         };
     },
+    computed: {
+        count() {
+            return this.$store.state.count;
+        }
+    },
 
     created() {
+        this.$store.commit('getPanierCountFromDB');
         this.getPanier();
         this.getArticles_Panier();
     },
@@ -238,6 +249,7 @@ export default {
             axios
                 .get("/paniers/" + id)
                 .then(res => {
+                    this.$store.commit('decrement');
                     this.panier.nbre_articles -- ;
                     for(let i = 0;i < this.articles.length; i++) {
                         if(this.articles[i].id === id) {

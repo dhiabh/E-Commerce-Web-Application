@@ -104,7 +104,7 @@
 
                                         <a class="dropdown-item" href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
-                                                                                 document.getElementById('logout-form').submit();">
+                                                                                     document.getElementById('logout-form').submit();">
                                             {{ __('Logout') }}
                                         </a>
 
@@ -125,8 +125,17 @@
                             <svg class="icon__cart">
                                 <use xlink:href="{{ URL::to('images/sprite.svg#icon-shopping-basket') }}"></use>
                             </svg>
-                            <span
-                                id="cart__total">{{ Auth::user() ? Auth::user()->panier->nbre_articles : 0 }}</span>
+                            @guest
+                            <div>
+                                <span id="cart__total">0</span>
+                            </div>
+                            @else
+                                <div id="app2">
+                                    <count-articles :articlesNumber = {{ json_encode(Auth::user()->panier->nbre_articles)  }}></count-articles>
+                                </div>
+                            @endguest
+
+
                         </a>
                     </div>
 

@@ -132,15 +132,11 @@
                     </div>
                 </div>
             </section>
-            @if (Auth::user())
+            
                 <div id="app">
                     <articles-index></articles-index>
                 </div>
-            @else
-                <div id="app">
-                    <articles-index></articles-index>
-                </div>
-            @endif
+
 
 
 

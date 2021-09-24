@@ -8,8 +8,10 @@ require('./bootstrap');
 
 window.Vue = require('vue').default;
 import Vue from 'vue';
+import Vuex from 'vuex';
 import VueRouter from 'vue-router';
 import { routes } from "./routes";
+import axios from 'axios';
 
 Vue.use(VueRouter);
 
@@ -28,6 +30,33 @@ Vue.use(VueRouter);
 //Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('articles-index', require('./components/articles/index.vue').default);
 Vue.component('panier-index', require('./components/panier/index.vue').default);
+Vue.component('count-articles', require('./components/countArticles_Panier.vue').default);
+
+Vue.use(Vuex);
+const store = new Vuex.Store({
+    state: {
+        count: 0
+    },
+
+    mutations: {
+        getPanierCountFromDB(state) {
+            axios.get('/panier-count')
+                .then((response) => {
+                    state.count = response.data;
+                });
+        },
+        increment(state) {
+            state.count++;
+        },
+
+        decrement(state) {
+            state.count--;
+        },
+
+        
+    }
+});
+    
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -42,5 +71,13 @@ const router = new VueRouter({
 
 const app = new Vue({
     el: '#app',
-    router: router
+    router: router,
+    store: store
 });
+
+const app2 = new Vue({
+    el: '#app2',
+    router: router,
+    store: store
+});
+

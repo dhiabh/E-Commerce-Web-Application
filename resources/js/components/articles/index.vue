@@ -67,7 +67,7 @@
                                     article.panier === undefined ||
                                         article.panier === 0
                                 "
-                                @click="AddToCart(article.id)"
+                                @click="AddToCart(article)"
                                 ><button type="submit" class="product__btn">
                                     Add To Cart
                                 </button>
@@ -78,7 +78,7 @@
                                     article.panier !== undefined &&
                                         article.panier === 1
                                 "
-                                @click="RemoveFromCart(article.id)"
+                                @click="RemoveFromCart(article)"
                                 ><button type="submit" class="product__btn">
                                     Remove from Cart
                                 </button>
@@ -107,6 +107,7 @@
 </template>
 
 <script>
+
 export default {
     data() {
         return {
@@ -116,8 +117,14 @@ export default {
             picked: "all"
         };
     },
+    computed: {
+        count() {
+            return this.$store.state.count;
+        }
+    },
 
     created() {
+        this.$store.commit('getPanierCountFromDB');
         this.getCategories();
         this.getArticles();
     },
@@ -159,11 +166,12 @@ export default {
                 });
         },
 
-        AddToCart(id) {
-            axios.get("/articles/" + id + "/add-to-cart")
-            .then(res =>{
-                window.location.reload();
-            } )
+        AddToCart(article) {
+            axios.get("/articles/" + article.id + "/add-to-cart")
+            .then(response => {
+                this.$store.commit('increment');
+                article.panier = 1;
+            })
             .catch(errors => {
                 if (errors.response.status == 401) {      //401: unauthorized error
                     window.location = "/login";
@@ -171,8 +179,14 @@ export default {
             });
         },
 
-        RemoveFromCart(id) {
-            axios.delete("/paniers/" + id).then(window.location.reload());
+        RemoveFromCart(article) {
+            axios.get("/paniers/" + article.id)
+            .then(response => {
+                this.$store.commit('decrement');
+                article.panier = 0;
+
+
+            })
         },
 
     }
